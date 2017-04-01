@@ -1,47 +1,34 @@
 package com.il4.acteur;
 
-import com.il4.Benne;
-import org.omg.CORBA.SystemException;
-import org.omg.CORBA.TRANSACTION_MODE;
+import com.il4.WaitingBenne;
+
 
 /**
  * Created by Argon on 31.03.17.
  */
 public class Bucheron extends Acteur{
 
-    private static final int MAX_BEN = 3;
-    private int benCount = 0;
 
-    public Transporteur transporteur;
 
-    public Bucheron(String name, Transporteur transporteur) {
+    public  WaitingBenne waitingBenne;
+
+    public WaitingBenne transporteurWaitingBenne;
+
+    public Bucheron(String name, WaitingBenne transporteurWaitingBenne, WaitingBenne waitingBenne) {
         super(name);
-        this.transporteur = transporteur;
+        this.transporteurWaitingBenne = transporteurWaitingBenne;
+        this.waitingBenne = waitingBenne;
     }
-
 
     @Override
     public void run(){
 
-        while(this.getBenne() == null) {
+        while(filledBenCount < BEN_TO_FILL) {
 
-            if (benCount < MAX_BEN) {
-                benCount++;
-                this.setBenne(new Benne(String.valueOf(benCount)));
-                System.out.println(this.name + "-> Creation de la benne :  " + this.getBenne().name);
-            }else{
-                try {
+            this.setBenne(this.waitingBenne.TakeBenne());
 
-                    while(!this.IsABenneWaiting()){
-                        wait();
-                    }
+            System.out.println(this.name + "-> Récupération de la benne :  " + this.getBenne().name);
 
-                    this.setBenne(this.TakeBenne());
-                    System.out.println(this.name + "-> Récupération de la benne :  " + this.getBenne().name);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
 
             while (this.getBenne().remplissage < this.getBenne().MAX_REMPLISSAGE) {
                 this.getBenne().remplissage++;
@@ -54,9 +41,9 @@ public class Bucheron extends Acteur{
                         this.getBenne().remplissage + " / " + this.getBenne().MAX_REMPLISSAGE);
             }
 
-            this.transporteur.GiveBenne(this.getBenne());
+            this.transporteurWaitingBenne.GiveBenne(this.getBenne());
+            incFilledBenCount();
             this.setBenne(null);
-            this.notifyAll();
         }
     }
 
