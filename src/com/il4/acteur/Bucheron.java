@@ -1,6 +1,8 @@
 package com.il4.acteur;
 
 import com.il4.WaitingBenne;
+import com.il4.view.MainViewController;
+import javafx.application.Platform;
 
 
 /**
@@ -14,8 +16,8 @@ public class Bucheron extends Acteur{
 
     public WaitingBenne transporteurWaitingBenne;
 
-    public Bucheron(String name, WaitingBenne transporteurWaitingBenne, WaitingBenne waitingBenne) {
-        super(name);
+    public Bucheron(String name, MainViewController mainViewController, WaitingBenne transporteurWaitingBenne, WaitingBenne waitingBenne) {
+        super(name,mainViewController);
         this.transporteurWaitingBenne = transporteurWaitingBenne;
         this.waitingBenne = waitingBenne;
     }
@@ -27,6 +29,10 @@ public class Bucheron extends Acteur{
 
             this.setBenne(this.waitingBenne.TakeBenne());
 
+            Platform.runLater(()-> {
+                view.BucheronReset();
+                view.BucheronSetCurrentBenne(this.getBenne().name);
+            });
             System.out.println(this.name + "-> Récupération de la benne :  " + this.getBenne().name);
 
 
@@ -39,11 +45,17 @@ public class Bucheron extends Acteur{
                 }
                 System.out.println(this.name + "-> Remplissage de la benne : " + this.getBenne().name + " - etat : " +
                         this.getBenne().remplissage + " / " + this.getBenne().MAX_REMPLISSAGE);
+
+                Platform.runLater(() -> view.BucheronAddBois());
             }
 
             this.transporteurWaitingBenne.GiveBenne(this.getBenne());
             incFilledBenCount();
             this.setBenne(null);
+            Platform.runLater(() -> {
+                view.BucheronReset();
+                view.BucheronResetCurrentBenne();
+            });
         }
     }
 
