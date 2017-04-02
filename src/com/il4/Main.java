@@ -34,16 +34,20 @@ public class Main extends Application {
             primaryStage.show();
 
 
-            WaitingBenne bucheronWaitingBenne = new WaitingBenne();
-            WaitingBenne ouvrierWaitingBenne = new WaitingBenne();
+            WaitingBenne bucheronWaitingBenne = new WaitingBenne(view.BucheronWaitingBenne);
+            WaitingBenne ouvrierWaitingBenne = new WaitingBenne(view.OuvrierWaitingBenne);
 
             //Création des trois bennes de départs;
             bucheronWaitingBenne.GiveBenne(new Benne("Benne 1"));
             bucheronWaitingBenne.GiveBenne(new Benne("Benne 2"));
             bucheronWaitingBenne.GiveBenne(new Benne("Benne 3"));
+            bucheronWaitingBenne.GiveBenne(new Benne("Benne 4"));
+            bucheronWaitingBenne.GiveBenne(new Benne("Benne 5"));
+            bucheronWaitingBenne.GiveBenne(new Benne("Benne 6"));
 
-            WaitingBenne transporteurWaitingBenneFromBucheron = new WaitingBenne();
-            WaitingBenne transporteurWaitingBenneFromOuvrier = new WaitingBenne();
+
+            WaitingBenne transporteurWaitingBenneFromBucheron = new WaitingBenne(view.TransporteurWaitingBenneBucheron);
+            WaitingBenne transporteurWaitingBenneFromOuvrier = new WaitingBenne(view.TransporteurWaitingBenneOuvrier);
 
             Transporteur transporteur = new Transporteur("Robert",view,
                     transporteurWaitingBenneFromBucheron,bucheronWaitingBenne,

@@ -1,5 +1,8 @@
 package com.il4;
 
+import com.il4.view.WaitingBenneViewController;
+import javafx.application.Platform;
+
 import java.util.LinkedList;
 
 /**
@@ -7,6 +10,7 @@ import java.util.LinkedList;
  */
 public class WaitingBenne {
 
+    private WaitingBenneViewController view;
     private LinkedList<Benne> waitingBenne;
 
     private synchronized boolean IsABenneWaiting(){
@@ -15,6 +19,7 @@ public class WaitingBenne {
 
     public synchronized void GiveBenne(Benne benne){
         this.waitingBenne.offer(benne);
+        Platform.runLater(() -> this.view.AddBenne(benne));
         notifyAll();
     }
 
@@ -31,12 +36,15 @@ public class WaitingBenne {
 
         Benne firstBenne = this.waitingBenne.getFirst();
         this.waitingBenne.removeFirst();
+
+        Platform.runLater(() -> this.view.RemoveBenne(firstBenne));
+
         return firstBenne;
     }
 
-    public WaitingBenne(){
+    public WaitingBenne(WaitingBenneViewController view){
         this.waitingBenne = new LinkedList<>();
+        this.view = view;
     }
-
 
 }

@@ -38,7 +38,7 @@ public class Ouvrier extends Acteur {
             while (this.getBenne().remplissage > 0) {
                 this.getBenne().remplissage--;
                 try {
-                    sleep(200);
+                    sleep(700);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

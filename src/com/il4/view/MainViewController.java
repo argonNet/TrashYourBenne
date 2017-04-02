@@ -3,6 +3,7 @@ package com.il4.view;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.Slider;
 
@@ -19,15 +20,30 @@ public class MainViewController implements Initializable{
     @FXML public ProgressBar ProgressBarBucheron;
     @FXML public Slider SliderTransporteur;
 
+    @FXML public ListView<String> ListTransporteurWaitingBenneBucheron;
+    @FXML public ListView<String> ListTransporteurWaitingBenneOuvrier;
+    @FXML public ListView<String> ListBucheronWaitingBenne;
+    @FXML public ListView<String> ListOuvrierWaitingBenne;
 
     @FXML public Label labelBucheron;
     @FXML public Label labelOuvrier;
     @FXML public Label labelTransporter;
 
+    public WaitingBenneViewController TransporteurWaitingBenneBucheron;
+    public WaitingBenneViewController TransporteurWaitingBenneOuvrier;
+    public WaitingBenneViewController BucheronWaitingBenne;
+    public WaitingBenneViewController OuvrierWaitingBenne;
+
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-    }
 
+        TransporteurWaitingBenneBucheron = new WaitingBenneViewController(ListTransporteurWaitingBenneBucheron);
+        TransporteurWaitingBenneOuvrier = new WaitingBenneViewController(ListTransporteurWaitingBenneOuvrier);
+        BucheronWaitingBenne = new WaitingBenneViewController(ListBucheronWaitingBenne);
+        OuvrierWaitingBenne = new WaitingBenneViewController(ListOuvrierWaitingBenne);
+
+    }
 
 
     public void BucheronSetCurrentBenne(String name){

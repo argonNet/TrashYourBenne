@@ -44,7 +44,7 @@ public class Transporteur extends Acteur{
 
             for(int i = 0; i <= TRAJET_DISTANCE; i++){
                 try {
-                    sleep(100);
+                    sleep(10);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -66,7 +66,7 @@ public class Transporteur extends Acteur{
 
             for(int i = 0; i <= TRAJET_DISTANCE; i++){
                 try {
-                    sleep(30);
+                    sleep(10);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
