@@ -1,8 +1,8 @@
 package com.il4;
 
-import com.il4.view.WaitingBenneViewController;
 import javafx.application.Platform;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 /**
@@ -10,8 +10,29 @@ import java.util.LinkedList;
  */
 public class WaitingBenne {
 
-    private WaitingBenneViewController view;
+    public ArrayList<IWaitingBenneListener> listeners;
+
     private LinkedList<Benne> waitingBenne;
+
+
+    private void onBenneGivenNotify(String benneName){
+
+        listeners.forEach( (listener) -> {
+            Platform.runLater(() -> {
+                listener.onBenneGiven(benneName);
+            });
+        });
+    }
+
+    private void onBenneTakeNotify(String benneName){
+
+        listeners.forEach( (listener) -> {
+            Platform.runLater(() -> {
+                listener.onBenneTaken(benneName);
+            });
+        });
+    }
+
 
     private synchronized boolean IsABenneWaiting(){
         return this.waitingBenne != null && !this.waitingBenne.isEmpty();
@@ -19,7 +40,8 @@ public class WaitingBenne {
 
     public synchronized void GiveBenne(Benne benne){
         this.waitingBenne.offer(benne);
-        Platform.runLater(() -> this.view.AddBenne(benne));
+        onBenneGivenNotify(benne.name);
+
         notifyAll();
     }
 
@@ -33,18 +55,17 @@ public class WaitingBenne {
             }
         }
 
-
         Benne firstBenne = this.waitingBenne.getFirst();
         this.waitingBenne.removeFirst();
 
-        Platform.runLater(() -> this.view.RemoveBenne(firstBenne));
+        onBenneTakeNotify(firstBenne.name);
 
         return firstBenne;
     }
 
-    public WaitingBenne(WaitingBenneViewController view){
+    public WaitingBenne(){
         this.waitingBenne = new LinkedList<>();
-        this.view = view;
+        this.listeners = new ArrayList<>();
     }
 
 }

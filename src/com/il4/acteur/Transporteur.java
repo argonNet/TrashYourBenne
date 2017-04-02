@@ -1,7 +1,6 @@
 package com.il4.acteur;
 
 import com.il4.WaitingBenne;
-import com.il4.view.MainViewController;
 import javafx.application.Platform;
 
 import java.util.ArrayList;
@@ -13,12 +12,11 @@ public class Transporteur extends Acteur{
 
     public ArrayList<ITransporteurListener> listeners;
 
-
-    private void giveBenne(String benneName){
+    private void takeBenne(String benneName){
 
         listeners.forEach( (listener) -> {
             Platform.runLater(() -> {
-                listener.onGiveBenne(benneName);
+                listener.onTakeBenne(benneName);
             });
         });
     }
@@ -32,7 +30,7 @@ public class Transporteur extends Acteur{
         });
     }
 
-    private void goToBucherong(){
+    private void goToBucheron(){
 
         listeners.forEach( (listener) -> {
             Platform.runLater(() -> {
@@ -41,13 +39,11 @@ public class Transporteur extends Acteur{
         });
     }
 
-
-
-    private void takeBenne(String benneName){
+    private void giveBenne(String benneName){
 
         listeners.forEach( (listener) -> {
             Platform.runLater(() -> {
-                listener.onTakeBenne(benneName);
+                listener.onGiveBenne(benneName);
             });
         });
     }
@@ -60,12 +56,14 @@ public class Transporteur extends Acteur{
 
     private final static int TRAJET_DISTANCE = 50;
 
-    public Transporteur(String name, MainViewController mainViewController,
+    public Transporteur(String name,
                         WaitingBenne waitingBenneFromBucheron,
                         WaitingBenne bucheronWaitingBenne,
                         WaitingBenne waitingBenneFromOuvrier,
                         WaitingBenne ouvrierWaitingBenne){
-        super(name,mainViewController);
+        super(name);
+
+        this.listeners = new ArrayList<>();
 
         this.waitingBenneFromBucheron = waitingBenneFromBucheron;
         this.bucheronWaitingBenne = bucheronWaitingBenne;
@@ -78,10 +76,10 @@ public class Transporteur extends Acteur{
 
         while(filledBenCount < BEN_TO_FILL) {
 
-            Platform.runLater(() -> this.view.TransporteurResetCurrentBenne());
+
             this.setBenne(this.waitingBenneFromBucheron.TakeBenne());
 
-            Platform.runLater(() -> this.view.TransporteurSetCurrentBenne(this.getBenne().name));
+            takeBenne(this.getBenne().name);
             System.out.println(this.name + "-> Prise en charge de la benne :  " + this.getBenne().name + " à destination de l'ouvrier");
 
 
@@ -92,7 +90,7 @@ public class Transporteur extends Acteur{
                     e.printStackTrace();
                 }
 
-                Platform.runLater(() -> this.view.TransporteurProgressDirectionOuvrier());
+                goToOuvrier();
                 System.out.println(this.name + "-> Acheminement de la benne : " + this.getBenne().name + " - etat : " +
                         i + " / " + TRAJET_DISTANCE);
             }
@@ -100,10 +98,11 @@ public class Transporteur extends Acteur{
 
 
             this.ouvrierWaitingBenne.GiveBenne(this.getBenne());
-            Platform.runLater(() -> this.view.TransporteurResetCurrentBenne());
+            giveBenne(this.getBenne().name);
+
             this.setBenne(this.waitingBenneFromOuvrier.TakeBenne());
 
-            Platform.runLater(() -> this.view.TransporteurSetCurrentBenne(this.getBenne().name));
+            takeBenne(this.getBenne().name);
             System.out.println(this.name + "-> Prise en charge de la benne :  " + this.getBenne().name + " à destination du bucheron");
 
 
@@ -113,14 +112,15 @@ public class Transporteur extends Acteur{
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                Platform.runLater(() -> this.view.TransporteurProgressDirectionBucheron());
+
+                goToBucheron();
                 System.out.println(this.name + "-> Acheminement de la benne : " + this.getBenne().name + " - etat : " +
                         i + " / " + TRAJET_DISTANCE);
             }
 
 
             this.bucheronWaitingBenne.GiveBenne(this.getBenne());
-            Platform.runLater(() -> this.view.TransporteurResetCurrentBenne());
+            giveBenne(this.getBenne().name);
 
             this.setBenne(null);
 

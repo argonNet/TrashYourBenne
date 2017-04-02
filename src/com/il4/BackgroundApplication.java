@@ -3,9 +3,11 @@ package com.il4;
 import com.il4.acteur.Bucheron;
 import com.il4.acteur.Ouvrier;
 import com.il4.acteur.Transporteur;
+import com.il4.view.WaitingBenneViewController;
 import com.il4.view.component.BucheronView;
 import com.il4.view.MainViewController;
 import com.il4.view.component.OuvrierView;
+import com.il4.view.component.TransporteurView;
 
 /**
  * Created by Argon on 02.04.17.
@@ -16,7 +18,6 @@ public class BackgroundApplication {
 
     WaitingBenne bucheronWaitingBenne ;
     WaitingBenne ouvrierWaitingBenne ;
-
     WaitingBenne transporteurWaitingBenneFromBucheron;
     WaitingBenne transporteurWaitingBenneFromOuvrier;
 
@@ -25,23 +26,53 @@ public class BackgroundApplication {
     Ouvrier ouvrier;
 
 
-    public void createBucheron(String name,MainViewController viewMain, BucheronView view){
-        bucheron = new Bucheron(name,viewMain,transporteurWaitingBenneFromBucheron,bucheronWaitingBenne);
+    public void createBucheron(String name, BucheronView view){
+        bucheron = new Bucheron(name,transporteurWaitingBenneFromBucheron,bucheronWaitingBenne);
         bucheron.listeners.add(view);
     }
 
-    public void createOuvrier(String name,MainViewController viewMain, OuvrierView view){
-        ouvrier = new Ouvrier(name,viewMain,transporteurWaitingBenneFromBucheron,bucheronWaitingBenne);
+    public void createOuvrier(String name, OuvrierView view){
+        ouvrier = new Ouvrier(name,transporteurWaitingBenneFromBucheron,bucheronWaitingBenne);
         ouvrier.listeners.add(view);
     }
 
-    public void Start(MainViewController view) {
 
+    public void createTransporteur(String name, TransporteurView view){
+        transporteur = new Transporteur(name,
+                                        transporteurWaitingBenneFromBucheron,bucheronWaitingBenne,
+                                        transporteurWaitingBenneFromOuvrier,ouvrierWaitingBenne);
+        transporteur.listeners.add(view);
+    }
+
+    public void createWaitingBenneQueues(
+            WaitingBenneViewController bucheronWaitingBenneView,
+            WaitingBenneViewController ouvrierWaitingBenneView,
+            WaitingBenneViewController transporteurWaitingBenneFromBucheronView,
+            WaitingBenneViewController transporteurWaitingBenneFromOuvrierView){
+
+        bucheronWaitingBenne = new WaitingBenne();
+        bucheronWaitingBenne.listeners.add(bucheronWaitingBenneView);
+
+        ouvrierWaitingBenne = new WaitingBenne();
+        ouvrierWaitingBenne.listeners.add(ouvrierWaitingBenneView);
+
+        transporteurWaitingBenneFromBucheron = new WaitingBenne();
+        transporteurWaitingBenneFromBucheron.listeners.add(transporteurWaitingBenneFromBucheronView);
+
+        transporteurWaitingBenneFromOuvrier = new WaitingBenne();
+        transporteurWaitingBenneFromOuvrier.listeners.add(transporteurWaitingBenneFromOuvrierView);
+    }
+
+
+    public void createBenne(String name){
+        bucheronWaitingBenne.GiveBenne(new Benne(name));
+    }
+
+    public void Start( ) {
 
         bucheron.start();
         transporteur.start();
         ouvrier.start();
-
     }
 
 

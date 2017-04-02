@@ -1,12 +1,12 @@
 package com.il4.view;
 
-import com.il4.Benne;
+import com.il4.IWaitingBenneListener;
 import javafx.scene.control.ListView;
 
 /**
  * Created by Argon on 02.04.17.
  */
-public class WaitingBenneViewController {
+public class WaitingBenneViewController implements IWaitingBenneListener{
 
     private ListView<String> listView;
 
@@ -14,14 +14,13 @@ public class WaitingBenneViewController {
         this.listView = listView;
     }
 
-    public void AddBenne(Benne benne){
-        listView.getItems().add(benne.name);
+    @Override
+    public void onBenneGiven(String benneName) {
+        listView.getItems().add(benneName);
     }
 
-    public void RemoveBenne(Benne benne){
-        listView.getItems().remove(benne.name);
+    @Override
+    public void onBenneTaken(String benneName) {
+        listView.getItems().remove(benneName);
     }
-
-
-
 }

@@ -1,7 +1,6 @@
 package com.il4.acteur;
 
 import com.il4.WaitingBenne;
-import com.il4.view.MainViewController;
 import javafx.application.Platform;
 
 import java.util.ArrayList;
@@ -45,8 +44,8 @@ public class Ouvrier extends Acteur {
     }
 
 
-    public Ouvrier(String name, MainViewController mainViewController, WaitingBenne transporteurWaitingBenne, WaitingBenne waitingBenne){
-        super(name,mainViewController);
+    public Ouvrier(String name, WaitingBenne transporteurWaitingBenne, WaitingBenne waitingBenne){
+        super(name);
 
         this.listeners = new ArrayList<>();
 
