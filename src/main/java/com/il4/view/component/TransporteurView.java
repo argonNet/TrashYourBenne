@@ -1,10 +1,10 @@
 package com.il4.view.component;
 
-import com.il4.acteur.IOuvrierListener;
+import com.il4.acteur.ITransporteurListener;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
-import javafx.scene.control.ProgressBar;
+import javafx.scene.control.Slider;
 import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
@@ -12,14 +12,14 @@ import java.io.IOException;
 /**
  * Created by Argon on 02.04.17.
  */
-public class OuvrierView extends AnchorPane implements IOuvrierListener {
+public class TransporteurView extends AnchorPane implements ITransporteurListener {
 
-    @FXML public ProgressBar progressBar;
+    @FXML private Slider slider;
     @FXML public Label labelName;
     @FXML public Label labelBenne;
 
-    public OuvrierView(){
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/il4/view/component/ouvrierView.fxml"));
+    public TransporteurView(){
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("transporteurView.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
 
@@ -30,8 +30,8 @@ public class OuvrierView extends AnchorPane implements IOuvrierListener {
         }
     }
 
-    public void setName(String name){
-        System.out.printf(name);
+
+    public  void setName(String name){
         labelName.setText(name);
     }
 
@@ -43,30 +43,32 @@ public class OuvrierView extends AnchorPane implements IOuvrierListener {
         labelBenne.setText("---");
     }
 
-    public void removeBois(){
-        progressBar.progressProperty().setValue(progressBar.progressProperty().getValue() - 0.1);
+    public void progressDirectionOuvrier(){
+        slider.increment();
     }
 
-    public void resetBois(){
-        progressBar.progressProperty().setValue(1);
+    public void progressDirectionBucheron(){
+        slider.decrement();
     }
 
 
     @Override
     public void onTakeBenne(String benneName) {
-        resetBois();
         setCurrentBenne(benneName);
     }
 
     @Override
-    public void onRemoveBoisToBenne() {
-        removeBois();
+    public void onGoOuvrier() {
+        progressDirectionOuvrier();
+    }
+
+    @Override
+    public void onGoBucheron() {
+        progressDirectionBucheron();
     }
 
     @Override
     public void onGiveBenne(String benneName) {
-        resetBois();
         resetCurrentBenne();
     }
-
 }

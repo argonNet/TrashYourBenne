@@ -19,7 +19,7 @@ public class BucheronView extends AnchorPane implements IBucheronListener{
     @FXML public Label labelBenne;
 
     public BucheronView(){
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/il4/view/component/bucheronView.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("bucheronView.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
 

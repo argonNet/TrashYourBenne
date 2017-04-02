@@ -5,13 +5,12 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="80.0" prefWidth="621.0" type="AnchorPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Slider fx:id="slider" blockIncrement="1.0" disable="true" layoutX="10.0" layoutY="37.0" max="50.0" prefHeight="16.0" prefWidth="499.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" />
       <Label fx:id="labelBenne" alignment="CENTER" layoutX="28.0" layoutY="65.0" prefHeight="17.0" prefWidth="546.0" text="-" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" />
-      <Label layoutX="24.0" layoutY="17.0" text="Bucheron :" AnchorPane.leftAnchor="24.0" AnchorPane.topAnchor="17.0" />
-      <Label fx:id="labelName" layoutX="98.0" layoutY="14.0" prefHeight="23.0" prefWidth="217.0" text="-" AnchorPane.leftAnchor="98.0" AnchorPane.topAnchor="14.0">
+      <Label layoutX="24.0" layoutY="17.0" text="Transporteur :" AnchorPane.leftAnchor="24.0" AnchorPane.topAnchor="17.0" />
+      <Label fx:id="labelName" layoutX="123.0" layoutY="14.0" prefHeight="23.0" prefWidth="217.0" text="-" AnchorPane.leftAnchor="123.0" AnchorPane.topAnchor="14.0">
          <font>
             <Font size="18.0" />
          </font>

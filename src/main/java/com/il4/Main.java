@@ -22,7 +22,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) {
         try {
             //Graphical part
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/il4/view/mainView.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("mainView.fxml"));
             Parent root = loader.load();
             view = loader.getController();
 

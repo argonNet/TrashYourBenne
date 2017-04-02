@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.materialicons.MaterialIconView?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane prefHeight="669.0" prefWidth="1018.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.il4.view.MainViewController">
+   <bottom>
+      <AnchorPane prefHeight="109.0" prefWidth="1018.0" style="-fx-background-color: darkgrey;" BorderPane.alignment="CENTER">
+         <children>
+            <Button layoutX="14.0" layoutY="18.0" mnemonicParsing="false" onAction="#buttonStartClick" prefHeight="74.0" prefWidth="75.0">
+               <graphic>
+                  <MaterialIconView glyphName="PLAY_ARROW" size="35" />
+               </graphic></Button>
+            <TextField fx:id="textFieldBucheronName" layoutX="826.0" layoutY="4.0" prefHeight="27.0" prefWidth="186.0" AnchorPane.rightAnchor="6.0" />
+            <Button fx:id="buttonAddBucheron" layoutX="670.0" layoutY="4.0" mnemonicParsing="false" onAction="#buttonAddBucheron" prefHeight="27.0" prefWidth="148.0" text="Add Bucheron" AnchorPane.rightAnchor="200.0" />
+            <TextField fx:id="textFieldOuvrierName" layoutX="828.0" layoutY="72.0" prefHeight="27.0" prefWidth="184.0" AnchorPane.rightAnchor="6.0" />
+            <Button layoutX="670.0" layoutY="72.0" mnemonicParsing="false" onAction="#buttonAddOuvrier" prefHeight="27.0" prefWidth="148.0" text="Add Ouvrier" AnchorPane.rightAnchor="200.0" />
+            <Button layoutX="572.0" layoutY="4.0" mnemonicParsing="false" onAction="#buttonAddBenneClick" prefHeight="27.0" prefWidth="87.0" text="Add Benne" AnchorPane.rightAnchor="359.0" AnchorPane.topAnchor="4.0" />
+            <TextField fx:id="textFieldTransporteurName" layoutX="826.0" layoutY="38.0" prefHeight="27.0" prefWidth="186.0" AnchorPane.rightAnchor="6.0" />
+            <Button layoutX="670.0" layoutY="38.0" mnemonicParsing="false" onAction="#buttonAddTransporteur" prefHeight="27.0" prefWidth="149.0" text="Add Transporteur" AnchorPane.rightAnchor="199.0" />
+         </children>
+      </AnchorPane>
+   </bottom>
+   <center>
+      <AnchorPane prefHeight="294.0" prefWidth="842.0" BorderPane.alignment="CENTER">
+         <children>
+            <ListView fx:id="ListBucheronWaitingBenne" layoutX="11.0" layoutY="386.0" prefHeight="150.0" prefWidth="110.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" />
+            <ListView fx:id="ListOuvrierWaitingBenne" layoutX="518.0" layoutY="14.0" prefHeight="150.0" prefWidth="110.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
+            <ListView fx:id="ListTransporteurWaitingBenneBucheron" layoutX="14.0" layoutY="14.0" prefHeight="150.0" prefWidth="110.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0" />
+            <ListView fx:id="ListTransporteurWaitingBenneOuvrier" layoutX="518.0" layoutY="496.0" prefHeight="150.0" prefWidth="110.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" />
+            <VBox fx:id="transporteursPane" layoutX="76.0" layoutY="89.0" prefHeight="391.0" prefWidth="493.0" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="130.0" AnchorPane.rightAnchor="130.0" AnchorPane.topAnchor="70.0" />
+         </children>
+      </AnchorPane>
+   </center>
+   <left>
+      <VBox fx:id="bucheronsPane" prefHeight="337.0" prefWidth="180.0" BorderPane.alignment="CENTER" />
+   </left>
+   <right>
+      <VBox fx:id="ouvriersPane" prefHeight="572.0" prefWidth="198.0" BorderPane.alignment="CENTER" />
+   </right>
+</BorderPane>

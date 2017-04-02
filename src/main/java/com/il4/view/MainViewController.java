@@ -17,16 +17,13 @@ import java.util.ResourceBundle;
  */
 public class MainViewController implements Initializable {
 
-    @FXML public Button buttonStart;
-
     @FXML public VBox bucheronsPane;
     @FXML public VBox transporteursPane;
 
     @FXML public VBox ouvriersPane;
 
-
-
     @FXML public TextField textFieldBucheronName;
+    @FXML public TextField textFieldTransporteurName;
     @FXML public TextField textFieldOuvrierName;
 
     @FXML public ProgressBar ProgressBarOuvrier;
@@ -36,11 +33,8 @@ public class MainViewController implements Initializable {
     @FXML public ListView<String> ListTransporteurWaitingBenneBucheron;
     @FXML public ListView<String> ListTransporteurWaitingBenneOuvrier;
     @FXML public ListView<String> ListBucheronWaitingBenne;
-    @FXML public ListView<String> ListOuvrierWaitingBenne;
 
-    @FXML public Label labelBucheron;
-    @FXML public Label labelOuvrier;
-    @FXML public Label labelTransporter;
+    @FXML public ListView<String> ListOuvrierWaitingBenne;
 
     public WaitingBenneViewController transporteurWaitingBenneBucheron;
     public WaitingBenneViewController transporteurWaitingBenneOuvrier;
@@ -66,7 +60,7 @@ public class MainViewController implements Initializable {
 
     private void addOuvrier(String name){
         OuvrierView newView = new OuvrierView();
-        newView.setName(textFieldOuvrierName.getText());
+        newView.setName(name);
         ouvriersPane.getChildren().add(newView);
 
         BackgroundApplication.getInstance().createOuvrier(name,newView);
@@ -90,7 +84,6 @@ public class MainViewController implements Initializable {
         BackgroundApplication.getInstance().createBenne("Benne 1");
         BackgroundApplication.getInstance().createBenne("Benne 2");
         BackgroundApplication.getInstance().createBenne("Benne 3");
-        BackgroundApplication.getInstance().createBenne("Benne 4");
 
 
         addBucheron("Florian");
@@ -108,10 +101,15 @@ public class MainViewController implements Initializable {
         addBucheron(textFieldBucheronName.getText());
     }
 
+    public void buttonAddTransporteur() { addTransporteur(textFieldTransporteurName.getText());}
+
     public void buttonAddOuvrier(){
         addOuvrier(textFieldBucheronName.getText());
     }
 
-
+    public void buttonAddBenneClick() {
+        BackgroundApplication.getInstance().createBenne(
+                "Benne " + (BackgroundApplication.getInstance().getBennesCount() + 1));
+    }
 
 }

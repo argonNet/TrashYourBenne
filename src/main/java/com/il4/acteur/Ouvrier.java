@@ -76,8 +76,8 @@ public class Ouvrier extends Acteur {
             }
 
             this.transporteurWaitingBenne.GiveBenne(this.getBenne());
-            this.setBenne(null);
             giveBenne(this.getBenne().name);
+            this.setBenne(null);
 
         }
     }
