@@ -4,20 +4,53 @@ import com.il4.WaitingBenne;
 import com.il4.view.MainViewController;
 import javafx.application.Platform;
 
+import java.util.ArrayList;
 
 /**
  * Created by Argon on 31.03.17.
  */
 public class Bucheron extends Acteur{
 
+    public ArrayList<IBucheronListener> listeners;
 
-
-    public  WaitingBenne waitingBenne;
-
+    public WaitingBenne waitingBenne;
     public WaitingBenne transporteurWaitingBenne;
+
+
+    private void addBoisToBenne(){
+
+        listeners.forEach( (listener) -> {
+            Platform.runLater(() -> {
+                listener.onAddBoisToBenne();
+            });
+        });
+    }
+
+
+    private void giveBenne(String benneName){
+
+        listeners.forEach( (listener) -> {
+            Platform.runLater(() -> {
+                listener.onGiveBenne(benneName);
+            });
+        });
+    }
+
+    private void takeBenne(String benneName){
+
+        listeners.forEach( (listener) -> {
+            Platform.runLater(() -> {
+                listener.onTakeBenne(benneName);
+            });
+        });
+    }
+
 
     public Bucheron(String name, MainViewController mainViewController, WaitingBenne transporteurWaitingBenne, WaitingBenne waitingBenne) {
         super(name,mainViewController);
+
+        listeners = new ArrayList<>();
+
         this.transporteurWaitingBenne = transporteurWaitingBenne;
         this.waitingBenne = waitingBenne;
     }
@@ -29,10 +62,7 @@ public class Bucheron extends Acteur{
 
             this.setBenne(this.waitingBenne.TakeBenne());
 
-            Platform.runLater(()-> {
-                view.BucheronReset();
-                view.BucheronSetCurrentBenne(this.getBenne().name);
-            });
+            takeBenne(this.getBenne().name);
             System.out.println(this.name + "-> Récupération de la benne :  " + this.getBenne().name);
 
 
@@ -46,16 +76,14 @@ public class Bucheron extends Acteur{
                 System.out.println(this.name + "-> Remplissage de la benne : " + this.getBenne().name + " - etat : " +
                         this.getBenne().remplissage + " / " + this.getBenne().MAX_REMPLISSAGE);
 
-                Platform.runLater(() -> view.BucheronAddBois());
+                addBoisToBenne();
             }
 
             this.transporteurWaitingBenne.GiveBenne(this.getBenne());
+            giveBenne(this.getBenne().name);
+
             incFilledBenCount();
             this.setBenne(null);
-            Platform.runLater(() -> {
-                view.BucheronReset();
-                view.BucheronResetCurrentBenne();
-            });
         }
     }
 

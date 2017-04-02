@@ -4,10 +4,53 @@ import com.il4.WaitingBenne;
 import com.il4.view.MainViewController;
 import javafx.application.Platform;
 
+import java.util.ArrayList;
+
 /**
  * Created by Argon on 31.03.17.
  */
 public class Transporteur extends Acteur{
+
+    public ArrayList<ITransporteurListener> listeners;
+
+
+    private void giveBenne(String benneName){
+
+        listeners.forEach( (listener) -> {
+            Platform.runLater(() -> {
+                listener.onGiveBenne(benneName);
+            });
+        });
+    }
+
+    private void goToOuvrier(){
+
+        listeners.forEach( (listener) -> {
+            Platform.runLater(() -> {
+                listener.onGoOuvrier();
+            });
+        });
+    }
+
+    private void goToBucherong(){
+
+        listeners.forEach( (listener) -> {
+            Platform.runLater(() -> {
+                listener.onGoBucheron();
+            });
+        });
+    }
+
+
+
+    private void takeBenne(String benneName){
+
+        listeners.forEach( (listener) -> {
+            Platform.runLater(() -> {
+                listener.onTakeBenne(benneName);
+            });
+        });
+    }
 
     public WaitingBenne waitingBenneFromBucheron;
     public WaitingBenne bucheronWaitingBenne;

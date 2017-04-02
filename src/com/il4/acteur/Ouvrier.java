@@ -4,18 +4,51 @@ import com.il4.WaitingBenne;
 import com.il4.view.MainViewController;
 import javafx.application.Platform;
 
+import java.util.ArrayList;
+
 /**
  * Created by Argon on 31.03.17.
  */
 public class Ouvrier extends Acteur {
 
-    public WaitingBenne waitingBenne;
+    public ArrayList<IOuvrierListener> listeners;
 
+    public WaitingBenne waitingBenne;
     public WaitingBenne transporteurWaitingBenne;
+
+    private void removeBoisToBenne(){
+
+        listeners.forEach( (listener) -> {
+            Platform.runLater(() -> {
+                listener.onRemoveBoisToBenne();
+            });
+        });
+    }
+
+
+    private void giveBenne(String benneName){
+
+        listeners.forEach( (listener) -> {
+            Platform.runLater(() -> {
+                listener.onGiveBenne(benneName);
+            });
+        });
+    }
+
+    private void takeBenne(String benneName){
+
+        listeners.forEach( (listener) -> {
+            Platform.runLater(() -> {
+                listener.onTakeBenne(benneName);
+            });
+        });
+    }
 
 
     public Ouvrier(String name, MainViewController mainViewController, WaitingBenne transporteurWaitingBenne, WaitingBenne waitingBenne){
         super(name,mainViewController);
+
+        this.listeners = new ArrayList<>();
 
         this.waitingBenne = waitingBenne;
         this.transporteurWaitingBenne = transporteurWaitingBenne;
@@ -26,12 +59,8 @@ public class Ouvrier extends Acteur {
 
         while(filledBenCount < BEN_TO_FILL) {
 
-
             this.setBenne(this.waitingBenne.TakeBenne());
-            Platform.runLater(() -> {
-                        view.OuvrierReset();
-                        view.OuvrierSetCurrentBenne(this.getBenne().name);
-                    });
+            takeBenne(this.getBenne().name);
             System.out.println(this.name + "-> Récupération de la benne :  " + this.getBenne().name);
 
 
@@ -44,12 +73,12 @@ public class Ouvrier extends Acteur {
                 }
                 System.out.println(this.name + "-> Vidage de la benne : " + this.getBenne().name + " - etat : " +
                         this.getBenne().remplissage + " / " + 0);
-                Platform.runLater(() -> view.OuvrierRemoveBois());
+                removeBoisToBenne();
             }
 
             this.transporteurWaitingBenne.GiveBenne(this.getBenne());
             this.setBenne(null);
-            Platform.runLater(() -> {view.OuvrierResetCurrentBenne();});
+            giveBenne(this.getBenne().name);
 
         }
     }

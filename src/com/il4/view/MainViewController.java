@@ -1,11 +1,12 @@
 package com.il4.view;
 
+import com.il4.BackgroundApplication;
+import com.il4.view.component.BucheronView;
+import com.il4.view.component.OuvrierView;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.ProgressBar;
-import javafx.scene.control.Slider;
+import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -15,6 +16,13 @@ import java.util.ResourceBundle;
  */
 public class MainViewController implements Initializable{
 
+    @FXML public Button buttonStart;
+
+    @FXML public VBox bucheronsPane;
+    @FXML public VBox ouvriersPane;
+
+    @FXML public TextField textFieldBucheronName;
+    @FXML public TextField textFieldOuvrierName;
 
     @FXML public ProgressBar ProgressBarOuvrier;
     @FXML public ProgressBar ProgressBarBucheron;
@@ -42,60 +50,30 @@ public class MainViewController implements Initializable{
         TransporteurWaitingBenneOuvrier = new WaitingBenneViewController(ListTransporteurWaitingBenneOuvrier);
         BucheronWaitingBenne = new WaitingBenneViewController(ListBucheronWaitingBenne);
         OuvrierWaitingBenne = new WaitingBenneViewController(ListOuvrierWaitingBenne);
-
-    }
-
-
-    public void BucheronSetCurrentBenne(String name){
-        labelBucheron.setText(name);
-    }
-
-    public void BucheronResetCurrentBenne(){
-        labelBucheron.setText("---");
-    }
-
-    public void BucheronAddBois(){
-        ProgressBarBucheron.progressProperty().setValue(ProgressBarBucheron.progressProperty().getValue() + 0.1);
-    }
-
-    public void BucheronReset(){
-        ProgressBarBucheron.progressProperty().setValue(0);
     }
 
 
 
-    public void TransporteurSetCurrentBenne(String name){
-        labelTransporter.setText(name);
+
+
+    public void buttonStartClick(){
+        BackgroundApplication.getInstance().Start(this);
     }
 
-    public void TransporteurResetCurrentBenne(){
-        labelTransporter.setText("---");
+    public void buttonAddBucheron(){
+        BucheronView newView = new BucheronView();
+        newView.setName(textFieldBucheronName.getText());
+        bucheronsPane.getChildren().add(newView);
+
+        BackgroundApplication.getInstance().createBucheron(textFieldBucheronName.getText(),this,newView);
     }
 
-    public void TransporteurProgressDirectionOuvrier(){
-        SliderTransporteur.increment();
-    }
+    public void buttonAddOuvrier(){
+        OuvrierView newView = new OuvrierView();
+        newView.setName(textFieldOuvrierName.getText());
+        ouvriersPane.getChildren().add(newView);
 
-    public void TransporteurProgressDirectionBucheron(){
-        SliderTransporteur.decrement();
-    }
-
-
-
-    public void OuvrierSetCurrentBenne(String name){
-        labelOuvrier.setText(name);
-    }
-
-    public void OuvrierResetCurrentBenne(){
-        labelOuvrier.setText("---");
-    }
-
-    public void OuvrierRemoveBois(){
-        ProgressBarOuvrier.progressProperty().setValue(ProgressBarOuvrier.progressProperty().getValue() - 0.1);
-    }
-
-    public void OuvrierReset(){
-        ProgressBarOuvrier.progressProperty().setValue(1);
+        BackgroundApplication.getInstance().createOuvrier(textFieldBucheronName.getText(),this,newView);
     }
 
 }
