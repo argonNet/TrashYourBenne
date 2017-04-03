@@ -1,5 +1,6 @@
 package com.il4;
 
+import com.il4.acteur.Acteur;
 import com.il4.acteur.Bucheron;
 import com.il4.acteur.Ouvrier;
 import com.il4.acteur.Transporteur;
@@ -23,8 +24,6 @@ public class BackgroundApplication {
     private WaitingBenne transporteurWaitingBenneFromBucheron;
     private WaitingBenne transporteurWaitingBenneFromOuvrier;
 
-
-
     private ArrayList<Benne> bennes = new ArrayList<>();
 
     private ArrayList<Transporteur> transporteurs = new ArrayList<>();
@@ -33,6 +32,9 @@ public class BackgroundApplication {
 
     private boolean isRunning = false;
 
+    public void setBenneToFillCount(int benneCount){
+        Acteur.setBenToFill(benneCount);
+    }
 
     public void createBucheron(String name, BucheronView view){
         Bucheron bucheron = new Bucheron(name,transporteurWaitingBenneFromBucheron,bucheronWaitingBenne);
@@ -96,9 +98,7 @@ public class BackgroundApplication {
         bucherons.forEach((bucheron -> bucheron.start()));
         transporteurs.forEach((transporteur -> transporteur.start()));
         ouvriers.forEach((ouvrier -> ouvrier.start()));
-
     }
-
 
 
 

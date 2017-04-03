@@ -57,7 +57,7 @@ public class Bucheron extends Acteur{
     @Override
     public void run(){
 
-        while(filledBenCount < BEN_TO_FILL) {
+        while(filledBenCount < benToFill) {
 
             this.setBenne(this.waitingBenne.TakeBenne());
 

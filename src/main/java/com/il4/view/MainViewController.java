@@ -6,7 +6,10 @@ import com.il4.view.component.OuvrierView;
 import com.il4.view.component.TransporteurView;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
+import javafx.scene.control.ListView;
+import javafx.scene.control.Spinner;
+import javafx.scene.control.SpinnerValueFactory;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 
 import java.net.URL;
@@ -26,9 +29,7 @@ public class MainViewController implements Initializable {
     @FXML public TextField textFieldTransporteurName;
     @FXML public TextField textFieldOuvrierName;
 
-    @FXML public ProgressBar ProgressBarOuvrier;
-    @FXML public ProgressBar ProgressBarBucheron;
-    @FXML public Slider SliderTransporteur;
+    @FXML public Spinner<Integer> spinnerTotalBenneToFill;
 
     @FXML public ListView<String> ListTransporteurWaitingBenneBucheron;
     @FXML public ListView<String> ListTransporteurWaitingBenneOuvrier;
@@ -69,6 +70,8 @@ public class MainViewController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+        spinnerTotalBenneToFill.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0,100));
+
         bucheronWaitingBenne = new WaitingBenneViewController(ListBucheronWaitingBenne);
         ouvrierWaitingBenne = new WaitingBenneViewController(ListOuvrierWaitingBenne);
 
@@ -94,6 +97,7 @@ public class MainViewController implements Initializable {
 
 
     public void buttonStartClick(){
+        BackgroundApplication.getInstance().setBenneToFillCount(spinnerTotalBenneToFill.getValue());
         BackgroundApplication.getInstance().Start();
     }
 

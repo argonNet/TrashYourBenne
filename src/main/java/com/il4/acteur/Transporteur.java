@@ -74,7 +74,7 @@ public class Transporteur extends Acteur{
     @Override
     public void run(){
 
-        while(filledBenCount < BEN_TO_FILL) {
+        while(filledBenCount < benToFill) {
 
 
             this.setBenne(this.waitingBenneFromBucheron.TakeBenne());

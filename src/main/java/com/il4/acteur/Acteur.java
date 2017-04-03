@@ -6,13 +6,12 @@ import com.il4.Benne;
  * Created by Argon on 31.03.17.
  */
 public class Acteur extends Thread{
-
-
+    
     protected String name;
 
     private Benne benne;
 
-    protected static final int BEN_TO_FILL = 100;
+    protected static int benToFill = 100;
     protected static int filledBenCount = 0;
 
     protected synchronized void incFilledBenCount(){
@@ -29,6 +28,10 @@ public class Acteur extends Thread{
 
     public Acteur(String name){
         this.name = name;
+    }
+
+    public static void setBenToFill(int value){
+        benToFill = value;
     }
 
 }
