@@ -101,17 +101,17 @@ public class MainViewController implements Initializable {
         BackgroundApplication.getInstance().Start();
     }
 
-    public void buttonAddBucheron(){
+    @FXML  public void buttonAddBucheron(){
         addBucheron(textFieldBucheronName.getText());
     }
 
-    public void buttonAddTransporteur() { addTransporteur(textFieldTransporteurName.getText());}
+    @FXML  public void buttonAddTransporteur() { addTransporteur(textFieldTransporteurName.getText());}
 
-    public void buttonAddOuvrier(){
+    @FXML  public void buttonAddOuvrier(){
         addOuvrier(textFieldBucheronName.getText());
     }
 
-    public void buttonAddBenneClick() {
+    @FXML  public void buttonAddBenneClick() {
         BackgroundApplication.getInstance().createBenne(
                 "Benne " + (BackgroundApplication.getInstance().getBennesCount() + 1));
     }
