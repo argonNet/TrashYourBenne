@@ -12,5 +12,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: de.jensd:fontawesomefx-commons:8.15" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: de.jensd:fontawesomefx-materialicons:2.2.0-5" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: de.jensd:fontawesomefx-commons:8.15" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: de.jensd:fontawesomefx-materialicons:2.2.0-5" level="project" />
   </component>
 </module>

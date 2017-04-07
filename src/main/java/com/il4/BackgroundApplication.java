@@ -101,7 +101,6 @@ public class BackgroundApplication {
     }
 
 
-
     private BackgroundApplication(){
     }
 
