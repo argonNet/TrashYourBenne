@@ -1,6 +1,7 @@
 package com.il4.view;
 
 import com.il4.BackgroundApplication;
+import com.il4.acteur.Bucheron;
 import com.il4.view.component.BucheronView;
 import com.il4.view.component.OuvrierView;
 import com.il4.view.component.TransporteurView;
@@ -115,5 +116,7 @@ public class MainViewController implements Initializable {
         BackgroundApplication.getInstance().createBenne(
                 "Benne " + (BackgroundApplication.getInstance().getBennesCount() + 1));
     }
+
+
 
 }

@@ -52,6 +52,7 @@ public class Bucheron extends Acteur{
 
         this.transporteurWaitingBenne = transporteurWaitingBenne;
         this.waitingBenne = waitingBenne;
+        this.speed = 500;
     }
 
     @Override
@@ -68,7 +69,7 @@ public class Bucheron extends Acteur{
             while (this.getBenne().remplissage < this.getBenne().MAX_REMPLISSAGE) {
                 this.getBenne().remplissage++;
                 try {
-                    sleep(500);
+                    sleep(speed);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

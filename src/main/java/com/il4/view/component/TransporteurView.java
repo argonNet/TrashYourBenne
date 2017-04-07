@@ -1,6 +1,8 @@
 package com.il4.view.component;
 
+import com.il4.BackgroundApplication;
 import com.il4.acteur.ITransporteurListener;
+import com.il4.acteur.Transporteur;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
@@ -17,6 +19,7 @@ public class TransporteurView extends AnchorPane implements ITransporteurListene
     @FXML private Slider slider;
     @FXML public Label labelName;
     @FXML public Label labelBenne;
+    private int idTransporteur;
 
     public TransporteurView(){
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("transporteurView.fxml"));
@@ -29,7 +32,10 @@ public class TransporteurView extends AnchorPane implements ITransporteurListene
             throw new RuntimeException(exception);
         }
     }
-
+    public void setIdTransporteur (int index)
+    {
+        this.idTransporteur = index;
+    }
 
     public  void setName(String name){
         labelName.setText(name);
@@ -70,5 +76,16 @@ public class TransporteurView extends AnchorPane implements ITransporteurListene
     @Override
     public void onGiveBenne(String benneName) {
         resetCurrentBenne();
+    }
+    @FXML  public void buttonWorkFasterClick (){
+        Transporteur transporteur = BackgroundApplication.getInstance().getTransporteur(idTransporteur);
+        if (transporteur.getSpeed() < 0) transporteur.setSpeed(0);
+        transporteur.setSpeed(transporteur.getSpeed() - 50);
+    }
+
+    @FXML  public void buttonWorkLessClick (){
+        Transporteur transporteur = BackgroundApplication.getInstance().getTransporteur(idTransporteur);
+        if (transporteur.getSpeed() < 0) transporteur.setSpeed(0);
+        transporteur.setSpeed(transporteur.getSpeed() + 50);
     }
 }

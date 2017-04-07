@@ -48,7 +48,7 @@ public class Ouvrier extends Acteur {
         super(name);
 
         this.listeners = new ArrayList<>();
-
+this.speed = 700;
         this.waitingBenne = waitingBenne;
         this.transporteurWaitingBenne = transporteurWaitingBenne;
     }
@@ -66,7 +66,7 @@ public class Ouvrier extends Acteur {
             while (this.getBenne().remplissage > 0) {
                 this.getBenne().remplissage--;
                 try {
-                    sleep(700);
+                    sleep(speed);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

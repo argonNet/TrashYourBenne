@@ -9,6 +9,16 @@ public class Acteur extends Thread{
     
     protected String name;
 
+    public String getNameActeur(){
+        return this.name;
+    }
+
+    protected int speed;
+    public int getSpeed(){
+        return this.speed;
+    }
+    public  void setSpeed(int value){this.speed = value;}
+
     private Benne benne;
 
     protected static int benToFill = 100;

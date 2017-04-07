@@ -64,7 +64,7 @@ public class Transporteur extends Acteur{
         super(name);
 
         this.listeners = new ArrayList<>();
-
+this.speed = 100;
         this.waitingBenneFromBucheron = waitingBenneFromBucheron;
         this.bucheronWaitingBenne = bucheronWaitingBenne;
         this.waitingBenneFromOuvrier = waitingBenneFromOuvrier;
@@ -85,7 +85,7 @@ public class Transporteur extends Acteur{
 
             for(int i = 0; i <= TRAJET_DISTANCE; i++){
                 try {
-                    sleep(10);
+                    sleep(speed);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
