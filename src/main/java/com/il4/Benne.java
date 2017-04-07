@@ -9,7 +9,26 @@ public class Benne {
 
     public String name;
 
-    public int remplissage;
+    private boolean someoneFillingTheBenne;
+    private int remplissage;
+
+
+    public synchronized int getRemplissage(){
+        return  remplissage;
+    }
+
+    public synchronized void fillBenne(int value){
+        this.remplissage += value;
+        someoneFillingTheBenne = false;
+    }
+
+    public synchronized boolean isSomeoneFillingTheBenne(){
+        boolean tmpFlag = someoneFillingTheBenne;
+        if(!someoneFillingTheBenne){
+            someoneFillingTheBenne = false;
+        }
+        return tmpFlag;
+    }
 
     public Benne(String name){
         this.name = name;

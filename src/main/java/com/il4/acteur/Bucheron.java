@@ -1,5 +1,6 @@
 package com.il4.acteur;
 
+import com.il4.Benne;
 import com.il4.WaitingBenne;
 import javafx.application.Platform;
 
@@ -9,6 +10,8 @@ import java.util.ArrayList;
  * Created by Argon on 31.03.17.
  */
 public class Bucheron extends Acteur{
+
+    protected static ArrayList<Benne> currentFillingBennes = new ArrayList<>();
 
     public ArrayList<IBucheronListener> listeners;
 
@@ -24,7 +27,6 @@ public class Bucheron extends Acteur{
             });
         });
     }
-
 
     private void giveBenne(String benneName){
 
@@ -44,6 +46,19 @@ public class Bucheron extends Acteur{
         });
     }
 
+    private synchronized Benne getABenneFilling(){
+        if(currentFillingBennes.size() > 0){
+
+
+        } else {
+
+        }
+        return ;
+    }
+
+    private Benne getABenne(){
+
+    }
 
     public Bucheron(String name, WaitingBenne transporteurWaitingBenne, WaitingBenne waitingBenne) {
         super(name);
@@ -59,13 +74,25 @@ public class Bucheron extends Acteur{
 
         while(filledBenCount < benToFill) {
 
+            //Contrôle si une benne est en cours de remplissage
+            if(this.isABenneFilling()){
+
+
+
+            }else{
+
+
+
+            }
+
+
             this.setBenne(this.waitingBenne.TakeBenne());
 
             takeBenne(this.getBenne().name);
             System.out.println(this.name + "-> Récupération de la benne :  " + this.getBenne().name);
 
 
-            while (this.getBenne().remplissage < this.getBenne().MAX_REMPLISSAGE) {
+            while (this.getBenne().getRemplissage() < this.getBenne().MAX_REMPLISSAGE) {
                 this.getBenne().remplissage++;
                 try {
                     sleep(500);

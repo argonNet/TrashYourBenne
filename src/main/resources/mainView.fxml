@@ -36,6 +36,8 @@
             <ListView fx:id="ListTransporteurWaitingBenneBucheron" layoutX="14.0" layoutY="14.0" prefHeight="150.0" prefWidth="110.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0" />
             <ListView fx:id="ListTransporteurWaitingBenneOuvrier" layoutX="518.0" layoutY="496.0" prefHeight="150.0" prefWidth="110.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" />
             <VBox fx:id="transporteursPane" layoutX="76.0" layoutY="89.0" prefHeight="391.0" prefWidth="493.0" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="130.0" AnchorPane.rightAnchor="130.0" AnchorPane.topAnchor="70.0" />
+            <VBox fx:id="fillingBennePane" layoutX="10.0" layoutY="180.0" prefHeight="200.0" prefWidth="113.0" />
+            <VBox fx:id="emptyingBennePane" layoutX="525.0" layoutY="180.0" prefHeight="200.0" prefWidth="100.0" />
          </children>
       </AnchorPane>
    </center>

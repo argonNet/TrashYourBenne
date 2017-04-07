@@ -21,8 +21,9 @@ import java.util.ResourceBundle;
 public class MainViewController implements Initializable {
 
     @FXML public VBox bucheronsPane;
+    @FXML public VBox fillingBennePane;
     @FXML public VBox transporteursPane;
-
+    @FXML public VBox emptyingBennePane;
     @FXML public VBox ouvriersPane;
 
     @FXML public TextField textFieldBucheronName;
