@@ -79,12 +79,12 @@ public class BucheronView extends AnchorPane implements IBucheronListener{
     @FXML  public void buttonWorkFasterClick (){
         Bucheron bucheron = BackgroundApplication.getInstance().getBucheron(idBucheron);
         if (bucheron.getSpeed() < 0) bucheron.setSpeed(0);
-        bucheron.setSpeed(bucheron.getSpeed() - 100);
+        else bucheron.setSpeed(bucheron.getSpeed() - 100);
     }
 
     @FXML  public void buttonWorkLessClick (){
         Bucheron bucheron = BackgroundApplication.getInstance().getBucheron(idBucheron);
         if (bucheron.getSpeed() < 0) bucheron.setSpeed(0);
-        bucheron.setSpeed(bucheron.getSpeed() + 100);
+        else bucheron.setSpeed(bucheron.getSpeed() + 100);
     }
 }

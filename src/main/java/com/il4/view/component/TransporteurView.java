@@ -80,12 +80,12 @@ public class TransporteurView extends AnchorPane implements ITransporteurListene
     @FXML  public void buttonWorkFasterClick (){
         Transporteur transporteur = BackgroundApplication.getInstance().getTransporteur(idTransporteur);
         if (transporteur.getSpeed() < 0) transporteur.setSpeed(0);
-        transporteur.setSpeed(transporteur.getSpeed() - 50);
+        else transporteur.setSpeed(transporteur.getSpeed() - 50);
     }
 
     @FXML  public void buttonWorkLessClick (){
         Transporteur transporteur = BackgroundApplication.getInstance().getTransporteur(idTransporteur);
         if (transporteur.getSpeed() < 0) transporteur.setSpeed(0);
-        transporteur.setSpeed(transporteur.getSpeed() + 50);
+        else transporteur.setSpeed(transporteur.getSpeed() + 50);
     }
 }
