@@ -11,11 +11,11 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="669.0" prefWidth="1018.0" xmlns="http://javafx.com/javafx/8.0.131" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.il4.view.MainViewController">
+<BorderPane prefHeight="669.0" prefWidth="1018.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.il4.view.MainViewController">
    <bottom>
       <AnchorPane prefHeight="109.0" prefWidth="1018.0" style="-fx-background-color: darkgrey;" BorderPane.alignment="CENTER">
          <children>
-            <Button layoutX="14.0" layoutY="18.0" mnemonicParsing="false" onAction="#buttonStartClick" prefHeight="74.0" prefWidth="75.0">
+            <Button layoutX="14.0" layoutY="18.0" mnemonicParsing="false" onAction="#buttonStartClick" prefHeight="74.0" prefWidth="75.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="18.0">
                <graphic>
                   <MaterialIconView glyphName="PLAY_ARROW" size="35" />
                </graphic></Button>
@@ -26,11 +26,11 @@
             <Button layoutX="572.0" layoutY="4.0" mnemonicParsing="false" onAction="#buttonAddBenneClick" prefHeight="27.0" prefWidth="87.0" text="Add Benne" AnchorPane.rightAnchor="359.0" AnchorPane.topAnchor="4.0" />
             <TextField fx:id="textFieldTransporteurName" layoutX="826.0" layoutY="38.0" prefHeight="27.0" prefWidth="186.0" AnchorPane.rightAnchor="6.0" />
             <Button layoutX="670.0" layoutY="38.0" mnemonicParsing="false" onAction="#buttonAddTransporteur" prefHeight="27.0" prefWidth="149.0" text="Add Transporteur" AnchorPane.rightAnchor="199.0" />
-            <Spinner fx:id="spinnerTotalBenneToFill" layoutX="259.0" layoutY="18.0" prefHeight="27.0" prefWidth="102.0">
+            <Spinner fx:id="spinnerTotalBenneToFill" layoutX="277.0" layoutY="18.0" prefHeight="27.0" prefWidth="102.0" AnchorPane.leftAnchor="277.0" AnchorPane.topAnchor="18.0">
                <tooltip>
                   <Tooltip text="Permet de définir le nombre de benne total à remplir, afin de déterminer à quel moment le traitement s'arrêtera." />
                </tooltip></Spinner>
-            <Label layoutX="96.0" layoutY="23.0" text="Nombre de benne à remplir :" />
+            <Label layoutX="94.0" layoutY="23.0" text="Nombre de benne à remplir :" AnchorPane.leftAnchor="94.0" AnchorPane.topAnchor="23.0" />
          </children>
       </AnchorPane>
    </bottom>

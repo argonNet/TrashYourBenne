@@ -2,6 +2,10 @@ package com.il4.acteur;
 
 import com.il4.Benne;
 
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
 /**
  * Created by Argon on 31.03.17.
  */
@@ -24,15 +28,22 @@ public class Acteur extends Thread{
     protected static int benToFill = 100;
     protected static int filledBenCount = 0;
 
+    protected static Lock mylock = new ReentrantLock();
+
     protected synchronized void incFilledBenCount(){
-        filledBenCount++;
+        mylock.lock();
+        try{
+            filledBenCount++;
+        }finally {
+            mylock.unlock();
+        }
     }
 
     public Benne getBenne(){
         return this.benne;
     }
 
-    public synchronized void setBenne(Benne value){
+    public void setBenne(Benne value){
         this.benne = value;
     }
 
@@ -43,5 +54,4 @@ public class Acteur extends Thread{
     public static void setBenToFill(int value){
         benToFill = value;
     }
-
 }
