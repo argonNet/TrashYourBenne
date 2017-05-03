@@ -15,7 +15,7 @@
    <bottom>
       <AnchorPane prefHeight="109.0" prefWidth="1018.0" style="-fx-background-color: darkgrey;" BorderPane.alignment="CENTER">
          <children>
-            <Button layoutX="14.0" layoutY="18.0" mnemonicParsing="false" onAction="#buttonStartClick" prefHeight="74.0" prefWidth="75.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="18.0">
+            <Button fx:id="buttonStart" layoutX="14.0" layoutY="18.0" mnemonicParsing="false" onAction="#buttonStartClick" prefHeight="74.0" prefWidth="75.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="18.0">
                <graphic>
                   <MaterialIconView glyphName="PLAY_ARROW" size="35" />
                </graphic></Button>
