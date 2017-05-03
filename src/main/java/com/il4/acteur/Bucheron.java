@@ -59,6 +59,7 @@ public class Bucheron extends Acteur{
     public void run(){
 
         while(filledBenCount < benToFill) {
+            incFilledBenCount();
 
             this.setBenne(this.waitingBenne.TakeBenne());
 
@@ -82,9 +83,10 @@ public class Bucheron extends Acteur{
             this.transporteurWaitingBenne.GiveBenne(this.getBenne());
             giveBenne(this.getBenne().name);
 
-            incFilledBenCount();
             this.setBenne(null);
         }
+
+        System.out.println("Fin du travail pour " + this.name );
     }
 
 }

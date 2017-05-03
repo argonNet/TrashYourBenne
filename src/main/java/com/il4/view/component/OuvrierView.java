@@ -72,14 +72,14 @@ public class OuvrierView extends AnchorPane implements IOuvrierListener {
 
     @Override
     public void onGiveBenne(String benneName) {
-        resetBois();
+        //resetBois();
         resetCurrentBenne();
     }
+
     @FXML  public void buttonWorkFasterClick (){
         Ouvrier ouvrier = BackgroundApplication.getInstance().getOuvrier(idOuvrier);
         if (ouvrier.getSpeed() < 0) ouvrier.setSpeed(0);
         else ouvrier.setSpeed(ouvrier.getSpeed() - 100);
-
     }
 
     @FXML  public void buttonWorkLessClick (){

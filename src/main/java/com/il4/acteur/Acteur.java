@@ -30,7 +30,7 @@ public class Acteur extends Thread{
 
     protected static Lock mylock = new ReentrantLock();
 
-    protected synchronized void incFilledBenCount(){
+    protected void incFilledBenCount(){
         mylock.lock();
         try{
             filledBenCount++;

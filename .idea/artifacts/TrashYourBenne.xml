@@ -7,9 +7,10 @@
         <option name="description" value="" />
         <option name="height" value="800" />
         <option name="htmlPlaceholderId" value="" />
+        <option name="nativeBundle" value="all" />
         <option name="title" value="Trash Your Benne" />
-        <option name="vendor" value="Joëlle Perritaz &amp; Sébastien Schoepfer" />
-        <option name="version" value="" />
+        <option name="vendor" value="Joëlle Perritaz - Sébastien Schoepfer" />
+        <option name="version" value="1.0" />
         <option name="width" value="1400" />
       </options>
     </properties>

@@ -4,6 +4,8 @@ import com.il4.WaitingBenne;
 import javafx.application.Platform;
 
 import java.util.ArrayList;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * Created by Argon on 31.03.17.
@@ -14,6 +16,24 @@ public class Ouvrier extends Acteur {
 
     public WaitingBenne waitingBenne;
     public WaitingBenne transporteurWaitingBenne;
+
+    private static int filledBenCountOuvrier = 0;
+
+    private static Lock mylockOuvrier = new ReentrantLock();
+
+    private boolean checkIfBenneToTakeAndIncFilledBenCountOuvrier() {
+        mylockOuvrier.lock();
+        try {
+            if(filledBenCountOuvrier < filledBenCount){
+                filledBenCountOuvrier++;
+                return true;
+            }else {
+                return false;
+            }
+        } finally {
+            mylockOuvrier.unlock();
+        }
+    }
 
     private void removeBoisToBenne(){
 
@@ -48,7 +68,7 @@ public class Ouvrier extends Acteur {
         super(name);
 
         this.listeners = new ArrayList<>();
-this.speed = 700;
+        this.speed = 700;
         this.waitingBenne = waitingBenne;
         this.transporteurWaitingBenne = transporteurWaitingBenne;
     }
@@ -56,7 +76,7 @@ this.speed = 700;
     @Override
     public void run(){
 
-        while(filledBenCount < benToFill) {
+        while(checkIfBenneToTakeAndIncFilledBenCountOuvrier()) {
 
             this.setBenne(this.waitingBenne.TakeBenne());
             takeBenne(this.getBenne().name);
@@ -80,6 +100,7 @@ this.speed = 700;
             this.setBenne(null);
 
         }
+        System.out.println("Fin du travail pour " + this.name);
     }
 }
 

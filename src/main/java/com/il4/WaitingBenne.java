@@ -39,7 +39,7 @@ public class WaitingBenne {
     }
 
 
-    private boolean IsABenneWaiting(){
+    public boolean IsABenneWaiting(){
         return this.waitingBenne != null && !this.waitingBenne.isEmpty();
     }
 

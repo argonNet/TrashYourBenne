@@ -109,7 +109,7 @@ public class MainViewController implements Initializable {
     @FXML  public void buttonAddTransporteur() { addTransporteur(textFieldTransporteurName.getText());}
 
     @FXML  public void buttonAddOuvrier(){
-        addOuvrier(textFieldBucheronName.getText());
+        addOuvrier(textFieldOuvrierName.getText());
     }
 
     @FXML  public void buttonAddBenneClick() {
