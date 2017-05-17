@@ -4,6 +4,8 @@ import com.il4.WaitingBenne;
 import javafx.application.Platform;
 
 import java.util.ArrayList;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * Created by Argon on 31.03.17.
@@ -11,6 +13,24 @@ import java.util.ArrayList;
 public class Transporteur extends Acteur{
 
     public ArrayList<ITransporteurListener> listeners;
+
+    private static int filledBenCountTransporteur = 0;
+
+    private static Lock mylockTransporteur = new ReentrantLock();
+
+    private boolean checkIfBenneToTakeAndIncFilledBenCountTransporteur() {
+        mylockTransporteur.lock();
+        try {
+            if(filledBenCountTransporteur < filledBenCount){
+                filledBenCountTransporteur++;
+                return true;
+            }else {
+                return false;
+            }
+        } finally {
+            mylockTransporteur.unlock();
+        }
+    }
 
     private void takeBenne(String benneName){
 
@@ -64,7 +84,7 @@ public class Transporteur extends Acteur{
         super(name);
 
         this.listeners = new ArrayList<>();
-
+        this.speed = 100;
         this.waitingBenneFromBucheron = waitingBenneFromBucheron;
         this.bucheronWaitingBenne = bucheronWaitingBenne;
         this.waitingBenneFromOuvrier = waitingBenneFromOuvrier;
@@ -74,8 +94,7 @@ public class Transporteur extends Acteur{
     @Override
     public void run(){
 
-        while(filledBenCount < benToFill) {
-
+        while(checkIfBenneToTakeAndIncFilledBenCountTransporteur()) {
 
             this.setBenne(this.waitingBenneFromBucheron.TakeBenne());
 
@@ -85,7 +104,7 @@ public class Transporteur extends Acteur{
 
             for(int i = 0; i <= TRAJET_DISTANCE; i++){
                 try {
-                    sleep(10);
+                    sleep(speed);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -125,6 +144,7 @@ public class Transporteur extends Acteur{
             this.setBenne(null);
 
         }
+        System.out.println("Fin du travail pour " + this.name);
     }
 
 }

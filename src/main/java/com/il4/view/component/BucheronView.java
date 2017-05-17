@@ -1,5 +1,7 @@
 package com.il4.view.component;
 
+import com.il4.BackgroundApplication;
+import com.il4.acteur.Bucheron;
 import com.il4.acteur.IBucheronListener;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,6 +19,7 @@ public class BucheronView extends AnchorPane implements IBucheronListener{
     @FXML public ProgressBar progressBar;
     @FXML public Label labelName;
     @FXML public Label labelBenne;
+    private int idBucheron;
 
     public BucheronView(){
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("bucheronView.fxml"));
@@ -30,6 +33,10 @@ public class BucheronView extends AnchorPane implements IBucheronListener{
         }
     }
 
+    public void setIdBucheron (int index)
+    {
+        this.idBucheron = index;
+    }
     public void setName(String name){
         System.out.printf(name);
         labelName.setText(name);
@@ -67,5 +74,17 @@ public class BucheronView extends AnchorPane implements IBucheronListener{
     public void onGiveBenne(String benneName) {
         resetBois();
         resetCurrentBenne();
+    }
+
+    @FXML  public void buttonWorkFasterClick (){
+        Bucheron bucheron = BackgroundApplication.getInstance().getBucheron(idBucheron);
+        if (bucheron.getSpeed() < 0) bucheron.setSpeed(0);
+        else bucheron.setSpeed(bucheron.getSpeed() - 100);
+    }
+
+    @FXML  public void buttonWorkLessClick (){
+        Bucheron bucheron = BackgroundApplication.getInstance().getBucheron(idBucheron);
+        if (bucheron.getSpeed() < 0) bucheron.setSpeed(0);
+        else bucheron.setSpeed(bucheron.getSpeed() + 100);
     }
 }

@@ -1,15 +1,13 @@
 package com.il4.view;
 
 import com.il4.BackgroundApplication;
+import com.il4.acteur.Bucheron;
 import com.il4.view.component.BucheronView;
 import com.il4.view.component.OuvrierView;
 import com.il4.view.component.TransporteurView;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ListView;
-import javafx.scene.control.Spinner;
-import javafx.scene.control.SpinnerValueFactory;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 
 import java.net.URL;
@@ -31,6 +29,8 @@ public class MainViewController implements Initializable {
     @FXML public TextField textFieldOuvrierName;
 
     @FXML public Spinner<Integer> spinnerTotalBenneToFill;
+
+    @FXML public Button buttonStart;
 
     @FXML public ListView<String> ListTransporteurWaitingBenneBucheron;
     @FXML public ListView<String> ListTransporteurWaitingBenneOuvrier;
@@ -94,12 +94,15 @@ public class MainViewController implements Initializable {
         addTransporteur("Robert");
         addOuvrier("Manuel");
 
+        spinnerTotalBenneToFill.getValueFactory().valueProperty().setValue(20);
+
     }
 
 
     public void buttonStartClick(){
         BackgroundApplication.getInstance().setBenneToFillCount(spinnerTotalBenneToFill.getValue());
         BackgroundApplication.getInstance().Start();
+        buttonStart.setDisable(true);
     }
 
     @FXML  public void buttonAddBucheron(){
@@ -109,12 +112,14 @@ public class MainViewController implements Initializable {
     @FXML  public void buttonAddTransporteur() { addTransporteur(textFieldTransporteurName.getText());}
 
     @FXML  public void buttonAddOuvrier(){
-        addOuvrier(textFieldBucheronName.getText());
+        addOuvrier(textFieldOuvrierName.getText());
     }
 
     @FXML  public void buttonAddBenneClick() {
         BackgroundApplication.getInstance().createBenne(
                 "Benne " + (BackgroundApplication.getInstance().getBennesCount() + 1));
     }
+
+
 
 }

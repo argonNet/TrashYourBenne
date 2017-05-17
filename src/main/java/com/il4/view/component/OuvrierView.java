@@ -1,6 +1,8 @@
 package com.il4.view.component;
 
+import com.il4.BackgroundApplication;
 import com.il4.acteur.IOuvrierListener;
+import com.il4.acteur.Ouvrier;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
@@ -17,6 +19,7 @@ public class OuvrierView extends AnchorPane implements IOuvrierListener {
     @FXML public ProgressBar progressBar;
     @FXML public Label labelName;
     @FXML public Label labelBenne;
+    private int idOuvrier;
 
     public OuvrierView(){
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("ouvrierView.fxml"));
@@ -28,6 +31,11 @@ public class OuvrierView extends AnchorPane implements IOuvrierListener {
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
+    }
+
+    public void setIdOuvrier (int index)
+    {
+        this.idOuvrier = index;
     }
 
     public void setName(String name){
@@ -64,8 +72,19 @@ public class OuvrierView extends AnchorPane implements IOuvrierListener {
 
     @Override
     public void onGiveBenne(String benneName) {
-        resetBois();
+        //resetBois();
         resetCurrentBenne();
     }
 
+    @FXML  public void buttonWorkFasterClick (){
+        Ouvrier ouvrier = BackgroundApplication.getInstance().getOuvrier(idOuvrier);
+        if (ouvrier.getSpeed() < 0) ouvrier.setSpeed(0);
+        else ouvrier.setSpeed(ouvrier.getSpeed() - 100);
+    }
+
+    @FXML  public void buttonWorkLessClick (){
+        Ouvrier ouvrier = BackgroundApplication.getInstance().getOuvrier(idOuvrier);
+        if (ouvrier.getSpeed() < 0) ouvrier.setSpeed(0);
+        else ouvrier.setSpeed(ouvrier.getSpeed() + 100);
+    }
 }

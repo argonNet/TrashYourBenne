@@ -67,12 +67,14 @@ public class Bucheron extends Acteur{
 
         this.transporteurWaitingBenne = transporteurWaitingBenne;
         this.waitingBenne = waitingBenne;
+        this.speed = 500;
     }
 
     @Override
     public void run(){
 
         while(filledBenCount < benToFill) {
+            incFilledBenCount();
 
             //Contrôle si une benne est en cours de remplissage
             if(this.isABenneFilling()){
@@ -95,7 +97,7 @@ public class Bucheron extends Acteur{
             while (this.getBenne().getRemplissage() < this.getBenne().MAX_REMPLISSAGE) {
                 this.getBenne().remplissage++;
                 try {
-                    sleep(500);
+                    sleep(speed);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -108,9 +110,10 @@ public class Bucheron extends Acteur{
             this.transporteurWaitingBenne.GiveBenne(this.getBenne());
             giveBenne(this.getBenne().name);
 
-            incFilledBenCount();
             this.setBenne(null);
         }
+
+        System.out.println("Fin du travail pour " + this.name );
     }
 
 }

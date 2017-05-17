@@ -11,6 +11,7 @@ import com.il4.view.component.OuvrierView;
 import com.il4.view.component.TransporteurView;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Created by Argon on 02.04.17.
@@ -40,6 +41,7 @@ public class BackgroundApplication {
         Bucheron bucheron = new Bucheron(name,transporteurWaitingBenneFromBucheron,bucheronWaitingBenne);
         bucheron.listeners.add(view);
         bucherons.add(bucheron);
+        view.setIdBucheron(bucherons.indexOf(bucheron));
         if(isRunning) bucheron.start();
     }
 
@@ -47,6 +49,7 @@ public class BackgroundApplication {
         Ouvrier ouvrier = new Ouvrier(name,transporteurWaitingBenneFromOuvrier,ouvrierWaitingBenne);
         ouvrier.listeners.add(view);
         ouvriers.add(ouvrier);
+        view.setIdOuvrier(ouvriers.indexOf(ouvrier));
         if(isRunning) ouvrier.start();
     }
 
@@ -57,6 +60,7 @@ public class BackgroundApplication {
                                                      transporteurWaitingBenneFromOuvrier,ouvrierWaitingBenne);
         transporteur.listeners.add(view);
         transporteurs.add(transporteur);
+        view.setIdTransporteur(transporteurs.indexOf(transporteur));
         if(isRunning) transporteur.start();
     }
 
@@ -84,6 +88,21 @@ public class BackgroundApplication {
         Benne benne = new Benne(name);
         bennes.add(benne);
         bucheronWaitingBenne.GiveBenne(benne);
+    }
+    
+    public Bucheron getBucheron(int index)
+    {
+        return bucherons.get(index);
+    }
+
+    public Ouvrier getOuvrier(int index)
+    {
+        return ouvriers.get(index);
+    }
+
+    public Transporteur getTransporteur(int index)
+    {
+        return transporteurs.get(index);
     }
 
     public int getBennesCount(){

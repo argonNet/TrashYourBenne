@@ -26,7 +26,7 @@ public class Main extends Application {
             Parent root = loader.load();
             view = loader.getController();
 
-            primaryStage.setTitle("WOOD SIMULATOR");
+            primaryStage.setTitle("TrashYourBenne");
             primaryStage.setScene(new Scene(root));
             primaryStage.show();
 
