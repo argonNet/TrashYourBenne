@@ -46,7 +46,7 @@ public class Bucheron extends Acteur{
         });
     }
 
-    private synchronized Benne getABenneFilling(){
+    private Benne getABenneFilling(){
         if(currentFillingBennes.size() > 0){
 
 
@@ -71,21 +71,23 @@ public class Bucheron extends Acteur{
     }
 
     @Override
-    public void run(){
+    public void run() throws InterruptedException{
+
 
         while(filledBenCount < benToFill) {
             incFilledBenCount();
 
-            //Contrôle si une benne est en cours de remplissage
-            if(this.isABenneFilling()){
+            //TEST si a des bennes disponibles sinon en prendre une
 
 
-
-            }else{
-
-
-
+            for (Benne currentBenne : currentFillingBennes) {
+                if(currentBenne.startFillBenneIfFree(1)){
+                    sleep(speed);
+                    currentBenne.stopFilleBenne();
+                    break;
+                }
             }
+
 
 
             this.setBenne(this.waitingBenne.TakeBenne());
