@@ -93,6 +93,8 @@ public class MainViewController implements Initializable {
         addTransporteur("Robert");
         addOuvrier("Manuel");
 
+        spinnerTotalBenneToFill.getValueFactory().valueProperty().setValue(20);
+
     }
 
 
