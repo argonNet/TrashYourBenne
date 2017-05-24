@@ -76,7 +76,7 @@ public class Ouvrier extends Acteur {
     @Override
     public void run(){
 
-        while(checkIfBenneToTakeAndIncFilledBenCountOuvrier()) {
+       /* while(checkIfBenneToTakeAndIncFilledBenCountOuvrier()) {
 
             this.setBenne(this.waitingBenne.TakeBenne());
             takeBenne(this.getBenne().name);
@@ -101,6 +101,6 @@ public class Ouvrier extends Acteur {
 
         }
         System.out.println("Fin du travail pour " + this.name);
-    }
+*/    }
 }
 

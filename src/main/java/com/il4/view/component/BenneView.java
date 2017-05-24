@@ -1,5 +1,6 @@
 package com.il4.view.component;
 
+import com.il4.acteur.IBenneListener;
 import com.il4.acteur.IBucheronListener;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,7 +13,7 @@ import java.io.IOException;
 /**
  * Created by Argon on 07.04.17.
  */
-public class BenneView extends AnchorPane {
+public class BenneView extends AnchorPane implements IBenneListener {
 
     @FXML public ProgressBar progressBar;
     @FXML public Label labelName;
@@ -42,4 +43,8 @@ public class BenneView extends AnchorPane {
         progressBar.progressProperty().setValue(0);
     }
 
+    @Override
+    public void onFillBenne(double value) {
+        progressBar.progressProperty().setValue(progressBar.progressProperty().getValue() + value);
+    }
 }

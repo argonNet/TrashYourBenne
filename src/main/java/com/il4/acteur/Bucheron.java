@@ -1,26 +1,28 @@
 package com.il4.acteur;
 
 import com.il4.Benne;
+import com.il4.IWorkingBenneListener;
 import com.il4.WaitingBenne;
 import javafx.application.Platform;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 /**
  * Created by Argon on 31.03.17.
  */
 public class Bucheron extends Acteur{
 
-    protected static ArrayList<Benne> currentFillingBennes = new ArrayList<>();
+    protected static LinkedList<Benne> currentFillingBennes = new LinkedList<>();
 
     public ArrayList<IBucheronListener> listeners;
+    public IWorkingBenneListener workingBenneListener;
 
     public WaitingBenne waitingBenne;
     public WaitingBenne transporteurWaitingBenne;
 
 
     private void addBoisToBenne(){
-
         listeners.forEach( (listener) -> {
             Platform.runLater(() -> {
                 listener.onAddBoisToBenne();
@@ -29,7 +31,6 @@ public class Bucheron extends Acteur{
     }
 
     private void giveBenne(String benneName){
-
         listeners.forEach( (listener) -> {
             Platform.runLater(() -> {
                 listener.onGiveBenne(benneName);
@@ -38,26 +39,11 @@ public class Bucheron extends Acteur{
     }
 
     private void takeBenne(String benneName){
-
         listeners.forEach( (listener) -> {
             Platform.runLater(() -> {
                 listener.onTakeBenne(benneName);
             });
         });
-    }
-
-    private Benne getABenneFilling(){
-        if(currentFillingBennes.size() > 0){
-
-
-        } else {
-
-        }
-        return ;
-    }
-
-    private Benne getABenne(){
-
     }
 
     public Bucheron(String name, WaitingBenne transporteurWaitingBenne, WaitingBenne waitingBenne) {
@@ -71,49 +57,63 @@ public class Bucheron extends Acteur{
     }
 
     @Override
-    public void run() throws InterruptedException{
+    public void run(){
 
+        try{
+            while(filledBenCount < benToFill) {
 
-        while(filledBenCount < benToFill) {
-            incFilledBenCount();
+                //TEST si a des bennes disponible sinon en prendre une
+                if (currentFillingBennes.isEmpty()) {
+                    Benne benne = this.waitingBenne.TakeBenne();
+                    currentFillingBennes.add(benne);
+                    Platform.runLater(() ->  workingBenneListener.addWorkingBenne(benne));
+                }
 
-            //TEST si a des bennes disponibles sinon en prendre une
+                for (Benne currentBenne : currentFillingBennes) {
+                    if (currentBenne.startFillBenneIfFree(1)) {
+                        sleep(speed);
 
+                        if(currentBenne.isFull()){
 
-            for (Benne currentBenne : currentFillingBennes) {
-                if(currentBenne.startFillBenneIfFree(1)){
-                    sleep(speed);
-                    currentBenne.stopFilleBenne();
-                    break;
+                            currentFillingBennes.remove(currentBenne);
+                            Platform.runLater(() ->  workingBenneListener.removeWorkingBenne(currentBenne));
+                            incFilledBenCount();
+                            transporteurWaitingBenne.GiveBenne(currentBenne);
+                        }
+                        currentBenne.stopFilleBenne();
+                        break;
+                    }
                 }
             }
-
-
-
-            this.setBenne(this.waitingBenne.TakeBenne());
-
-            takeBenne(this.getBenne().name);
-            System.out.println(this.name + "-> Récupération de la benne :  " + this.getBenne().name);
-
-
-            while (this.getBenne().getRemplissage() < this.getBenne().MAX_REMPLISSAGE) {
-                this.getBenne().remplissage++;
-                try {
-                    sleep(speed);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                System.out.println(this.name + "-> Remplissage de la benne : " + this.getBenne().name + " - etat : " +
-                        this.getBenne().remplissage + " / " + this.getBenne().MAX_REMPLISSAGE);
-
-                addBoisToBenne();
-            }
-
-            this.transporteurWaitingBenne.GiveBenne(this.getBenne());
-            giveBenne(this.getBenne().name);
-
-            this.setBenne(null);
+        }catch(InterruptedException e){
+            System.out.println("Error : " + e.getMessage());
         }
+
+
+//            this.setBenne(this.waitingBenne.TakeBenne());
+//
+//            takeBenne(this.getBenne().name);
+//            System.out.println(this.name + "-> Récupération de la benne :  " + this.getBenne().name);
+//
+//
+//            while (this.getBenne().getRemplissage() < this.getBenne().MAX_REMPLISSAGE) {
+//                this.getBenne().remplissage++;
+//                try {
+//                    sleep(speed);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//                System.out.println(this.name + "-> Remplissage de la benne : " + this.getBenne().name + " - etat : " +
+//                        this.getBenne().remplissage + " / " + this.getBenne().MAX_REMPLISSAGE);
+//
+//                addBoisToBenne();
+//            }
+//
+//            this.transporteurWaitingBenne.GiveBenne(this.getBenne());
+//            giveBenne(this.getBenne().name);
+//
+//            this.setBenne(null);
+//        }
 
         System.out.println("Fin du travail pour " + this.name );
     }

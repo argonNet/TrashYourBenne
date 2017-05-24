@@ -6,6 +6,7 @@ import com.il4.acteur.Ouvrier;
 import com.il4.acteur.Transporteur;
 import com.il4.view.MainViewController;
 import com.il4.view.WaitingBenneViewController;
+import com.il4.view.component.BenneView;
 import com.il4.view.component.BucheronView;
 import com.il4.view.component.OuvrierView;
 import com.il4.view.component.TransporteurView;
@@ -37,8 +38,9 @@ public class BackgroundApplication {
         Acteur.setBenToFill(benneCount);
     }
 
-    public void createBucheron(String name, BucheronView view){
+    public void createBucheron(String name, BucheronView view, IWorkingBenneListener workingBenneListener){
         Bucheron bucheron = new Bucheron(name,transporteurWaitingBenneFromBucheron,bucheronWaitingBenne);
+        bucheron.workingBenneListener = workingBenneListener;
         bucheron.listeners.add(view);
         bucherons.add(bucheron);
         view.setIdBucheron(bucherons.indexOf(bucheron));
@@ -64,6 +66,14 @@ public class BackgroundApplication {
         if(isRunning) transporteur.start();
     }
 
+
+    public void createBenne(String name, BenneView view){
+        Benne benne = new Benne(name,view);
+        benne.listeners.add(view);
+        bennes.add(benne);
+        bucheronWaitingBenne.GiveBenne(benne);
+    }
+
     public void createWaitingBenneQueues(
             WaitingBenneViewController bucheronWaitingBenneView,
             WaitingBenneViewController ouvrierWaitingBenneView,
@@ -84,31 +94,21 @@ public class BackgroundApplication {
     }
 
 
-    public void createBenne(String name){
-        Benne benne = new Benne(name);
-        bennes.add(benne);
-        bucheronWaitingBenne.GiveBenne(benne);
-    }
-    
     public Bucheron getBucheron(int index)
     {
         return bucherons.get(index);
     }
-
     public Ouvrier getOuvrier(int index)
     {
         return ouvriers.get(index);
     }
-
     public Transporteur getTransporteur(int index)
     {
         return transporteurs.get(index);
     }
-
     public int getBennesCount(){
         return  bennes.size();
     }
-
 
     public void Start( ) {
 

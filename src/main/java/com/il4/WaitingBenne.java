@@ -49,7 +49,7 @@ public class WaitingBenne {
             this.waitingBenne.offer(benne);
             onBenneGivenNotify(benne.name);
 
-            myCond.signal();
+            myCond.signalAll();
         }finally {
             mylock.unlock();
         }
