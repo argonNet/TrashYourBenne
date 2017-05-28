@@ -1,9 +1,12 @@
 package com.il4.acteur;
 
+import com.il4.Benne;
+import com.il4.IWorkingBenneListener;
 import com.il4.WaitingBenne;
 import javafx.application.Platform;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -12,7 +15,11 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 public class Ouvrier extends Acteur {
 
+    protected static LinkedList<Benne> currentEmptyingBennes = new LinkedList<>();
+
     public ArrayList<IOuvrierListener> listeners;
+    public IWorkingBenneListener workingBenneListener;
+
 
     public WaitingBenne waitingBenne;
     public WaitingBenne transporteurWaitingBenne;
@@ -21,19 +28,19 @@ public class Ouvrier extends Acteur {
 
     private static Lock mylockOuvrier = new ReentrantLock();
 
-    private boolean checkIfBenneToTakeAndIncFilledBenCountOuvrier() {
-        mylockOuvrier.lock();
-        try {
-            if(filledBenCountOuvrier < filledBenCount){
-                filledBenCountOuvrier++;
-                return true;
-            }else {
-                return false;
-            }
-        } finally {
-            mylockOuvrier.unlock();
-        }
-    }
+//    private boolean checkIfBenneToTakeAndIncFilledBenCountOuvrier() {
+//        mylockOuvrier.lock();
+//        try {
+//            if(filledBenCountOuvrier < filledBenCount){
+//                filledBenCountOuvrier++;
+//                return true;
+//            }else {
+//                return false;
+//            }
+//        } finally {
+//            mylockOuvrier.unlock();
+//        }
+//    }
 
     private void removeBoisToBenne(){
 
@@ -76,31 +83,37 @@ public class Ouvrier extends Acteur {
     @Override
     public void run(){
 
-       /* while(checkIfBenneToTakeAndIncFilledBenCountOuvrier()) {
+        try{
+            while(filledBenCount < benToFill) {
 
-            this.setBenne(this.waitingBenne.TakeBenne());
-            takeBenne(this.getBenne().name);
-            System.out.println(this.name + "-> Récupération de la benne :  " + this.getBenne().name);
-
-
-            while (this.getBenne().remplissage > 0) {
-                this.getBenne().remplissage--;
-                try {
-                    sleep(speed);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                //TEST si a des bennes disponible sinon en prendre une
+                if (currentEmptyingBennes.isEmpty()) {
+                    Benne benne = this.waitingBenne.TakeBenne();
+                    currentEmptyingBennes.add(benne);
+                    Platform.runLater(() ->  workingBenneListener.addWorkingBenne(benne));
                 }
-                System.out.println(this.name + "-> Vidage de la benne : " + this.getBenne().name + " - etat : " +
-                        this.getBenne().remplissage + " / " + 0);
-                removeBoisToBenne();
+
+                for (Benne currentBenne : currentEmptyingBennes) {
+                    if (currentBenne.startBenneWorkIfFree(-1, this.getNameActeur())) {
+                        sleep(speed);
+
+                        if(currentBenne.isEmpty()){
+
+                            currentEmptyingBennes.remove(currentBenne);
+                            Platform.runLater(() ->  workingBenneListener.removeWorkingBenne(currentBenne));
+                            incFilledBenCount();
+                            transporteurWaitingBenne.GiveBenne(currentBenne);
+                        }
+                        currentBenne.stopBenneWork();
+                        break;
+                    }
+                }
             }
-
-            this.transporteurWaitingBenne.GiveBenne(this.getBenne());
-            giveBenne(this.getBenne().name);
-            this.setBenne(null);
-
+        }catch(InterruptedException e){
+            System.out.println("Error : " + e.getMessage());
         }
-        System.out.println("Fin du travail pour " + this.name);
-*/    }
+
+        System.out.println("Fin du travail pour " + this.name );
+    }
 }
 

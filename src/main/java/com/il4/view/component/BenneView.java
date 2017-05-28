@@ -1,7 +1,6 @@
 package com.il4.view.component;
 
 import com.il4.acteur.IBenneListener;
-import com.il4.acteur.IBucheronListener;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
@@ -17,6 +16,7 @@ public class BenneView extends AnchorPane implements IBenneListener {
 
     @FXML public ProgressBar progressBar;
     @FXML public Label labelName;
+    @FXML public Label labelWorkerName;
 
     public BenneView(){
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("benneView.fxml"));
@@ -35,16 +35,9 @@ public class BenneView extends AnchorPane implements IBenneListener {
         labelName.setText(name);
     }
 
-    public void addBois(){
-        progressBar.progressProperty().setValue(progressBar.progressProperty().getValue() + 0.1);
-    }
-
-    public void resetBois(){
-        progressBar.progressProperty().setValue(0);
-    }
-
     @Override
-    public void onFillBenne(double value) {
+    public void onFillBenne(double value, String workerName) {
         progressBar.progressProperty().setValue(progressBar.progressProperty().getValue() + value);
+        labelWorkerName.setText(workerName);
     }
 }

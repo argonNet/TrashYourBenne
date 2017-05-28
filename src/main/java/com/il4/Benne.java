@@ -1,7 +1,6 @@
 package com.il4;
 
 import com.il4.acteur.IBenneListener;
-import com.il4.acteur.IBucheronListener;
 import com.il4.view.component.BenneView;
 import javafx.application.Platform;
 
@@ -27,10 +26,10 @@ public class Benne {
 
     public ArrayList<IBenneListener> listeners;
 
-    public void fillBenne(double value){
+    public void fillBenne(double value, String workerName){
         listeners.forEach( (listener) -> {
             Platform.runLater(() -> {
-                listener.onFillBenne(value);
+                listener.onFillBenne(value, workerName);
             });
         });
     }
@@ -39,11 +38,15 @@ public class Benne {
         return  remplissage == MAX_REMPLISSAGE;
     }
 
-    public boolean startFillBenneIfFree(int value) throws InterruptedException{
+    public synchronized boolean isEmpty(){
+        return  remplissage <= 0;
+    }
+
+    public boolean startBenneWorkIfFree(int value, String workerName) throws InterruptedException{
 
         if (lock.tryLock(500, TimeUnit.MILLISECONDS)){
             this.remplissage += value;
-            fillBenne((double)value / 10);
+            fillBenne((double)value / 10, workerName);
             someoneFillingTheBenne = false;
 
             return true;
@@ -52,7 +55,7 @@ public class Benne {
         }
     }
 
-    public void stopFilleBenne(){
+    public void stopBenneWork(){
         lock.unlock();
     }
 

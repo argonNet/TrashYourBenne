@@ -60,7 +60,7 @@ public class BucheronView extends AnchorPane implements IBucheronListener{
 
 
     @Override
-    public void onTakeBenne(String benneName) {
+    public void onStartWorkingOnBenne(String benneName) {
         resetBois();
         setCurrentBenne(benneName);
     }
@@ -71,9 +71,8 @@ public class BucheronView extends AnchorPane implements IBucheronListener{
     }
 
     @Override
-    public void onGiveBenne(String benneName) {
-        resetBois();
-        resetCurrentBenne();
+    public void onStopWorkingOnBenne() {
+        setCurrentBenne("-");
     }
 
     @FXML  public void buttonWorkFasterClick (){

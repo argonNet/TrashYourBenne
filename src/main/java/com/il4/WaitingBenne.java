@@ -8,17 +8,26 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+
+
 /**
  * Created by Argon on 01.04.17.
  */
 public class WaitingBenne {
 
+    public enum WaitingMode{
+        oneWaiting,
+        severalWaiting
+    }
+
     public ArrayList<IWaitingBenneListener> listeners;
 
     private LinkedList<Benne> waitingBenne;
 
-    private Lock mylock = new ReentrantLock();
-    private Condition myCond = mylock.newCondition();
+    private Lock takeOrGiveBenneLock = new ReentrantLock();
+    private Condition waitIfNoBenneAvailable = takeOrGiveBenneLock.newCondition();
+    private WaitingMode waitingMode = WaitingMode.oneWaiting;
+    private boolean isSomeOneWaitingForABenne = false;
 
     private  void onBenneGivenNotify(String benneName){
 
@@ -39,51 +48,77 @@ public class WaitingBenne {
     }
 
 
-    public boolean IsABenneWaiting(){
+    public boolean IsABenneWaiting() {
         return this.waitingBenne != null && !this.waitingBenne.isEmpty();
     }
 
     public void GiveBenne(Benne benne){
-        mylock.lock();
+        takeOrGiveBenneLock.lock();
         try{
             this.waitingBenne.offer(benne);
             onBenneGivenNotify(benne.name);
 
-            myCond.signalAll();
+            waitIfNoBenneAvailable.signalAll();
         }finally {
-            mylock.unlock();
+            takeOrGiveBenneLock.unlock();
         }
 
     }
 
     public Benne TakeBenne(){
-        mylock.lock();
+        takeOrGiveBenneLock.lock();
 
         try{
 
-            while(!this.IsABenneWaiting()){
-                try {
 
-                    myCond.await();
+            if(waitingMode == WaitingMode.oneWaiting){
 
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                //Seul un thread peut attendre à la fois.
+                if(!this.IsABenneWaiting()){ //Si aucune benne n'est là on attend qu'une arrive
+                    try {
+                        if(!isSomeOneWaitingForABenne){
+                            isSomeOneWaitingForABenne = true;
+                            waitIfNoBenneAvailable.await();
+                        }
+                        isSomeOneWaitingForABenne = false;
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
+
+            }else if(waitingMode == WaitingMode.severalWaiting){
+
+                //Plusieurs thread attende simulatnément (file d'attente)
+                while(!this.IsABenneWaiting()){ //Si aucune benne n'est là on attend qu'une arrive
+                    try {
+                        waitIfNoBenneAvailable.await();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+
             }
 
-            Benne firstBenne = this.waitingBenne.getFirst();
-            this.waitingBenne.removeFirst();
 
-            onBenneTakeNotify(firstBenne.name);
+            if(this.IsABenneWaiting()){
+                Benne firstBenne = this.waitingBenne.getFirst();
+                this.waitingBenne.removeFirst();
 
+                onBenneTakeNotify(firstBenne.name);
 
-            return firstBenne;
+                return firstBenne;
+            }else{
+                return  null;
+            }
+
         }finally {
-            mylock.unlock();
+            takeOrGiveBenneLock.unlock();
         }
     }
 
-    public WaitingBenne(){
+
+    public WaitingBenne(WaitingMode waitingMode){
+        this.waitingMode = waitingMode;
         this.waitingBenne = new LinkedList<>();
         this.listeners = new ArrayList<>();
     }

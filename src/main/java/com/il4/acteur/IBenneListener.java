@@ -5,7 +5,7 @@ package com.il4.acteur;
  */
 public interface IBenneListener {
 
-    void onFillBenne(double value);
+    void onFillBenne(double value, String workerName);
 }
 
 

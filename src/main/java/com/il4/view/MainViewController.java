@@ -1,17 +1,11 @@
 package com.il4.view;
 
 import com.il4.BackgroundApplication;
-import com.il4.IWorkingBenneListener;
-import com.il4.acteur.Bucheron;
-import com.il4.view.component.BenneView;
-import com.il4.view.component.BucheronView;
-import com.il4.view.component.OuvrierView;
-import com.il4.view.component.TransporteurView;
+import com.il4.view.component.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
-import com.il4.Benne;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -19,7 +13,7 @@ import java.util.ResourceBundle;
 /**
  * Created by Argon on 01.04.17.
  */
-    public class MainViewController implements Initializable,IWorkingBenneListener  {
+    public class MainViewController implements Initializable {
 
     @FXML public VBox bucheronsPane;
     @FXML public VBox fillingBennePane;
@@ -46,13 +40,15 @@ import java.util.ResourceBundle;
     public WaitingBenneViewController bucheronWaitingBenne;
     public WaitingBenneViewController ouvrierWaitingBenne;
 
+    public WorkingBenneView fillingBenneView;
+    public WorkingBenneView emptyingBenneView;
 
     private void addBucheron(String name){
         BucheronView newView = new BucheronView();
         newView.setName(name);
         bucheronsPane.getChildren().add(newView);
 
-        BackgroundApplication.getInstance().createBucheron(name,newView, this);
+        BackgroundApplication.getInstance().createBucheron(name,newView, this.fillingBenneView);
     }
 
     private void addTransporteur(String name){
@@ -68,7 +64,7 @@ import java.util.ResourceBundle;
         newView.setName(name);
         ouvriersPane.getChildren().add(newView);
 
-        BackgroundApplication.getInstance().createOuvrier(name,newView);
+        BackgroundApplication.getInstance().createOuvrier(name,newView, this.emptyingBenneView);
     }
 
     private void addBenne(String name){
@@ -90,6 +86,9 @@ import java.util.ResourceBundle;
         transporteurWaitingBenneBucheron = new WaitingBenneViewController(ListTransporteurWaitingBenneBucheron);
         transporteurWaitingBenneOuvrier = new WaitingBenneViewController(ListTransporteurWaitingBenneOuvrier);
 
+        fillingBenneView = new WorkingBenneView(fillingBennePane);
+        emptyingBenneView = new WorkingBenneView(emptyingBennePane);
+
         BackgroundApplication.getInstance().createWaitingBenneQueues(
                 bucheronWaitingBenne,
                 ouvrierWaitingBenne,
@@ -105,6 +104,8 @@ import java.util.ResourceBundle;
         addOuvrier("Manuel");
 
         spinnerTotalBenneToFill.getValueFactory().valueProperty().setValue(20);
+
+
 
     }
 
@@ -129,12 +130,5 @@ import java.util.ResourceBundle;
         addBenne("Benne " + (BackgroundApplication.getInstance().getBennesCount() + 1));
     }
 
-    @Override
-    public void addWorkingBenne(Benne benne) {
-        fillingBennePane.getChildren().add(benne.view);
-    }
-    @Override
-    public void removeWorkingBenne(Benne benne) {
-        fillingBennePane.getChildren().remove(benne.view);
-    }
+
 }

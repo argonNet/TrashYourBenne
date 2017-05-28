@@ -5,9 +5,9 @@ package com.il4.acteur;
  */
 public interface IBucheronListener {
 
-        void onTakeBenne(String benneName);
+        void onStartWorkingOnBenne(String benneName);
         void onAddBoisToBenne();
-        void onGiveBenne(String benneName);
+        void onStopWorkingOnBenne();
 }
 
 

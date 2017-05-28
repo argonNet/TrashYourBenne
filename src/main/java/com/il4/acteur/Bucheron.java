@@ -30,21 +30,23 @@ public class Bucheron extends Acteur{
         });
     }
 
-    private void giveBenne(String benneName){
+    private void startWorkingOnBenne(String benneName){
         listeners.forEach( (listener) -> {
             Platform.runLater(() -> {
-                listener.onGiveBenne(benneName);
+                listener.onStartWorkingOnBenne(benneName);
             });
         });
     }
 
-    private void takeBenne(String benneName){
+    private void stopWorkingOnBenne(){
         listeners.forEach( (listener) -> {
             Platform.runLater(() -> {
-                listener.onTakeBenne(benneName);
+                listener.onStopWorkingOnBenne();
             });
         });
     }
+
+
 
     public Bucheron(String name, WaitingBenne transporteurWaitingBenne, WaitingBenne waitingBenne) {
         super(name);
@@ -53,7 +55,7 @@ public class Bucheron extends Acteur{
 
         this.transporteurWaitingBenne = transporteurWaitingBenne;
         this.waitingBenne = waitingBenne;
-        this.speed = 500;
+        this.speed = 50;
     }
 
     @Override
@@ -65,55 +67,40 @@ public class Bucheron extends Acteur{
                 //TEST si a des bennes disponible sinon en prendre une
                 if (currentFillingBennes.isEmpty()) {
                     Benne benne = this.waitingBenne.TakeBenne();
-                    currentFillingBennes.add(benne);
-                    Platform.runLater(() ->  workingBenneListener.addWorkingBenne(benne));
+                    if(benne != null){
+                        currentFillingBennes.add(benne);
+                        Platform.runLater(() ->  workingBenneListener.addWorkingBenne(benne));
+                    }
+
                 }
 
                 for (Benne currentBenne : currentFillingBennes) {
-                    if (currentBenne.startFillBenneIfFree(1)) {
-                        sleep(speed);
+                    if (currentBenne.startBenneWorkIfFree(1, this.getNameActeur())) {
+                        startWorkingOnBenne(currentBenne.name);
+
+                        //Transporte une bille de jusqu'à la benne
+                        for(int i = 0; i < 10; i++ ){
+                            sleep(speed);
+                            addBoisToBenne();
+                        }
 
                         if(currentBenne.isFull()){
-
                             currentFillingBennes.remove(currentBenne);
                             Platform.runLater(() ->  workingBenneListener.removeWorkingBenne(currentBenne));
                             incFilledBenCount();
                             transporteurWaitingBenne.GiveBenne(currentBenne);
                         }
-                        currentBenne.stopFilleBenne();
+                        currentBenne.stopBenneWork();
+                        stopWorkingOnBenne();
                         break;
                     }
                 }
+
+                sleep(500); //Petite pause du bucheron avant de reprendre une bille de bois
             }
         }catch(InterruptedException e){
             System.out.println("Error : " + e.getMessage());
         }
-
-
-//            this.setBenne(this.waitingBenne.TakeBenne());
-//
-//            takeBenne(this.getBenne().name);
-//            System.out.println(this.name + "-> Récupération de la benne :  " + this.getBenne().name);
-//
-//
-//            while (this.getBenne().getRemplissage() < this.getBenne().MAX_REMPLISSAGE) {
-//                this.getBenne().remplissage++;
-//                try {
-//                    sleep(speed);
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
-//                System.out.println(this.name + "-> Remplissage de la benne : " + this.getBenne().name + " - etat : " +
-//                        this.getBenne().remplissage + " / " + this.getBenne().MAX_REMPLISSAGE);
-//
-//                addBoisToBenne();
-//            }
-//
-//            this.transporteurWaitingBenne.GiveBenne(this.getBenne());
-//            giveBenne(this.getBenne().name);
-//
-//            this.setBenne(null);
-//        }
 
         System.out.println("Fin du travail pour " + this.name );
     }

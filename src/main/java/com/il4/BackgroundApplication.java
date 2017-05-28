@@ -12,7 +12,6 @@ import com.il4.view.component.OuvrierView;
 import com.il4.view.component.TransporteurView;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 /**
  * Created by Argon on 02.04.17.
@@ -47,8 +46,9 @@ public class BackgroundApplication {
         if(isRunning) bucheron.start();
     }
 
-    public void createOuvrier(String name, OuvrierView view){
+    public void createOuvrier(String name, OuvrierView view, IWorkingBenneListener workingBenneListener){
         Ouvrier ouvrier = new Ouvrier(name,transporteurWaitingBenneFromOuvrier,ouvrierWaitingBenne);
+        ouvrier.workingBenneListener = workingBenneListener;
         ouvrier.listeners.add(view);
         ouvriers.add(ouvrier);
         view.setIdOuvrier(ouvriers.indexOf(ouvrier));
@@ -80,16 +80,16 @@ public class BackgroundApplication {
             WaitingBenneViewController transporteurWaitingBenneFromBucheronView,
             WaitingBenneViewController transporteurWaitingBenneFromOuvrierView){
 
-        bucheronWaitingBenne = new WaitingBenne();
+        bucheronWaitingBenne = new WaitingBenne(WaitingBenne.WaitingMode.oneWaiting);
         bucheronWaitingBenne.listeners.add(bucheronWaitingBenneView);
 
-        ouvrierWaitingBenne = new WaitingBenne();
+        ouvrierWaitingBenne = new WaitingBenne(WaitingBenne.WaitingMode.oneWaiting);
         ouvrierWaitingBenne.listeners.add(ouvrierWaitingBenneView);
 
-        transporteurWaitingBenneFromBucheron = new WaitingBenne();
+        transporteurWaitingBenneFromBucheron = new WaitingBenne(WaitingBenne.WaitingMode.severalWaiting);
         transporteurWaitingBenneFromBucheron.listeners.add(transporteurWaitingBenneFromBucheronView);
 
-        transporteurWaitingBenneFromOuvrier = new WaitingBenne();
+        transporteurWaitingBenneFromOuvrier = new WaitingBenne(WaitingBenne.WaitingMode.severalWaiting);
         transporteurWaitingBenneFromOuvrier.listeners.add(transporteurWaitingBenneFromOuvrierView);
     }
 
