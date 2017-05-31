@@ -1,7 +1,7 @@
 package com.il4.view.component;
 
-import com.il4.Benne;
-import com.il4.IWorkingBenneListener;
+import com.il4.tool.Benne;
+import com.il4.tool.listener.IWorkingBenneListener;
 import javafx.scene.layout.VBox;
 
 /**

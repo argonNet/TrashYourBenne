@@ -2,7 +2,7 @@ package com.il4.view.component;
 
 import com.il4.BackgroundApplication;
 import com.il4.acteur.Bucheron;
-import com.il4.acteur.IBucheronListener;
+import com.il4.acteur.listener.IBucheronListener;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;

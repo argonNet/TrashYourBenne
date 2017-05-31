@@ -1,7 +1,7 @@
 package com.il4.view.component;
 
 import com.il4.BackgroundApplication;
-import com.il4.acteur.ITransporteurListener;
+import com.il4.acteur.listener.ITransporteurListener;
 import com.il4.acteur.Transporteur;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

@@ -4,6 +4,9 @@ import com.il4.acteur.Acteur;
 import com.il4.acteur.Bucheron;
 import com.il4.acteur.Ouvrier;
 import com.il4.acteur.Transporteur;
+import com.il4.tool.Benne;
+import com.il4.tool.listener.IWorkingBenneListener;
+import com.il4.tool.WaitingBenne;
 import com.il4.view.MainViewController;
 import com.il4.view.WaitingBenneViewController;
 import com.il4.view.component.BenneView;
@@ -40,7 +43,7 @@ public class BackgroundApplication {
     public void createBucheron(String name, BucheronView view, IWorkingBenneListener workingBenneListener){
         Bucheron bucheron = new Bucheron(name,transporteurWaitingBenneFromBucheron,bucheronWaitingBenne);
         bucheron.workingBenneListener = workingBenneListener;
-        bucheron.listeners.add(view);
+        bucheron.addListener(view);
         bucherons.add(bucheron);
         view.setIdBucheron(bucherons.indexOf(bucheron));
         if(isRunning) bucheron.start();
@@ -49,7 +52,7 @@ public class BackgroundApplication {
     public void createOuvrier(String name, OuvrierView view, IWorkingBenneListener workingBenneListener){
         Ouvrier ouvrier = new Ouvrier(name,transporteurWaitingBenneFromOuvrier,ouvrierWaitingBenne);
         ouvrier.workingBenneListener = workingBenneListener;
-        ouvrier.listeners.add(view);
+        ouvrier.addListener(view);
         ouvriers.add(ouvrier);
         view.setIdOuvrier(ouvriers.indexOf(ouvrier));
         if(isRunning) ouvrier.start();

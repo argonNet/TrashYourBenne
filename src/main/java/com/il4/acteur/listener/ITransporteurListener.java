@@ -1,12 +1,14 @@
-package com.il4.acteur;
+package com.il4.acteur.listener;
 
 /**
  * Created by Argon on 02.04.17.
  */
-public interface IOuvrierListener {
+public interface ITransporteurListener {
 
     void onTakeBenne(String benneName);
-    void onRemoveBoisToBenne();
+    void onGoOuvrier();
+    void onGoBucheron();
     void onGiveBenne(String benneName);
+
 
 }

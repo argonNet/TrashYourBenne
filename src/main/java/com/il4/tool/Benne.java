@@ -1,6 +1,6 @@
-package com.il4;
+package com.il4.tool;
 
-import com.il4.acteur.IBenneListener;
+import com.il4.acteur.listener.IBenneListener;
 import com.il4.view.component.BenneView;
 import javafx.application.Platform;
 
@@ -18,7 +18,6 @@ public class Benne {
 
     public String name;
 
-    private boolean someoneFillingTheBenne;
     private int remplissage;
     private final Lock lock = new ReentrantLock();
 
@@ -47,7 +46,6 @@ public class Benne {
         if (lock.tryLock(500, TimeUnit.MILLISECONDS)){
             this.remplissage += value;
             fillBenne((double)value / 10, workerName);
-            someoneFillingTheBenne = false;
 
             return true;
         }else{
@@ -57,14 +55,6 @@ public class Benne {
 
     public void stopBenneWork(){
         lock.unlock();
-    }
-
-    public synchronized boolean isSomeoneFillingTheBenne(){
-        boolean tmpFlag = someoneFillingTheBenne;
-        if(!someoneFillingTheBenne){
-            someoneFillingTheBenne = false;
-        }
-        return tmpFlag;
     }
 
     public Benne(String name, BenneView view){

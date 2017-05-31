@@ -1,6 +1,6 @@
 package com.il4.acteur;
 
-import com.il4.Benne;
+import com.il4.tool.Benne;
 
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
