@@ -72,7 +72,6 @@ public class Transporteur extends Acteur{
         super(name);
 
         this.listeners = new ArrayList<>();
-        this.speed = 100;
         this.waitingBenneFromBucheron = waitingBenneFromBucheron;
         this.bucheronWaitingBenne = bucheronWaitingBenne;
         this.waitingBenneFromOuvrier = waitingBenneFromOuvrier;

@@ -43,7 +43,7 @@ public class Benne {
 
     public boolean startBenneWorkIfFree(int value, String workerName) throws InterruptedException{
 
-        if (lock.tryLock(500, TimeUnit.MILLISECONDS)){
+        if (lock.tryLock(100, TimeUnit.MILLISECONDS)){
             this.remplissage += value;
             fillBenne((double)value / 10, workerName);
 

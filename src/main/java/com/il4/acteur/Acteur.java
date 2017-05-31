@@ -49,6 +49,8 @@ public class Acteur extends Thread{
     public Acteur(String name){
         this.name = name;
         this.setName(name);
+
+        this.setSpeed(10 + (int)(Math.random() * ((500 - 10) + 1)));
     }
 
     public static void setBenToFill(int value){

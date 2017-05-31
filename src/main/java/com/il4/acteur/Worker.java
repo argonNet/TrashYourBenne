@@ -32,7 +32,6 @@ public abstract class Worker extends Acteur {
 
         this.transporteurWaitingBenne = transporteurWaitingBenne;
         this.waitingBenne = waitingBenne;
-        this.speed = 50;
     }
 
     private void startWorkingOnBenne(String benneName) {

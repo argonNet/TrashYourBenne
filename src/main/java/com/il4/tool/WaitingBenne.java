@@ -9,8 +9,6 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-
-
 /**
  * Created by Argon on 01.04.17.
  */
@@ -27,11 +25,11 @@ public class WaitingBenne {
 
     private Lock takeOrGiveBenneLock = new ReentrantLock();
     private Condition waitIfNoBenneAvailable = takeOrGiveBenneLock.newCondition();
+
     private WaitingMode waitingMode = WaitingMode.oneWaiting;
     private boolean isSomeOneWaitingForABenne = false;
 
     private  void onBenneGivenNotify(String benneName){
-
         listeners.forEach( (listener) -> {
             Platform.runLater(() -> {
                 listener.onBenneGiven(benneName);
@@ -40,14 +38,12 @@ public class WaitingBenne {
     }
 
     private void onBenneTakeNotify(String benneName){
-
         listeners.forEach( (listener) -> {
             Platform.runLater(() -> {
                 listener.onBenneTaken(benneName);
             });
         });
     }
-
 
     public boolean IsABenneWaiting() {
         return this.waitingBenne != null && !this.waitingBenne.isEmpty();
@@ -63,14 +59,12 @@ public class WaitingBenne {
         }finally {
             takeOrGiveBenneLock.unlock();
         }
-
     }
 
     public Benne TakeBenne(){
         takeOrGiveBenneLock.lock();
 
         try{
-
 
             if(waitingMode == WaitingMode.oneWaiting){
 
@@ -97,9 +91,7 @@ public class WaitingBenne {
                         e.printStackTrace();
                     }
                 }
-
             }
-
 
             if(this.IsABenneWaiting()){
                 Benne firstBenne = this.waitingBenne.getFirst();
@@ -109,7 +101,7 @@ public class WaitingBenne {
 
                 return firstBenne;
             }else{
-                return  null;
+                return null;
             }
 
         }finally {
