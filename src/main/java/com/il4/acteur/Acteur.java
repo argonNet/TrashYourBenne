@@ -1,8 +1,7 @@
 package com.il4.acteur;
 
-import com.il4.Benne;
+import com.il4.tool.Benne;
 
-import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -49,6 +48,7 @@ public class Acteur extends Thread{
 
     public Acteur(String name){
         this.name = name;
+        this.setName(name);
     }
 
     public static void setBenToFill(int value){

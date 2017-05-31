@@ -1,92 +1,54 @@
 package com.il4.acteur;
 
-import com.il4.WaitingBenne;
+import com.il4.tool.Benne;
+import com.il4.tool.WaitingBenne;
+import com.il4.acteur.listener.IBucheronListener;
 import javafx.application.Platform;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 
 /**
  * Created by Argon on 31.03.17.
  */
-public class Bucheron extends Acteur{
+public class Bucheron extends Worker {
 
-    public ArrayList<IBucheronListener> listeners;
-
-    public WaitingBenne waitingBenne;
-    public WaitingBenne transporteurWaitingBenne;
-
-
-    private void addBoisToBenne(){
-
-        listeners.forEach( (listener) -> {
-            Platform.runLater(() -> {
-                listener.onAddBoisToBenne();
-            });
-        });
-    }
-
-
-    private void giveBenne(String benneName){
-
-        listeners.forEach( (listener) -> {
-            Platform.runLater(() -> {
-                listener.onGiveBenne(benneName);
-            });
-        });
-    }
-
-    private void takeBenne(String benneName){
-
-        listeners.forEach( (listener) -> {
-            Platform.runLater(() -> {
-                listener.onTakeBenne(benneName);
-            });
-        });
-    }
-
+    protected static LinkedList<Benne> currentFillingBennes = new LinkedList<>();
 
     public Bucheron(String name, WaitingBenne transporteurWaitingBenne, WaitingBenne waitingBenne) {
-        super(name);
+        super(name,transporteurWaitingBenne,waitingBenne);
+    }
 
-        listeners = new ArrayList<>();
-
-        this.transporteurWaitingBenne = transporteurWaitingBenne;
-        this.waitingBenne = waitingBenne;
-        this.speed = 500;
+    private void addBoisToBenne() {
+        listeners.forEach((listener) -> {
+            Platform.runLater(() -> {
+                ((IBucheronListener)listener).onAddBoisToBenne();
+            });
+        });
     }
 
     @Override
-    public void run(){
+    protected LinkedList<Benne> getCurrentFillingBennes() {
+        return currentFillingBennes;
+    }
 
-        while(filledBenCount < benToFill) {
-            incFilledBenCount();
+    @Override
+    protected void defineWorkerOperation(){
+        addBoisToBenne();
+    }
 
-            this.setBenne(this.waitingBenne.TakeBenne());
+    @Override
+    protected boolean isBenneReady(Benne benne){
+        return benne.isFull();
+    }
 
-            takeBenne(this.getBenne().name);
-            System.out.println(this.name + "-> Récupération de la benne :  " + this.getBenne().name);
+    @Override
+    protected int getValueOperation(){
+        return 1;
+    }
 
-
-            while (this.getBenne().remplissage < this.getBenne().MAX_REMPLISSAGE) {
-                this.getBenne().remplissage++;
-                try {
-                    sleep(speed);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                System.out.println(this.name + "-> Remplissage de la benne : " + this.getBenne().name + " - etat : " +
-                        this.getBenne().remplissage + " / " + this.getBenne().MAX_REMPLISSAGE);
-
-                addBoisToBenne();
-            }
-
-            this.transporteurWaitingBenne.GiveBenne(this.getBenne());
-            giveBenne(this.getBenne().name);
-
-            this.setBenne(null);
-        }
-
-        System.out.println("Fin du travail pour " + this.name );
+    public void addListener(IBucheronListener listener){
+        listeners.add(listener);
     }
 
 }
+

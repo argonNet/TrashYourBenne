@@ -1,7 +1,7 @@
 package com.il4.view.component;
 
 import com.il4.BackgroundApplication;
-import com.il4.acteur.IOuvrierListener;
+import com.il4.acteur.listener.IOuvrierListener;
 import com.il4.acteur.Ouvrier;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -60,7 +60,7 @@ public class OuvrierView extends AnchorPane implements IOuvrierListener {
 
 
     @Override
-    public void onTakeBenne(String benneName) {
+    public void onStartWorkingOnBenne(String benneName) {
         resetBois();
         setCurrentBenne(benneName);
     }
@@ -71,9 +71,8 @@ public class OuvrierView extends AnchorPane implements IOuvrierListener {
     }
 
     @Override
-    public void onGiveBenne(String benneName) {
-        //resetBois();
-        resetCurrentBenne();
+    public void onStopWorkingOnBenne() {
+        setCurrentBenne("-");
     }
 
     @FXML  public void buttonWorkFasterClick (){

@@ -2,7 +2,7 @@ package com.il4.view.component;
 
 import com.il4.BackgroundApplication;
 import com.il4.acteur.Bucheron;
-import com.il4.acteur.IBucheronListener;
+import com.il4.acteur.listener.IBucheronListener;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
@@ -60,7 +60,7 @@ public class BucheronView extends AnchorPane implements IBucheronListener{
 
 
     @Override
-    public void onTakeBenne(String benneName) {
+    public void onStartWorkingOnBenne(String benneName) {
         resetBois();
         setCurrentBenne(benneName);
     }
@@ -71,9 +71,8 @@ public class BucheronView extends AnchorPane implements IBucheronListener{
     }
 
     @Override
-    public void onGiveBenne(String benneName) {
-        resetBois();
-        resetCurrentBenne();
+    public void onStopWorkingOnBenne() {
+        setCurrentBenne("-");
     }
 
     @FXML  public void buttonWorkFasterClick (){

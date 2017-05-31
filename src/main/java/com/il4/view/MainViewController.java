@@ -1,10 +1,7 @@
 package com.il4.view;
 
 import com.il4.BackgroundApplication;
-import com.il4.acteur.Bucheron;
-import com.il4.view.component.BucheronView;
-import com.il4.view.component.OuvrierView;
-import com.il4.view.component.TransporteurView;
+import com.il4.view.component.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -16,11 +13,12 @@ import java.util.ResourceBundle;
 /**
  * Created by Argon on 01.04.17.
  */
-public class MainViewController implements Initializable {
+    public class MainViewController implements Initializable {
 
     @FXML public VBox bucheronsPane;
+    @FXML public VBox fillingBennePane;
     @FXML public VBox transporteursPane;
-
+    @FXML public VBox emptyingBennePane;
     @FXML public VBox ouvriersPane;
 
     @FXML public TextField textFieldBucheronName;
@@ -42,13 +40,15 @@ public class MainViewController implements Initializable {
     public WaitingBenneViewController bucheronWaitingBenne;
     public WaitingBenneViewController ouvrierWaitingBenne;
 
+    public WorkingBenneView fillingBenneView;
+    public WorkingBenneView emptyingBenneView;
 
     private void addBucheron(String name){
         BucheronView newView = new BucheronView();
         newView.setName(name);
         bucheronsPane.getChildren().add(newView);
 
-        BackgroundApplication.getInstance().createBucheron(name,newView);
+        BackgroundApplication.getInstance().createBucheron(name,newView, this.fillingBenneView);
     }
 
     private void addTransporteur(String name){
@@ -64,8 +64,16 @@ public class MainViewController implements Initializable {
         newView.setName(name);
         ouvriersPane.getChildren().add(newView);
 
-        BackgroundApplication.getInstance().createOuvrier(name,newView);
+        BackgroundApplication.getInstance().createOuvrier(name,newView, this.emptyingBenneView);
     }
+
+    private void addBenne(String name){
+        BenneView newView = new BenneView();
+        newView.setName(name);
+        BackgroundApplication.getInstance().createBenne(name,newView);
+    }
+
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -78,22 +86,26 @@ public class MainViewController implements Initializable {
         transporteurWaitingBenneBucheron = new WaitingBenneViewController(ListTransporteurWaitingBenneBucheron);
         transporteurWaitingBenneOuvrier = new WaitingBenneViewController(ListTransporteurWaitingBenneOuvrier);
 
+        fillingBenneView = new WorkingBenneView(fillingBennePane);
+        emptyingBenneView = new WorkingBenneView(emptyingBennePane);
+
         BackgroundApplication.getInstance().createWaitingBenneQueues(
                 bucheronWaitingBenne,
                 ouvrierWaitingBenne,
                 transporteurWaitingBenneBucheron,
                 transporteurWaitingBenneOuvrier);
 
-        BackgroundApplication.getInstance().createBenne("Benne 1");
-        BackgroundApplication.getInstance().createBenne("Benne 2");
-        BackgroundApplication.getInstance().createBenne("Benne 3");
-
+        addBenne("Benne 1");
+        addBenne("Benne 2");
+        addBenne("Benne 3");
 
         addBucheron("Florian");
         addTransporteur("Robert");
         addOuvrier("Manuel");
 
         spinnerTotalBenneToFill.getValueFactory().valueProperty().setValue(20);
+
+
 
     }
 
@@ -115,10 +127,8 @@ public class MainViewController implements Initializable {
     }
 
     @FXML  public void buttonAddBenneClick() {
-        BackgroundApplication.getInstance().createBenne(
-                "Benne " + (BackgroundApplication.getInstance().getBennesCount() + 1));
+        addBenne("Benne " + (BackgroundApplication.getInstance().getBennesCount() + 1));
     }
-
 
 
 }

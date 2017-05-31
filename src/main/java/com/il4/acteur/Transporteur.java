@@ -1,6 +1,7 @@
 package com.il4.acteur;
 
-import com.il4.WaitingBenne;
+import com.il4.tool.WaitingBenne;
+import com.il4.acteur.listener.ITransporteurListener;
 import javafx.application.Platform;
 
 import java.util.ArrayList;
@@ -18,19 +19,6 @@ public class Transporteur extends Acteur{
 
     private static Lock mylockTransporteur = new ReentrantLock();
 
-    private boolean checkIfBenneToTakeAndIncFilledBenCountTransporteur() {
-        mylockTransporteur.lock();
-        try {
-            if(filledBenCountTransporteur < filledBenCount){
-                filledBenCountTransporteur++;
-                return true;
-            }else {
-                return false;
-            }
-        } finally {
-            mylockTransporteur.unlock();
-        }
-    }
 
     private void takeBenne(String benneName){
 
@@ -94,7 +82,7 @@ public class Transporteur extends Acteur{
     @Override
     public void run(){
 
-        while(checkIfBenneToTakeAndIncFilledBenCountTransporteur()) {
+        while(true) { //TODO : Stop this properly
 
             this.setBenne(this.waitingBenneFromBucheron.TakeBenne());
 
@@ -144,7 +132,7 @@ public class Transporteur extends Acteur{
             this.setBenne(null);
 
         }
-        System.out.println("Fin du travail pour " + this.name);
+       // System.out.println("Fin du travail pour " + this.name);
     }
 
 }

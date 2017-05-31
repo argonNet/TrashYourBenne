@@ -4,14 +4,17 @@ import com.il4.acteur.Acteur;
 import com.il4.acteur.Bucheron;
 import com.il4.acteur.Ouvrier;
 import com.il4.acteur.Transporteur;
+import com.il4.tool.Benne;
+import com.il4.tool.listener.IWorkingBenneListener;
+import com.il4.tool.WaitingBenne;
 import com.il4.view.MainViewController;
 import com.il4.view.WaitingBenneViewController;
+import com.il4.view.component.BenneView;
 import com.il4.view.component.BucheronView;
 import com.il4.view.component.OuvrierView;
 import com.il4.view.component.TransporteurView;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 /**
  * Created by Argon on 02.04.17.
@@ -37,17 +40,19 @@ public class BackgroundApplication {
         Acteur.setBenToFill(benneCount);
     }
 
-    public void createBucheron(String name, BucheronView view){
+    public void createBucheron(String name, BucheronView view, IWorkingBenneListener workingBenneListener){
         Bucheron bucheron = new Bucheron(name,transporteurWaitingBenneFromBucheron,bucheronWaitingBenne);
-        bucheron.listeners.add(view);
+        bucheron.workingBenneListener = workingBenneListener;
+        bucheron.addListener(view);
         bucherons.add(bucheron);
         view.setIdBucheron(bucherons.indexOf(bucheron));
         if(isRunning) bucheron.start();
     }
 
-    public void createOuvrier(String name, OuvrierView view){
+    public void createOuvrier(String name, OuvrierView view, IWorkingBenneListener workingBenneListener){
         Ouvrier ouvrier = new Ouvrier(name,transporteurWaitingBenneFromOuvrier,ouvrierWaitingBenne);
-        ouvrier.listeners.add(view);
+        ouvrier.workingBenneListener = workingBenneListener;
+        ouvrier.addListener(view);
         ouvriers.add(ouvrier);
         view.setIdOuvrier(ouvriers.indexOf(ouvrier));
         if(isRunning) ouvrier.start();
@@ -64,51 +69,49 @@ public class BackgroundApplication {
         if(isRunning) transporteur.start();
     }
 
+
+    public void createBenne(String name, BenneView view){
+        Benne benne = new Benne(name,view);
+        benne.listeners.add(view);
+        bennes.add(benne);
+        bucheronWaitingBenne.GiveBenne(benne);
+    }
+
     public void createWaitingBenneQueues(
             WaitingBenneViewController bucheronWaitingBenneView,
             WaitingBenneViewController ouvrierWaitingBenneView,
             WaitingBenneViewController transporteurWaitingBenneFromBucheronView,
             WaitingBenneViewController transporteurWaitingBenneFromOuvrierView){
 
-        bucheronWaitingBenne = new WaitingBenne();
+        bucheronWaitingBenne = new WaitingBenne(WaitingBenne.WaitingMode.oneWaiting);
         bucheronWaitingBenne.listeners.add(bucheronWaitingBenneView);
 
-        ouvrierWaitingBenne = new WaitingBenne();
+        ouvrierWaitingBenne = new WaitingBenne(WaitingBenne.WaitingMode.oneWaiting);
         ouvrierWaitingBenne.listeners.add(ouvrierWaitingBenneView);
 
-        transporteurWaitingBenneFromBucheron = new WaitingBenne();
+        transporteurWaitingBenneFromBucheron = new WaitingBenne(WaitingBenne.WaitingMode.severalWaiting);
         transporteurWaitingBenneFromBucheron.listeners.add(transporteurWaitingBenneFromBucheronView);
 
-        transporteurWaitingBenneFromOuvrier = new WaitingBenne();
+        transporteurWaitingBenneFromOuvrier = new WaitingBenne(WaitingBenne.WaitingMode.severalWaiting);
         transporteurWaitingBenneFromOuvrier.listeners.add(transporteurWaitingBenneFromOuvrierView);
     }
 
 
-    public void createBenne(String name){
-        Benne benne = new Benne(name);
-        bennes.add(benne);
-        bucheronWaitingBenne.GiveBenne(benne);
-    }
-    
     public Bucheron getBucheron(int index)
     {
         return bucherons.get(index);
     }
-
     public Ouvrier getOuvrier(int index)
     {
         return ouvriers.get(index);
     }
-
     public Transporteur getTransporteur(int index)
     {
         return transporteurs.get(index);
     }
-
     public int getBennesCount(){
         return  bennes.size();
     }
-
 
     public void Start( ) {
 

@@ -1,6 +1,6 @@
 package com.il4.view;
 
-import com.il4.IWaitingBenneListener;
+import com.il4.tool.listener.IWaitingBenneListener;
 import javafx.scene.control.ListView;
 
 /**
