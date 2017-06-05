@@ -6,12 +6,17 @@ import com.il4.acteur.listener.IOuvrierListener;
 import javafx.application.Platform;
 
 import java.util.LinkedList;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
  * Created by Argon on 31.03.17.
  */
 public class Ouvrier extends Worker {
 
+    protected static ReadWriteLock currentEmptyingBennesLock = new ReentrantReadWriteLock();
     protected static LinkedList<Benne> currentEmptyingBennes = new LinkedList<>();
 
     private void removeBoisToBenne(){
@@ -28,7 +33,12 @@ public class Ouvrier extends Worker {
     }
 
     @Override
-    protected LinkedList<Benne> getCurrentFillingBennes() {
+    protected ReadWriteLock getCurrentWorkingBennesLock() {
+        return currentEmptyingBennesLock;
+    }
+
+    @Override
+    protected LinkedList<Benne> getCurrentWorkingBennes() {
         return currentEmptyingBennes;
     }
 

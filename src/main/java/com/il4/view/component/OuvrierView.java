@@ -14,7 +14,7 @@ import java.io.IOException;
 /**
  * Created by Argon on 02.04.17.
  */
-public class OuvrierView extends AnchorPane implements IOuvrierListener {
+public class OuvrierView extends ActeurView implements IOuvrierListener {
 
     @FXML public ProgressBar progressBar;
     @FXML public Label labelName;

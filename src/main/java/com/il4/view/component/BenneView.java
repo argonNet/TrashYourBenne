@@ -1,6 +1,6 @@
 package com.il4.view.component;
 
-import com.il4.acteur.listener.IBenneListener;
+import com.il4.tool.listener.IBenneListener;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;

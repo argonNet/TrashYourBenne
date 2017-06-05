@@ -13,8 +13,6 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 public class Transporteur extends Acteur{
 
-    public ArrayList<ITransporteurListener> listeners;
-
     private static int filledBenCountTransporteur = 0;
 
     private static Lock mylockTransporteur = new ReentrantLock();
@@ -24,7 +22,7 @@ public class Transporteur extends Acteur{
 
         listeners.forEach( (listener) -> {
             Platform.runLater(() -> {
-                listener.onTakeBenne(benneName);
+                ((ITransporteurListener)listener).onTakeBenne(benneName);
             });
         });
     }
@@ -33,7 +31,7 @@ public class Transporteur extends Acteur{
 
         listeners.forEach( (listener) -> {
             Platform.runLater(() -> {
-                listener.onGoOuvrier();
+                ((ITransporteurListener)listener).onGoOuvrier();
             });
         });
     }
@@ -42,7 +40,7 @@ public class Transporteur extends Acteur{
 
         listeners.forEach( (listener) -> {
             Platform.runLater(() -> {
-                listener.onGoBucheron();
+                ((ITransporteurListener)listener).onGoBucheron();
             });
         });
     }
@@ -51,7 +49,7 @@ public class Transporteur extends Acteur{
 
         listeners.forEach( (listener) -> {
             Platform.runLater(() -> {
-                listener.onGiveBenne(benneName);
+                ((ITransporteurListener)listener).onGiveBenne(benneName);
             });
         });
     }
@@ -81,7 +79,7 @@ public class Transporteur extends Acteur{
     @Override
     public void run(){
 
-        while(true) { //TODO : Stop this properly
+        while(!getWorkIsDone()) { //TODO : Stop this properly
 
             this.setBenne(this.waitingBenneFromBucheron.TakeBenne());
 

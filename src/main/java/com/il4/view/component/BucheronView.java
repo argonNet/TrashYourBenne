@@ -14,7 +14,7 @@ import java.io.IOException;
 /**
  * Created by Argon on 02.04.17.
  */
-public class BucheronView extends AnchorPane implements IBucheronListener{
+public class BucheronView extends ActeurView implements IBucheronListener{
 
     @FXML public ProgressBar progressBar;
     @FXML public Label labelName;

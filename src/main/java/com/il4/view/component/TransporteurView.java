@@ -14,7 +14,7 @@ import java.io.IOException;
 /**
  * Created by Argon on 02.04.17.
  */
-public class TransporteurView extends AnchorPane implements ITransporteurListener {
+public class TransporteurView extends ActeurView implements ITransporteurListener {
 
     @FXML private Slider slider;
     @FXML public Label labelName;

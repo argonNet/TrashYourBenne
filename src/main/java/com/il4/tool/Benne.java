@@ -1,6 +1,7 @@
 package com.il4.tool;
 
-import com.il4.acteur.listener.IBenneListener;
+import com.il4.acteur.Acteur;
+import com.il4.tool.listener.IBenneListener;
 import com.il4.view.component.BenneView;
 import javafx.application.Platform;
 
@@ -34,7 +35,7 @@ public class Benne {
     }
 
     public synchronized boolean isFull(){
-        return  remplissage == MAX_REMPLISSAGE;
+        return  remplissage >= MAX_REMPLISSAGE;
     }
 
     public synchronized boolean isEmpty(){
@@ -43,12 +44,17 @@ public class Benne {
 
     public boolean startBenneWorkIfFree(int value, String workerName) throws InterruptedException{
 
-        if (lock.tryLock(100, TimeUnit.MILLISECONDS)){
+        ((Acteur)Thread.currentThread()).setStatus(Acteur.ThreadStatus.Await);
+
+        if (lock.tryLock(10, TimeUnit.MILLISECONDS)){
+
+            ((Acteur)Thread.currentThread()).setStatus(Acteur.ThreadStatus.Running);
             this.remplissage += value;
             fillBenne((double)value / 10, workerName);
 
             return true;
         }else{
+            ((Acteur)Thread.currentThread()).setStatus(Acteur.ThreadStatus.Running);
             return false;
         }
     }

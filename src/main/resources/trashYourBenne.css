@@ -1,0 +1,19 @@
+
+
+
+.waiting{
+    -fx-background-color: darkorange;
+}
+
+.waitingAlone{
+    -fx-background-color: blueviolet;
+}
+
+.waitingInQueue{
+    -fx-background-color: deeppink;
+}
+
+
+.running{
+    -fx-background-color: limegreen;
+}

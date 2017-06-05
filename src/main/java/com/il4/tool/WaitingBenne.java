@@ -1,5 +1,6 @@
 package com.il4.tool;
 
+import com.il4.acteur.Acteur;
 import com.il4.tool.listener.IWaitingBenneListener;
 import javafx.application.Platform;
 
@@ -50,43 +51,52 @@ public class WaitingBenne {
     }
 
     public void GiveBenne(Benne benne){
+        if(Thread.currentThread() instanceof Acteur) ((Acteur)Thread.currentThread()).setStatus(Acteur.ThreadStatus.Await);
         takeOrGiveBenneLock.lock();
+        if(Thread.currentThread() instanceof Acteur) ((Acteur)Thread.currentThread()).setStatus(Acteur.ThreadStatus.Running);
         try{
             this.waitingBenne.offer(benne);
             onBenneGivenNotify(benne.name);
 
             waitIfNoBenneAvailable.signalAll();
         }finally {
-            takeOrGiveBenneLock.unlock();
+           takeOrGiveBenneLock.unlock();
         }
     }
 
     public Benne TakeBenne(){
+        ((Acteur)Thread.currentThread()).setStatus(Acteur.ThreadStatus.Await);
         takeOrGiveBenneLock.lock();
+        ((Acteur)Thread.currentThread()).setStatus(Acteur.ThreadStatus.Running);
 
         try{
 
             if(waitingMode == WaitingMode.oneWaiting){
 
                 //Seul un thread peut attendre à la fois.
-                if(!this.IsABenneWaiting()){ //Si aucune benne n'est là on attend qu'une arrive
+                /*if(!this.IsABenneWaiting()){ //Si aucune benne n'est là on attend qu'une arrive
                     try {
                         if(!isSomeOneWaitingForABenne){
                             isSomeOneWaitingForABenne = true;
+
+                            ((Acteur)Thread.currentThread()).setStatus(Acteur.ThreadStatus.AwaitAlone);
                             waitIfNoBenneAvailable.await();
+                            ((Acteur)Thread.currentThread()).setStatus(Acteur.ThreadStatus.Running);
                         }
                         isSomeOneWaitingForABenne = false;
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                 }
-
+*/
             }else if(waitingMode == WaitingMode.severalWaiting){
 
                 //Plusieurs thread attende simulatnément (file d'attente)
                 while(!this.IsABenneWaiting()){ //Si aucune benne n'est là on attend qu'une arrive
                     try {
+                        ((Acteur)Thread.currentThread()).setStatus(Acteur.ThreadStatus.AwaitInQueue);
                         waitIfNoBenneAvailable.await();
+                        ((Acteur)Thread.currentThread()).setStatus(Acteur.ThreadStatus.Running);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -104,8 +114,7 @@ public class WaitingBenne {
                 return null;
             }
 
-        }finally {
-            takeOrGiveBenneLock.unlock();
+        }finally {takeOrGiveBenneLock.unlock();
         }
     }
 

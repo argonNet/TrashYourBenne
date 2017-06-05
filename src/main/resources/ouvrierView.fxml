@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<fx:root prefHeight="131.0" prefWidth="246.0" type="AnchorPane" xmlns="http://javafx.com/javafx/8.0.131" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root fx:id="mainPane" prefHeight="131.0" prefWidth="246.0" stylesheets="@trashYourBenne.css" type="AnchorPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <ProgressBar fx:id="progressBar" layoutX="55.0" layoutY="48.0" prefHeight="49.0" prefWidth="136.0" progress="0.0" AnchorPane.bottomAnchor="34.0" AnchorPane.leftAnchor="55.0" AnchorPane.rightAnchor="55.0" AnchorPane.topAnchor="48.0" />
       <Label fx:id="labelBenne" alignment="CENTER" layoutX="10.0" layoutY="102.0" prefHeight="17.0" prefWidth="187.0" text="-" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" />
