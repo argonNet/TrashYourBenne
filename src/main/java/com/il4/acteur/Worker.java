@@ -76,45 +76,49 @@ public abstract class Worker extends Acteur {
 
                 getCurrentWorkingBennesLock().lock();
 
-                if(i <= getCurrentWorkingBennes().size() - 1) currentBenne = getCurrentWorkingBennes().get(i);
+                //if(i <= getCurrentWorkingBennes().size() - 1) currentBenne = getCurrentWorkingBennes().get(i);
+
+                    for (Benne parsedBenne : getCurrentWorkingBennes()) {
+                        if (parsedBenne.startBenneWorkIfFree(getValueOperation(), this.getNameActeur())){
+                            currentBenne = parsedBenne;
+                            break;
+                        }
+                    }
 
                 getCurrentWorkingBennesLock().unlock();
 
-                while(currentBenne != null && notOkTry <= MAX_WORKING_BENNE_COUNT){
+                if(currentBenne != null){
 
+                    if( !isBenneReady(currentBenne)) {
+                        startWorkingOnBenne(currentBenne.name);
 
-                    if (currentBenne.startBenneWorkIfFree(getValueOperation(), this.getNameActeur()){
-                        if( !isBenneReady(currentBenne)) {
-                            startWorkingOnBenne(currentBenne.name);
+                        //TODO : Put this code in the BENNE and Lock IT !!
+                        currentBenne.remplissage += getValueOperation();
+                        currentBenne.fillBenne((double) getValueOperation() / 10, this.getNameActeur());
 
-                            currentBenne.remplissage += getValueOperation();
-                            currentBenne.fillBenne((double) getValueOperation() / 10, this.getNameActeur());
-
-                            //Transporte une bille de jusqu'à la benne
-                            for (int j = 0; j < 10; j++) {
-                                sleep(speed);
-                                defineWorkerOperation();
-                            }
-
-                            if (isBenneReady(currentBenne)) {
-
-                                getCurrentWorkingBennesLock().lock();
-
-                                getCurrentWorkingBennes().remove(currentBenne);
-                                final Benne realCurrentBenne = currentBenne; //To cear a warning
-                                Platform.runLater(() -> workingBenneListener.removeWorkingBenne(realCurrentBenne));
-                                transporteurWaitingBenne.GiveBenne(currentBenne);
-
-                                getCurrentWorkingBennesLock().unlock();
-
-                            }
+                        //Transporte une bille de jusqu'à la benne
+                        for (int j = 0; j < 10; j++) {
+                            sleep(speed);
+                            defineWorkerOperation();
                         }
-                        currentBenne.stopBenneWork();
-                        stopWorkingOnBenne();
-                        break;
-                    }else{
-                        notOkTry++;
+
+                        if (isBenneReady(currentBenne)) {
+
+                            getCurrentWorkingBennesLock().lock();
+
+                            getCurrentWorkingBennes().remove(currentBenne);
+                            final Benne realCurrentBenne = currentBenne; //To cear a warning
+                            Platform.runLater(() -> workingBenneListener.removeWorkingBenne(realCurrentBenne));
+                            transporteurWaitingBenne.GiveBenne(currentBenne);
+
+                            getCurrentWorkingBennesLock().unlock();
+
+                        }
                     }
+
+                    currentBenne.stopBenneWork();
+                    stopWorkingOnBenne();
+
 
                     getCurrentWorkingBennesLock().lock();
 
