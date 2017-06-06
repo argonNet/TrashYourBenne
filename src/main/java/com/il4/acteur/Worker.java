@@ -18,7 +18,7 @@ public abstract class Worker extends Acteur {
 
     private static final int MAX_WORKING_BENNE_COUNT = 2; //TODO : Set it to BUCHERON COUNT -1
 
-    protected abstract ReadWriteLock getCurrentWorkingBennesLock();
+    protected abstract Lock getCurrentWorkingBennesLock();
     protected abstract LinkedList<Benne> getCurrentWorkingBennes();
     protected abstract int getValueOperation();
     protected abstract boolean isBenneReady(Benne benne);
@@ -74,38 +74,41 @@ public abstract class Worker extends Acteur {
                 int notOkTry = 0;
                 Benne currentBenne =  null;
 
-                getCurrentWorkingBennesLock().readLock().lock();
+                getCurrentWorkingBennesLock().lock();
 
                 if(i <= getCurrentWorkingBennes().size() - 1) currentBenne = getCurrentWorkingBennes().get(i);
 
-                getCurrentWorkingBennesLock().readLock().unlock();
+                getCurrentWorkingBennesLock().unlock();
 
                 while(currentBenne != null && notOkTry <= MAX_WORKING_BENNE_COUNT){
 
 
+                    if (currentBenne.startBenneWorkIfFree(getValueOperation(), this.getNameActeur()){
+                        if( !isBenneReady(currentBenne)) {
+                            startWorkingOnBenne(currentBenne.name);
 
-                    if (currentBenne.startBenneWorkIfFree(getValueOperation(), this.getNameActeur())) {
-                        startWorkingOnBenne(currentBenne.name);
+                            currentBenne.remplissage += getValueOperation();
+                            currentBenne.fillBenne((double) getValueOperation() / 10, this.getNameActeur());
 
-                        //Transporte une bille de jusqu'à la benne
-                        for(int j = 0; j < 10; j++ ){
-                            sleep(speed);
-                            defineWorkerOperation();
+                            //Transporte une bille de jusqu'à la benne
+                            for (int j = 0; j < 10; j++) {
+                                sleep(speed);
+                                defineWorkerOperation();
+                            }
+
+                            if (isBenneReady(currentBenne)) {
+
+                                getCurrentWorkingBennesLock().lock();
+
+                                getCurrentWorkingBennes().remove(currentBenne);
+                                final Benne realCurrentBenne = currentBenne; //To cear a warning
+                                Platform.runLater(() -> workingBenneListener.removeWorkingBenne(realCurrentBenne));
+                                transporteurWaitingBenne.GiveBenne(currentBenne);
+
+                                getCurrentWorkingBennesLock().unlock();
+
+                            }
                         }
-
-                        if(isBenneReady(currentBenne)){
-
-                            getCurrentWorkingBennesLock().writeLock().lock();
-
-                            getCurrentWorkingBennes().remove(currentBenne);
-                            final Benne realCurrentBenne = currentBenne; //To cear a warning
-                            Platform.runLater(() ->  workingBenneListener.removeWorkingBenne(realCurrentBenne));
-                            transporteurWaitingBenne.GiveBenne(currentBenne);
-
-                            getCurrentWorkingBennesLock().writeLock().unlock();
-
-                        }
-
                         currentBenne.stopBenneWork();
                         stopWorkingOnBenne();
                         break;
@@ -113,14 +116,14 @@ public abstract class Worker extends Acteur {
                         notOkTry++;
                     }
 
-                    getCurrentWorkingBennesLock().readLock().lock();
+                    getCurrentWorkingBennesLock().lock();
 
                     if(getCurrentWorkingBennes().size() - 1 > i){
                         i++;
                         currentBenne = getCurrentWorkingBennes().get(i);
                     }
 
-                    getCurrentWorkingBennesLock().readLock().unlock();
+                    getCurrentWorkingBennesLock().unlock();
                 }
 
                 sleep(20); //Petite pause du bucheron avant de reprendre une bille de bois

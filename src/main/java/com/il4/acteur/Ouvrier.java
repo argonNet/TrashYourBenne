@@ -16,7 +16,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  */
 public class Ouvrier extends Worker {
 
-    protected static ReadWriteLock currentEmptyingBennesLock = new ReentrantReadWriteLock();
+    protected static Lock currentEmptyingBennesLock = new ReentrantLock();
     protected static LinkedList<Benne> currentEmptyingBennes = new LinkedList<>();
 
     private void removeBoisToBenne(){
@@ -33,7 +33,7 @@ public class Ouvrier extends Worker {
     }
 
     @Override
-    protected ReadWriteLock getCurrentWorkingBennesLock() {
+    protected Lock getCurrentWorkingBennesLock() {
         return currentEmptyingBennesLock;
     }
 

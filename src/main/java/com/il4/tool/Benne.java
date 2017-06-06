@@ -19,7 +19,7 @@ public class Benne {
 
     public String name;
 
-    private int remplissage;
+    public int remplissage;
     private final Lock lock = new ReentrantLock();
 
     public BenneView view;
@@ -34,25 +34,28 @@ public class Benne {
         });
     }
 
-    public synchronized boolean isFull(){
+
+    public boolean isFull(){
         return  remplissage >= MAX_REMPLISSAGE;
     }
-
-    public synchronized boolean isEmpty(){
+    public boolean isEmpty(){
         return  remplissage <= 0;
     }
 
     public boolean startBenneWorkIfFree(int value, String workerName) throws InterruptedException{
 
         ((Acteur)Thread.currentThread()).setStatus(Acteur.ThreadStatus.Await);
-
         if (lock.tryLock(10, TimeUnit.MILLISECONDS)){
-
             ((Acteur)Thread.currentThread()).setStatus(Acteur.ThreadStatus.Running);
-            this.remplissage += value;
-            fillBenne((double)value / 10, workerName);
+
+            //Tester si la benne
+
+
+            //this.remplissage += value;
+            //fillBenne((double)value / 10, workerName);
 
             return true;
+
         }else{
             ((Acteur)Thread.currentThread()).setStatus(Acteur.ThreadStatus.Running);
             return false;

@@ -16,7 +16,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  */
 public class Bucheron extends Worker {
 
-    protected static ReadWriteLock currentFillingBennesLock = new ReentrantReadWriteLock();
+    protected static Lock currentFillingBennesLock = new ReentrantLock();
     protected static LinkedList<Benne> currentFillingBennes = new LinkedList<>();
 
     public Bucheron(String name, WaitingBenne transporteurWaitingBenne, WaitingBenne waitingBenne) {
@@ -32,7 +32,7 @@ public class Bucheron extends Worker {
     }
 
     @Override
-    protected ReadWriteLock getCurrentWorkingBennesLock() {
+    protected Lock getCurrentWorkingBennesLock() {
         return currentFillingBennesLock;
     }
 

@@ -30,6 +30,7 @@ public class WaitingBenne {
     private WaitingMode waitingMode = WaitingMode.oneWaiting;
     private boolean isSomeOneWaitingForABenne = false;
 
+    /*
     private  void onBenneGivenNotify(String benneName){
         listeners.forEach( (listener) -> {
             Platform.runLater(() -> {
@@ -45,6 +46,17 @@ public class WaitingBenne {
             });
         });
     }
+*/
+    private void benneListChange(){
+        ArrayList<String> benneNames = new ArrayList<>();
+        waitingBenne.forEach((x) -> benneNames.add(x.name));
+
+        listeners.forEach( (listener) -> {
+            Platform.runLater(() -> {
+                listener.onWaitingBennesChange(benneNames);
+            });
+        });
+    }
 
     public boolean IsABenneWaiting() {
         return this.waitingBenne != null && !this.waitingBenne.isEmpty();
@@ -56,7 +68,8 @@ public class WaitingBenne {
         if(Thread.currentThread() instanceof Acteur) ((Acteur)Thread.currentThread()).setStatus(Acteur.ThreadStatus.Running);
         try{
             this.waitingBenne.offer(benne);
-            onBenneGivenNotify(benne.name);
+            //onBenneGivenNotify(benne.name);
+            benneListChange();
 
             waitIfNoBenneAvailable.signalAll();
         }finally {
@@ -92,7 +105,8 @@ public class WaitingBenne {
             }else if(waitingMode == WaitingMode.severalWaiting){
 
                 //Plusieurs thread attende simulatnément (file d'attente)
-                while(!this.IsABenneWaiting()){ //Si aucune benne n'est là on attend qu'une arrive
+
+                while(!this.IsABenneWaiting()){
                     try {
                         ((Acteur)Thread.currentThread()).setStatus(Acteur.ThreadStatus.AwaitInQueue);
                         waitIfNoBenneAvailable.await();
@@ -107,14 +121,17 @@ public class WaitingBenne {
                 Benne firstBenne = this.waitingBenne.getFirst();
                 this.waitingBenne.removeFirst();
 
-                onBenneTakeNotify(firstBenne.name);
+                //onBenneTakeNotify(firstBenne.name);
+
+                benneListChange();
 
                 return firstBenne;
             }else{
                 return null;
             }
 
-        }finally {takeOrGiveBenneLock.unlock();
+        }finally {
+            takeOrGiveBenneLock.unlock();
         }
     }
 
