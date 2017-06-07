@@ -8,6 +8,7 @@ import com.il4.tool.Benne;
 import com.il4.tool.listener.IWorkingBenneListener;
 import com.il4.tool.WaitingBenne;
 import com.il4.view.MainViewController;
+import com.il4.view.PetriViewController;
 import com.il4.view.WaitingBenneViewController;
 import com.il4.view.component.BenneView;
 import com.il4.view.component.BucheronView;
@@ -40,30 +41,33 @@ public class BackgroundApplication {
         Acteur.setBenToFill(benneCount);
     }
 
-    public void createBucheron(String name, BucheronView view, IWorkingBenneListener workingBenneListener){
+    public void createBucheron(String name, BucheronView view, IWorkingBenneListener workingBenneListener,PetriViewController pvctrl){
         Bucheron bucheron = new Bucheron(name,transporteurWaitingBenneFromBucheron,bucheronWaitingBenne);
-        bucheron.workingBenneListener = workingBenneListener;
         bucheron.addListener(view);
+        bucheron.addWorkingBenneListener(workingBenneListener);
+        bucheron.addWorkingBenneListener(pvctrl);
         bucherons.add(bucheron);
         view.setIdBucheron(bucherons.indexOf(bucheron));
         if(isRunning) bucheron.start();
     }
 
-    public void createOuvrier(String name, OuvrierView view, IWorkingBenneListener workingBenneListener){
+    public void createOuvrier(String name, OuvrierView view, IWorkingBenneListener workingBenneListener,PetriViewController pvctrl){
         Ouvrier ouvrier = new Ouvrier(name,transporteurWaitingBenneFromOuvrier,ouvrierWaitingBenne);
-        ouvrier.workingBenneListener = workingBenneListener;
         ouvrier.addListener(view);
+        ouvrier.addWorkingBenneListener(workingBenneListener);
+        ouvrier.addWorkingBenneListener(pvctrl);
         ouvriers.add(ouvrier);
         view.setIdOuvrier(ouvriers.indexOf(ouvrier));
         if(isRunning) ouvrier.start();
     }
 
 
-    public void createTransporteur(String name, TransporteurView view){
+    public void createTransporteur(String name, TransporteurView view,PetriViewController pvctrl){
         Transporteur transporteur = new Transporteur(name,
                                                      transporteurWaitingBenneFromBucheron,bucheronWaitingBenne,
                                                      transporteurWaitingBenneFromOuvrier,ouvrierWaitingBenne);
         transporteur.listeners.add(view);
+        transporteur.listeners.add(pvctrl);
         transporteurs.add(transporteur);
         view.setIdTransporteur(transporteurs.indexOf(transporteur));
         if(isRunning) transporteur.start();

@@ -16,12 +16,12 @@ public class WorkingBenneView implements IWorkingBenneListener {
     }
 
     @Override
-    public void addWorkingBenne(Benne benne) {
+    public void addWorkingBenne(Benne benne, String side) {
         bennePane.getChildren().add(benne.view);
     }
 
     @Override
-    public void removeWorkingBenne(Benne benne) {
+    public void removeWorkingBenne(Benne benne, String side) {
         bennePane.getChildren().remove(benne.view);
     }
 

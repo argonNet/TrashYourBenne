@@ -23,12 +23,15 @@ public abstract class Worker extends Acteur {
     public WaitingBenne transporteurWaitingBenne;
 
     public ArrayList<IWorkerListener> listeners;
-    public IWorkingBenneListener workingBenneListener;
+    public ArrayList<IWorkingBenneListener> workingBenneListeners;
+
+
 
     public Worker(String name, WaitingBenne transporteurWaitingBenne, WaitingBenne waitingBenne) {
         super(name);
 
         listeners = new ArrayList<>();
+        workingBenneListeners = new ArrayList<>();
 
         this.transporteurWaitingBenne = transporteurWaitingBenne;
         this.waitingBenne = waitingBenne;
@@ -50,6 +53,26 @@ public abstract class Worker extends Acteur {
         });
     }
 
+    public void addWorkingBenneListener(IWorkingBenneListener listener){
+        workingBenneListeners.add(listener);
+    }
+
+    private void addWorkingBenne(Benne benneName) {
+        workingBenneListeners.forEach((listener) -> {
+            Platform.runLater(() -> {
+                listener.addWorkingBenne(benneName, this.getClass().getName());
+            });
+        });
+    }
+
+    private void stopWorkingOnBenne(Benne benneName) {
+        workingBenneListeners.forEach((listener) -> {
+            Platform.runLater(() -> {
+                listener.removeWorkingBenne(benneName,this.getClass().getName());
+            });
+        });
+    }
+
     @Override
     public void run(){
 
@@ -61,7 +84,13 @@ public abstract class Worker extends Acteur {
                     Benne benne = this.waitingBenne.TakeBenne();
                     if(benne != null) {
                         getCurrentFillingBennes().add(benne);
-                        Platform.runLater(() -> workingBenneListener.addWorkingBenne(benne));
+                       // Platform.runLater(() -> workingBenneListener.addWorkingBenne(benne));
+                        try {
+                            sleep(100); //WORKAROUND pour résoudre le problème que l'ouvrier prend la benne avant que le transporteur le lui donne...
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        addWorkingBenne(benne);
                     }
                 }
 
@@ -77,7 +106,8 @@ public abstract class Worker extends Acteur {
 
                         if(isBenneReady(currentBenne)){
                             getCurrentFillingBennes().remove(currentBenne);
-                            Platform.runLater(() ->  workingBenneListener.removeWorkingBenne(currentBenne));
+                            //Platform.runLater(() ->  workingBenneListener.removeWorkingBenne(currentBenne));
+                            stopWorkingOnBenne(currentBenne);
                             incFilledBenCount();
                             transporteurWaitingBenne.GiveBenne(currentBenne);
                         }

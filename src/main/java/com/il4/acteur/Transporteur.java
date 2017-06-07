@@ -20,11 +20,11 @@ public class Transporteur extends Acteur{
     private static Lock mylockTransporteur = new ReentrantLock();
 
 
-    private void takeBenne(String benneName){
+    private void takeBenne(String benneName, String side){
 
         listeners.forEach( (listener) -> {
             Platform.runLater(() -> {
-                listener.onTakeBenne(benneName);
+                listener.onTakeBenne(benneName,side);
             });
         });
     }
@@ -47,11 +47,11 @@ public class Transporteur extends Acteur{
         });
     }
 
-    private void giveBenne(String benneName){
+    private void giveBenne(String benneName, String side){
 
         listeners.forEach( (listener) -> {
             Platform.runLater(() -> {
-                listener.onGiveBenne(benneName);
+                listener.onGiveBenne(benneName,side);
             });
         });
     }
@@ -85,7 +85,7 @@ public class Transporteur extends Acteur{
 
             this.setBenne(this.waitingBenneFromBucheron.TakeBenne());
 
-            takeBenne(this.getBenne().name);
+            takeBenne(this.getBenne().name, "Bucheron");
             System.out.println(this.name + "-> Prise en charge de la benne :  " + this.getBenne().name + " à destination de l'ouvrier");
 
 
@@ -104,11 +104,12 @@ public class Transporteur extends Acteur{
 
 
             this.ouvrierWaitingBenne.GiveBenne(this.getBenne());
-            giveBenne(this.getBenne().name);
+
+            giveBenne(this.getBenne().name, "Ouvrier");
 
             this.setBenne(this.waitingBenneFromOuvrier.TakeBenne());
 
-            takeBenne(this.getBenne().name);
+            takeBenne(this.getBenne().name, "Ouvrier");
             System.out.println(this.name + "-> Prise en charge de la benne :  " + this.getBenne().name + " à destination du bucheron");
 
 
@@ -126,7 +127,7 @@ public class Transporteur extends Acteur{
 
 
             this.bucheronWaitingBenne.GiveBenne(this.getBenne());
-            giveBenne(this.getBenne().name);
+            giveBenne(this.getBenne().name,"Bucheron");
 
             this.setBenne(null);
 

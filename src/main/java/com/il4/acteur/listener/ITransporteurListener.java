@@ -5,10 +5,10 @@ package com.il4.acteur.listener;
  */
 public interface ITransporteurListener {
 
-    void onTakeBenne(String benneName);
+    void onTakeBenne(String benneName,String side);
     void onGoOuvrier();
     void onGoBucheron();
-    void onGiveBenne(String benneName);
+    void onGiveBenne(String benneName,String side);
 
 
 }
