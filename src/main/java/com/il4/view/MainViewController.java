@@ -42,13 +42,14 @@ import java.util.ResourceBundle;
 
     public WorkingBenneView fillingBenneView;
     public WorkingBenneView emptyingBenneView;
+    private PetriViewController petriNet;
 
     private void addBucheron(String name){
         BucheronView newView = new BucheronView();
         newView.setName(name);
         bucheronsPane.getChildren().add(newView);
 
-        BackgroundApplication.getInstance().createBucheron(name,newView, this.fillingBenneView);
+        BackgroundApplication.getInstance().createBucheron(name,newView, this.fillingBenneView,petriNet);
     }
 
     private void addTransporteur(String name){
@@ -56,7 +57,7 @@ import java.util.ResourceBundle;
         newView.setName(name);
         transporteursPane.getChildren().add(newView);
 
-        BackgroundApplication.getInstance().createTransporteur(name,newView);
+        BackgroundApplication.getInstance().createTransporteur(name,newView,petriNet);
     }
 
     private void addOuvrier(String name){
@@ -64,20 +65,21 @@ import java.util.ResourceBundle;
         newView.setName(name);
         ouvriersPane.getChildren().add(newView);
 
-        BackgroundApplication.getInstance().createOuvrier(name,newView, this.emptyingBenneView);
+        BackgroundApplication.getInstance().createOuvrier(name,newView, this.emptyingBenneView, petriNet);
     }
 
     private void addBenne(String name){
         BenneView newView = new BenneView();
         newView.setName(name);
         BackgroundApplication.getInstance().createBenne(name,newView);
+        petriNet.addToken();
     }
 
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        petriNet = new PetriViewController();
         spinnerTotalBenneToFill.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0,100));
 
         bucheronWaitingBenne = new WaitingBenneViewController(ListBucheronWaitingBenne);

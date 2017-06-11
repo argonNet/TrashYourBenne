@@ -59,7 +59,7 @@ public class TransporteurView extends ActeurView implements ITransporteurListene
 
 
     @Override
-    public void onTakeBenne(String benneName) {
+    public void onTakeBenne(String benneName, String side) {
         setCurrentBenne(benneName);
     }
 
@@ -74,7 +74,7 @@ public class TransporteurView extends ActeurView implements ITransporteurListene
     }
 
     @Override
-    public void onGiveBenne(String benneName) {
+    public void onGiveBenne(String benneName, String side) {
         resetCurrentBenne();
     }
     @FXML  public void buttonWorkFasterClick (){
