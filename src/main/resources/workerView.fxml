@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.materialicons.MaterialIconView?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<fx:root fx:id="mainPane" prefHeight="80.0" prefWidth="242.0" styleClass="actor" stylesheets="@trashYourBenne.css" type="javafx.scene.layout.AnchorPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <ProgressBar fx:id="progressBar" layoutX="55.0" layoutY="30.0" prefHeight="26.0" prefWidth="132.0" progress="0.0" AnchorPane.leftAnchor="55.0" AnchorPane.rightAnchor="55.0" AnchorPane.topAnchor="30.0" />
+   <Label fx:id="labelBenne" alignment="CENTER" layoutX="10.0" layoutY="60.0" prefHeight="17.0" prefWidth="187.0" text="-" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" />
+   <Label fx:id="labelWorkerType" layoutX="10.0" layoutY="6.0" text="Bucheron :" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="6.0" />
+   <Label fx:id="labelName" layoutX="86.0" layoutY="3.0" prefHeight="23.0" prefWidth="150.0" text="-" AnchorPane.leftAnchor="90.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="3.0">
+      <font>
+         <Font size="18.0" />
+      </font>
+   </Label>
+   <Button fx:id="buttonWorkFaster" layoutX="202.0" layoutY="35.0" mnemonicParsing="false" onAction="#buttonWorkFasterClick" pickOnBounds="false" prefHeight="17.0" prefWidth="32.0" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="30.0">
+      <graphic>
+         <MaterialIconView glyphName="FAST_FORWARD" size="15" />
+      </graphic></Button>
+   <Button fx:id="buttonWorkLess" layoutX="10.0" layoutY="35.0" mnemonicParsing="false" onAction="#buttonWorkLessClick" prefHeight="12.0" prefWidth="33.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="30.0">
+      <graphic>
+         <MaterialIconView glyphName="FAST_REWIND" size="15" />
+      </graphic></Button>
+</fx:root>
