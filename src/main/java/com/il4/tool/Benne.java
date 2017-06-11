@@ -44,15 +44,16 @@ public class Benne {
      */
     public boolean startBenneWorkIfFree() throws InterruptedException{
 
-        ((Acteur)Thread.currentThread()).setStatus(Acteur.ThreadStatus.Await);
+        Acteur.threadAwait();
+
         if (lock.tryLock(10, TimeUnit.MILLISECONDS)){
 
-            ((Acteur)Thread.currentThread()).setStatus(Acteur.ThreadStatus.Running);
+            Acteur.threadRun();
             return true;
 
         }else{
 
-            ((Acteur)Thread.currentThread()).setStatus(Acteur.ThreadStatus.Running);
+            Acteur.threadRun();
             return false;
         }
     }

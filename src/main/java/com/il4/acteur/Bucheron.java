@@ -7,9 +7,7 @@ import javafx.application.Platform;
 
 import java.util.LinkedList;
 import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
  * Created by Argon on 31.03.17.
@@ -47,9 +45,16 @@ public class Bucheron extends Worker {
     }
 
     @Override
+    protected boolean shouldIContinueMyWork() {
+        //Les bucherons s'arrêtent lorsque le total de benne a été remplis
+        //(même si des bennes sont en cours de remplissage)
+        return !isTotalBenneCountFilled();
+    }
+
+    @Override
     protected boolean isBenneReady(Benne benne){
         if(benne.isFull()){
-            incFilledBenCount();
+            incFilledBenneCount();
         }
 
         return benne.isFull();

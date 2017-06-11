@@ -15,19 +15,11 @@ public class ActeurView extends AnchorPane implements IActeurListener {
     @Override
     public void statusChange(Acteur.ThreadStatus status) {
 
-        mainPane.getStyleClass().removeAll("waiting","waitingAlone","waitingInQueue","running", "end");
+        mainPane.getStyleClass().removeAll("waiting","running", "end");
 
         switch (status){
             case Await:
                 mainPane.getStyleClass().add("waiting");
-                break;
-
-            case AwaitAlone:
-                mainPane.getStyleClass().add("waitingAlone");
-                break;
-
-            case AwaitInQueue:
-                mainPane.getStyleClass().add("waitingInQueue");
                 break;
 
             case Running:

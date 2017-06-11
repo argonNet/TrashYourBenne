@@ -1,15 +1,13 @@
 package com.il4.acteur;
 
+import com.il4.acteur.listener.IOuvrierListener;
 import com.il4.tool.Benne;
 import com.il4.tool.WaitingBenne;
-import com.il4.acteur.listener.IOuvrierListener;
 import javafx.application.Platform;
 
 import java.util.LinkedList;
 import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
  * Created by Argon on 31.03.17.
@@ -45,6 +43,17 @@ public class Ouvrier extends Worker {
     @Override
     protected void defineWorkerOperation(){
         removeBoisToBenne();
+    }
+
+    @Override
+    protected boolean shouldIContinueMyWork() {
+        //Un ouvrier s'arrête lorsque toutes les bennes qui devaient être remplies on été vidées
+        return !isTotalBenneCountFilled() ||
+                !(
+                    isTotalBenneCountFilled() &&
+                    !this.waitingBenne.IsABenneWaiting() &&
+                    !isATransporteurWorking()
+                );
     }
 
     @Override

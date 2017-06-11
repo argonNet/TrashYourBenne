@@ -22,6 +22,7 @@ public abstract class Worker extends Acteur {
     protected abstract int getValueOperation();
     protected abstract boolean isBenneReady(Benne benne);
     protected abstract void defineWorkerOperation();
+    protected abstract boolean shouldIContinueMyWork();
 
     public WaitingBenne waitingBenne;
     public WaitingBenne transporteurWaitingBenne;
@@ -79,11 +80,15 @@ public abstract class Worker extends Acteur {
 
         try{
 
-            while(!getWorkIsDone()){
+            while(shouldIContinueMyWork()){
+
+                System.out.println(this.getNameActeur() + " + Un tour !");
 
                 Benne currentBenne =  null;
 
+                Acteur.threadAwait();
                 getCurrentWorkingBennesLock().lock();
+                Acteur.threadRun();
                 try{
 
                     // 1 - Prends une benne en attente, pour la passer en cours de travail
@@ -95,12 +100,19 @@ public abstract class Worker extends Acteur {
                         }
                     }
 
+                    // ... - s'assurer que le travail n'est pas terminé
+                    if(!shouldIContinueMyWork()) break;
+
                     // 2 - Remplir une benne, si la 1er est occupée on prend la suivant jusqu'à en trouver une.
                     for (Benne parsedBenne : getCurrentWorkingBennes()) {
                         if (parsedBenne.startBenneWorkIfFree()){
                             currentBenne = parsedBenne;
                             break;
                         }
+
+                        // ... - s'assurer que le travail n'est pas terminé
+                        if(!shouldIContinueMyWork()) break;
+
                     }
 
                 }finally {
@@ -109,6 +121,9 @@ public abstract class Worker extends Acteur {
 
                 // 3 - Si on a pu obtenir une benne
                 if(currentBenne != null){
+
+                    // ... - s'assurer que le travail n'est pas terminé
+                    if(!shouldIContinueMyWork()) break;
 
                     startWorkingOnBenne(currentBenne.getName());
 
@@ -124,7 +139,10 @@ public abstract class Worker extends Acteur {
                     // 3c - Test si la benne est prête
                     if (isBenneReady(currentBenne)) {
 
+                        Acteur.threadAwait();
                         getCurrentWorkingBennesLock().lock();
+                        Acteur.threadRun();
+
                         try{
                             getCurrentWorkingBennes().remove(currentBenne);
                             stopWorkingOnBenne(currentBenne);

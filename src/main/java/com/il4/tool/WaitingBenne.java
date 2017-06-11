@@ -63,12 +63,14 @@ public class WaitingBenne {
     }
 
     public void GiveBenne(Benne benne){
-        if(Thread.currentThread() instanceof Acteur) ((Acteur)Thread.currentThread()).setStatus(Acteur.ThreadStatus.Await);
+
+        Acteur.threadAwait();
         takeOrGiveBenneLock.lock();
-        if(Thread.currentThread() instanceof Acteur) ((Acteur)Thread.currentThread()).setStatus(Acteur.ThreadStatus.Running);
+        Acteur.threadRun();
+
         try{
             this.waitingBenne.offer(benne);
-            //onBenneGivenNotify(benne.name);
+
             benneListChange();
 
             waitIfNoBenneAvailable.signalAll();
@@ -78,9 +80,10 @@ public class WaitingBenne {
     }
 
     public Benne TakeBenne(){
-        ((Acteur)Thread.currentThread()).setStatus(Acteur.ThreadStatus.Await);
+
+        Acteur.threadAwait();
         takeOrGiveBenneLock.lock();
-        ((Acteur)Thread.currentThread()).setStatus(Acteur.ThreadStatus.Running);
+        Acteur.threadRun();
 
         try{
 
@@ -108,9 +111,11 @@ public class WaitingBenne {
 
                 while(!this.IsABenneWaiting()){
                     try {
-                        ((Acteur)Thread.currentThread()).setStatus(Acteur.ThreadStatus.AwaitInQueue);
+
+                        Acteur.threadAwait();
                         waitIfNoBenneAvailable.await();
-                        ((Acteur)Thread.currentThread()).setStatus(Acteur.ThreadStatus.Running);
+                        Acteur.threadRun();
+
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }

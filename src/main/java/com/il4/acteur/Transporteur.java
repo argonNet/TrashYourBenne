@@ -79,7 +79,15 @@ public class Transporteur extends Acteur{
     @Override
     public void performWork(){
 
-        while(!getWorkIsDone()) { //TODO : Stop this properly
+        while(!isTotalBenneCountFilled() ||
+                !(
+                    isTotalBenneCountFilled() &&
+                    !this.waitingBenneFromBucheron.IsABenneWaiting() &&
+                    !this.ouvrierWaitingBenne.IsABenneWaiting() &&
+                    !this.waitingBenneFromOuvrier.IsABenneWaiting() &&
+                    !isABucheronWorking()
+                )
+        ) {
 
             this.setBenne(this.waitingBenneFromBucheron.TakeBenne());
 
@@ -94,7 +102,6 @@ public class Transporteur extends Acteur{
 
                 goToOuvrier();
             }
-
 
 
             this.ouvrierWaitingBenne.GiveBenne(this.getBenne());
