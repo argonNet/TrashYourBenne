@@ -18,11 +18,11 @@ public class Transporteur extends Acteur{
     private static Lock mylockTransporteur = new ReentrantLock();
 
 
-    private void takeBenne(String benneName){
+    private void takeBenne(String benneName, String side){
 
         listeners.forEach( (listener) -> {
             Platform.runLater(() -> {
-                ((ITransporteurListener)listener).onTakeBenne(benneName);
+                ((ITransporteurListener)listener).onTakeBenne(benneName,side);
             });
         });
     }
@@ -45,11 +45,11 @@ public class Transporteur extends Acteur{
         });
     }
 
-    private void giveBenne(String benneName){
+    private void giveBenne(String benneName, String side){
 
         listeners.forEach( (listener) -> {
             Platform.runLater(() -> {
-                ((ITransporteurListener)listener).onGiveBenne(benneName);
+                ((ITransporteurListener)listener).onGiveBenne(benneName,side);
             });
         });
     }
@@ -77,15 +77,13 @@ public class Transporteur extends Acteur{
     }
 
     @Override
-    public void run(){
+    public void performWork(){
 
         while(!getWorkIsDone()) { //TODO : Stop this properly
 
             this.setBenne(this.waitingBenneFromBucheron.TakeBenne());
 
-            takeBenne(this.getBenne().name);
-            System.out.println(this.name + "-> Prise en charge de la benne :  " + this.getBenne().name + " à destination de l'ouvrier");
-
+            takeBenne(this.getBenne().getName(),  "Bucheron");
 
             for(int i = 0; i <= TRAJET_DISTANCE; i++){
                 try {
@@ -95,19 +93,17 @@ public class Transporteur extends Acteur{
                 }
 
                 goToOuvrier();
-                System.out.println(this.name + "-> Acheminement de la benne : " + this.getBenne().name + " - etat : " +
-                        i + " / " + TRAJET_DISTANCE);
             }
 
 
 
             this.ouvrierWaitingBenne.GiveBenne(this.getBenne());
-            giveBenne(this.getBenne().name);
+            giveBenne(this.getBenne().getName(),  "Ouvrier");
 
             this.setBenne(this.waitingBenneFromOuvrier.TakeBenne());
 
-            takeBenne(this.getBenne().name);
-            System.out.println(this.name + "-> Prise en charge de la benne :  " + this.getBenne().name + " à destination du bucheron");
+            takeBenne(this.getBenne().getName(),  "Ouvrier");
+
 
 
             for(int i = 0; i <= TRAJET_DISTANCE; i++){
@@ -118,18 +114,17 @@ public class Transporteur extends Acteur{
                 }
 
                 goToBucheron();
-                System.out.println(this.name + "-> Acheminement de la benne : " + this.getBenne().name + " - etat : " +
-                        i + " / " + TRAJET_DISTANCE);
+
             }
 
 
             this.bucheronWaitingBenne.GiveBenne(this.getBenne());
-            giveBenne(this.getBenne().name);
+            giveBenne(this.getBenne().getName(), "Bucheron");
 
             this.setBenne(null);
 
         }
-       // System.out.println("Fin du travail pour " + this.name);
+
     }
 
 }

@@ -11,65 +11,86 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
- * Created by Argon on 31.03.17.
+ * Benne, objet remplis par les bucherons, transporté par les transporteur et vidé par les ouvriers
  */
 public class Benne {
 
-    public static final int MAX_REMPLISSAGE = 10;
+    private static final int MAX_REMPLISSAGE = 10;
 
-    public String name;
-
-    public int remplissage;
+    private String name;
+    private int remplissage;
     private final Lock lock = new ReentrantLock();
 
     public BenneView view;
-
     public ArrayList<IBenneListener> listeners;
 
-    public void fillBenne(double value, String workerName){
-        listeners.forEach( (listener) -> {
-            Platform.runLater(() -> {
-                listener.onFillBenne(value, workerName);
-            });
-        });
+    public Benne(String name, BenneView viewB){
+        this.name = name;
+        this.listeners = new ArrayList<>();
+        this.view = viewB;
     }
-
 
     public boolean isFull(){
         return  remplissage >= MAX_REMPLISSAGE;
     }
+
     public boolean isEmpty(){
         return  remplissage <= 0;
     }
 
-    public boolean startBenneWorkIfFree(int value, String workerName) throws InterruptedException{
+    /**
+     * Essaie de prendre la main sur la benne (acquérir le lock).
+     * @return True = l'opération a réussi.
+     */
+    public boolean startBenneWorkIfFree() throws InterruptedException{
 
         ((Acteur)Thread.currentThread()).setStatus(Acteur.ThreadStatus.Await);
         if (lock.tryLock(10, TimeUnit.MILLISECONDS)){
+
             ((Acteur)Thread.currentThread()).setStatus(Acteur.ThreadStatus.Running);
-
-            //Tester si la benne
-
-
-            //this.remplissage += value;
-            //fillBenne((double)value / 10, workerName);
-
             return true;
 
         }else{
+
             ((Acteur)Thread.currentThread()).setStatus(Acteur.ThreadStatus.Running);
             return false;
         }
     }
 
+    /**
+     * Libère la benne (libère le lock).
+     */
     public void stopBenneWork(){
         lock.unlock();
     }
 
-    public Benne(String name, BenneView view){
+    /**
+     * Ajoute la valeur (value) dans la benne
+     * @param value Valeur à ajouter
+     * @param workerName Nom de la personne qui effectue l'opération
+     */
+    public void setNewValue(int value, String workerName){
+        this.remplissage += value;
+        fillBenne((double)value / 10, workerName);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
         this.name = name;
-        this.listeners = new ArrayList<>();
-        this.view  = view;
+    }
+
+    /**
+     * Notifie les abonnée que la benne a été remplie et par qui.
+     */
+    private void fillBenne(double value, String workerName){
+        listeners.forEach( (listener) -> {
+            Platform.runLater(() -> {
+                listener.onFillBenne(value, workerName);
+            });
+        });
     }
 
 }

@@ -4,8 +4,6 @@ import com.il4.acteur.Acteur;
 import com.il4.acteur.listener.IActeurListener;
 import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Background;
-import sun.plugin.javascript.navig.Anchor;
 
 /**
  * Created by Argon on 05.06.17.
@@ -17,7 +15,7 @@ public class ActeurView extends AnchorPane implements IActeurListener {
     @Override
     public void statusChange(Acteur.ThreadStatus status) {
 
-        mainPane.getStyleClass().clear();
+        mainPane.getStyleClass().removeAll("waiting","waitingAlone","waitingInQueue","running", "end");
 
         switch (status){
             case Await:
@@ -31,8 +29,13 @@ public class ActeurView extends AnchorPane implements IActeurListener {
             case AwaitInQueue:
                 mainPane.getStyleClass().add("waitingInQueue");
                 break;
+
             case Running:
                 mainPane.getStyleClass().add("running");
+                break;
+
+            case End:
+                mainPane.getStyleClass().add("end");
                 break;
         }
 

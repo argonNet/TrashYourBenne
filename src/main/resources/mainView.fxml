@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import de.jensd.fx.glyphs.materialicons.MaterialIconView?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
@@ -11,7 +12,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="669.0" prefWidth="1018.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.il4.view.MainViewController">
+<BorderPane prefHeight="669.0" prefWidth="1018.0" stylesheets="@trashYourBenne.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.il4.view.MainViewController">
    <bottom>
       <AnchorPane prefHeight="109.0" prefWidth="1018.0" style="-fx-background-color: darkgrey;" BorderPane.alignment="CENTER">
          <children>
@@ -37,20 +38,103 @@
    <center>
       <AnchorPane prefHeight="294.0" prefWidth="842.0" BorderPane.alignment="CENTER">
          <children>
-            <ListView fx:id="ListBucheronWaitingBenne" layoutX="11.0" layoutY="386.0" prefHeight="150.0" prefWidth="110.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" />
-            <ListView fx:id="ListOuvrierWaitingBenne" layoutX="518.0" layoutY="14.0" prefHeight="150.0" prefWidth="110.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
-            <ListView fx:id="ListTransporteurWaitingBenneBucheron" layoutX="14.0" layoutY="14.0" prefHeight="150.0" prefWidth="110.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0" />
-            <ListView fx:id="ListTransporteurWaitingBenneOuvrier" layoutX="518.0" layoutY="496.0" prefHeight="150.0" prefWidth="110.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" />
-            <VBox fx:id="transporteursPane" alignment="TOP_CENTER" layoutX="76.0" layoutY="89.0" prefHeight="391.0" prefWidth="493.0" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="130.0" AnchorPane.rightAnchor="130.0" AnchorPane.topAnchor="70.0" />
-            <VBox fx:id="fillingBennePane" layoutX="1.0" layoutY="180.0" prefHeight="200.0" prefWidth="110.0" AnchorPane.bottomAnchor="180.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="180.0" />
-            <VBox fx:id="emptyingBennePane" layoutX="521.0" layoutY="180.0" prefHeight="200.0" prefWidth="109.0" AnchorPane.bottomAnchor="180.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="180.0" />
+            <BorderPane layoutX="5.0" layoutY="57.0" prefHeight="474.0" prefWidth="581.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <center>
+                  <VBox fx:id="transporteursPane" alignment="CENTER" prefHeight="176.0" prefWidth="218.0" spacing="5.0" BorderPane.alignment="CENTER">
+                     <BorderPane.margin>
+                        <Insets />
+                     </BorderPane.margin>
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </VBox>
+               </center>
+               <left>
+                  <BorderPane prefWidth="150.0" BorderPane.alignment="CENTER">
+                     <top>
+                        <ListView fx:id="ListTransporteurWaitingBenneBucheron" prefHeight="80.0" prefWidth="200.0" styleClass="waitingBenneList" BorderPane.alignment="CENTER">
+                           <BorderPane.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </BorderPane.margin>
+                        </ListView>
+                     </top>
+                     <bottom>
+                        <ListView fx:id="ListBucheronWaitingBenne" prefHeight="80.0" prefWidth="200.0" styleClass="waitingBenneList" BorderPane.alignment="CENTER">
+                           <BorderPane.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </BorderPane.margin>
+                        </ListView>
+                     </bottom>
+                     <center>
+                        <VBox fx:id="fillingBennePane" alignment="CENTER" prefHeight="400.0" prefWidth="110.0" spacing="5.0" styleClass="waitingBenneList" BorderPane.alignment="CENTER">
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </padding>
+                        </VBox>
+                     </center>
+                  </BorderPane>
+               </left>
+               <right>
+                  <BorderPane prefWidth="150.0" BorderPane.alignment="CENTER">
+                     <top>
+                        <ListView fx:id="ListOuvrierWaitingBenne" prefHeight="80.0" prefWidth="200.0" styleClass="waitingBenneList" BorderPane.alignment="CENTER">
+                           <BorderPane.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </BorderPane.margin>
+                        </ListView>
+                     </top>
+                     <bottom>
+                        <ListView fx:id="ListTransporteurWaitingBenneOuvrier" prefHeight="80.0" prefWidth="200.0" styleClass="waitingBenneList" BorderPane.alignment="CENTER">
+                           <BorderPane.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </BorderPane.margin>
+                        </ListView>
+                     </bottom>
+                     <center>
+                        <VBox fx:id="emptyingBennePane" alignment="CENTER" prefHeight="200.0" prefWidth="129.0" spacing="5.0" BorderPane.alignment="CENTER">
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </padding>
+                        </VBox>
+                     </center>
+                  </BorderPane>
+               </right>
+            </BorderPane>
          </children>
       </AnchorPane>
    </center>
    <left>
-      <VBox fx:id="bucheronsPane" prefHeight="337.0" prefWidth="180.0" BorderPane.alignment="CENTER" />
+      <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <top>
+            <AnchorPane prefHeight="100.0" prefWidth="200.0" styleClass="angle" BorderPane.alignment="CENTER" />
+         </top>
+         <bottom>
+            <AnchorPane prefHeight="100.0" prefWidth="200.0" styleClass="angle" BorderPane.alignment="CENTER" />
+         </bottom>
+         <center>
+            <VBox fx:id="bucheronsPane" alignment="CENTER" prefHeight="337.0" prefWidth="180.0" spacing="5.0" BorderPane.alignment="CENTER">
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </VBox>
+         </center>
+      </BorderPane>
    </left>
    <right>
-      <VBox fx:id="ouvriersPane" prefHeight="572.0" prefWidth="198.0" BorderPane.alignment="CENTER" />
+      <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <center>
+            <VBox fx:id="ouvriersPane" alignment="CENTER" prefHeight="572.0" prefWidth="198.0" spacing="5.0" BorderPane.alignment="CENTER">
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </VBox>
+         </center>
+         <top>
+            <AnchorPane prefHeight="100.0" prefWidth="200.0" styleClass="angle" BorderPane.alignment="CENTER" />
+         </top>
+         <bottom>
+            <AnchorPane prefHeight="100.0" prefWidth="200.0" styleClass="angle" BorderPane.alignment="CENTER" />
+         </bottom>
+      </BorderPane>
    </right>
 </BorderPane>

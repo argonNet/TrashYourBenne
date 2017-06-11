@@ -66,8 +66,8 @@ public class BackgroundApplication {
         Transporteur transporteur = new Transporteur(name,
                                                      transporteurWaitingBenneFromBucheron,bucheronWaitingBenne,
                                                      transporteurWaitingBenneFromOuvrier,ouvrierWaitingBenne);
-        transporteur.listeners.add(view);
-        transporteur.listeners.add(pvctrl);
+        transporteur.addListener(view);
+        transporteur.addListener(pvctrl);
         transporteurs.add(transporteur);
         view.setIdTransporteur(transporteurs.indexOf(transporteur));
         if(isRunning) transporteur.start();

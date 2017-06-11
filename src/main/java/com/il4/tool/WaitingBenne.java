@@ -49,7 +49,7 @@ public class WaitingBenne {
 */
     private void benneListChange(){
         ArrayList<String> benneNames = new ArrayList<>();
-        waitingBenne.forEach((x) -> benneNames.add(x.name));
+        waitingBenne.forEach((x) -> benneNames.add(x.getName()));
 
         listeners.forEach( (listener) -> {
             Platform.runLater(() -> {

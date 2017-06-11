@@ -1,19 +1,39 @@
 
 
 
-.waiting{
-    -fx-background-color: darkorange;
-}
-
-.waitingAlone{
-    -fx-background-color: blueviolet;
-}
-
-.waitingInQueue{
-    -fx-background-color: deeppink;
+.angle{
+    /*-fx-background-color: black;*/
 }
 
 
-.running{
-    -fx-background-color: limegreen;
+.actor{
+    -fx-border-radius: 15px;
+    -fx-background-radius: 15px;
+    -fx-border-width: 2px;
+    -fx-border-color: darkgrey;
+}
+
+    .waiting{
+        -fx-background-color: darkorange;
+    }
+
+    .waitingAlone{
+        -fx-background-color: blueviolet;
+    }
+
+    .waitingInQueue{
+        -fx-background-color: deeppink;
+    }
+
+    .running{
+        -fx-background-color: limegreen;
+    }
+
+    .end{
+        -fx-background-color: darkred;
+    }
+
+
+.waitingBenneList{
+    -fx-margin : 10px;
 }

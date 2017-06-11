@@ -11,7 +11,7 @@ import java.util.concurrent.locks.ReentrantLock;
 /**
  * Created by Argon on 31.03.17.
  */
-public class Acteur extends Thread{
+public abstract class Acteur extends Thread{
 
 
     protected String name;
@@ -84,7 +84,8 @@ public class Acteur extends Thread{
         Await,
         AwaitAlone,
         AwaitInQueue,
-        Running
+        Running,
+        End
     }
 
     private ThreadStatus status;
@@ -103,5 +104,15 @@ public class Acteur extends Thread{
                 (listener).statusChange(status);
             });
         });
+    }
+
+    protected abstract void performWork();
+
+    @Override
+    public void run(){
+        performWork();
+
+        System.out.println("Fin du travail pour " + this.getNameActeur());
+        setStatus(ThreadStatus.End);
     }
 }

@@ -7,14 +7,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
-import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
 
 /**
  * Created by Argon on 02.04.17.
  */
-public class BucheronView extends ActeurView implements IBucheronListener{
+public class BucheronView extends WorkerView implements IBucheronListener{
 
     @FXML public ProgressBar progressBar;
     @FXML public Label labelName;
@@ -22,7 +21,7 @@ public class BucheronView extends ActeurView implements IBucheronListener{
     private int idBucheron;
 
     public BucheronView(){
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("bucheronView.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("workerView.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
 
@@ -31,6 +30,8 @@ public class BucheronView extends ActeurView implements IBucheronListener{
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
+
+        labelWorkerType.setText("Bucheron");
     }
 
     public void setIdBucheron (int index)

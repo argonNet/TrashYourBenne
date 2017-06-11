@@ -1,8 +1,7 @@
 package com.il4.view;
 
-import com.il4.acteur.listener.IBucheronListener;
+import com.il4.acteur.Acteur;
 import com.il4.acteur.listener.ITransporteurListener;
-import com.il4.petri.Arc;
 import com.il4.petri.Petrinet;
 import com.il4.petri.Place;
 import com.il4.petri.Transition;
@@ -155,4 +154,8 @@ public class PetriViewController implements IWorkingBenneListener,ITransporteurL
         }
     }
 
+    @Override
+    public void statusChange(Acteur.ThreadStatus status) {
+        //Nothing to do in this.
+    }
 }

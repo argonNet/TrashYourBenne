@@ -1,20 +1,19 @@
 package com.il4.view.component;
 
 import com.il4.BackgroundApplication;
-import com.il4.acteur.listener.IOuvrierListener;
 import com.il4.acteur.Ouvrier;
+import com.il4.acteur.listener.IOuvrierListener;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
-import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
 
 /**
  * Created by Argon on 02.04.17.
  */
-public class OuvrierView extends ActeurView implements IOuvrierListener {
+public class OuvrierView extends WorkerView implements IOuvrierListener {
 
     @FXML public ProgressBar progressBar;
     @FXML public Label labelName;
@@ -22,7 +21,7 @@ public class OuvrierView extends ActeurView implements IOuvrierListener {
     private int idOuvrier;
 
     public OuvrierView(){
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("ouvrierView.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("workerView.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
 
@@ -31,6 +30,8 @@ public class OuvrierView extends ActeurView implements IOuvrierListener {
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
+
+        labelWorkerType.setText("Ouvrier");
     }
 
     public void setIdOuvrier (int index)
