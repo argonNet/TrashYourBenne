@@ -15,27 +15,11 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="669.0" prefWidth="1018.0" stylesheets="@trashYourBenne.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.il4.view.MainViewController">
+<BorderPane prefHeight="727.0" prefWidth="1122.0" stylesheets="@trashYourBenne.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.il4.view.MainViewController">
    <bottom>
-      <AnchorPane prefHeight="238.0" prefWidth="1018.0" style="-fx-background-color: darkgrey;" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="279.0" prefWidth="1122.0" style="-fx-background-color: darkgrey;" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="buttonStart" layoutX="14.0" layoutY="18.0" mnemonicParsing="false" onAction="#buttonStartClick" prefHeight="74.0" prefWidth="75.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="18.0">
-               <graphic>
-                  <MaterialIconView glyphName="PLAY_ARROW" size="35" />
-               </graphic></Button>
-            <TextField fx:id="textFieldBucheronName" layoutX="826.0" layoutY="4.0" prefHeight="27.0" prefWidth="186.0" AnchorPane.rightAnchor="6.0" />
-            <Button fx:id="buttonAddBucheron" layoutX="670.0" layoutY="4.0" mnemonicParsing="false" onAction="#buttonAddBucheron" prefHeight="27.0" prefWidth="148.0" text="Add Bucheron" AnchorPane.rightAnchor="200.0" />
-            <TextField fx:id="textFieldOuvrierName" layoutX="828.0" layoutY="72.0" prefHeight="27.0" prefWidth="184.0" AnchorPane.rightAnchor="6.0" />
-            <Button layoutX="670.0" layoutY="72.0" mnemonicParsing="false" onAction="#buttonAddOuvrier" prefHeight="27.0" prefWidth="148.0" text="Add Ouvrier" AnchorPane.rightAnchor="200.0" />
-            <Button layoutX="572.0" layoutY="4.0" mnemonicParsing="false" onAction="#buttonAddBenneClick" prefHeight="27.0" prefWidth="87.0" text="Add Benne" AnchorPane.rightAnchor="359.0" AnchorPane.topAnchor="4.0" />
-            <TextField fx:id="textFieldTransporteurName" layoutX="826.0" layoutY="38.0" prefHeight="27.0" prefWidth="186.0" AnchorPane.rightAnchor="6.0" />
-            <Button layoutX="670.0" layoutY="38.0" mnemonicParsing="false" onAction="#buttonAddTransporteur" prefHeight="27.0" prefWidth="149.0" text="Add Transporteur" AnchorPane.rightAnchor="199.0" />
-            <Spinner fx:id="spinnerTotalBenneToFill" layoutX="277.0" layoutY="18.0" prefHeight="27.0" prefWidth="102.0" AnchorPane.leftAnchor="277.0" AnchorPane.topAnchor="18.0">
-               <tooltip>
-                  <Tooltip text="Permet de définir le nombre de benne total à remplir, afin de déterminer à quel moment le traitement s'arrêtera." />
-               </tooltip></Spinner>
-            <Label layoutX="94.0" layoutY="23.0" text="Nombre de benne à remplir :" AnchorPane.leftAnchor="94.0" AnchorPane.topAnchor="23.0" />
-            <BarChart fx:id="actorWorkChart" layoutX="182.0" layoutY="99.0" prefHeight="209.0" prefWidth="366.0">
+            <BarChart fx:id="actorWorkChart" layoutY="102.0" prefHeight="177.0" prefWidth="335.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="787.0" AnchorPane.topAnchor="102.0">
               <xAxis>
                 <CategoryAxis side="BOTTOM" fx:id="xAxis" />
               </xAxis>
@@ -43,6 +27,29 @@
                 <NumberAxis side="LEFT" />
               </yAxis>
             </BarChart>
+            <AnchorPane prefHeight="90.0" prefWidth="1095.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <Button fx:id="buttonStart" layoutX="12.0" layoutY="9.0" mnemonicParsing="false" onAction="#buttonStartClick" prefHeight="35.0" prefWidth="29.0" AnchorPane.leftAnchor="12.0" AnchorPane.topAnchor="9.0">
+                     <graphic>
+                        <MaterialIconView glyphName="PLAY_ARROW" size="25" />
+                     </graphic>
+                  </Button>
+                  <TextField fx:id="textFieldBucheronName" layoutX="201.0" layoutY="13.0" prefHeight="27.0" prefWidth="130.0" />
+                  <Button fx:id="buttonAddBucheron" layoutX="66.0" layoutY="13.0" mnemonicParsing="false" onAction="#buttonAddBucheron" prefHeight="27.0" prefWidth="135.0" text="Add Bucheron" />
+                  <TextField fx:id="textFieldTransporteurName" layoutX="548.0" layoutY="13.0" prefHeight="27.0" prefWidth="130.0" />
+                  <Button layoutX="402.0" layoutY="13.0" mnemonicParsing="false" onAction="#buttonAddTransporteur" prefHeight="27.0" prefWidth="135.0" text="Add Transporteur" />
+                  <TextField fx:id="textFieldOuvrierName" layoutX="910.0" layoutY="13.0" prefHeight="27.0" prefWidth="130.0" />
+                  <Button layoutX="750.0" layoutY="13.0" mnemonicParsing="false" onAction="#buttonAddOuvrier" prefHeight="17.0" prefWidth="135.0" text="Add Ouvrier" />
+                  <Button layoutX="530.0" layoutY="49.0" mnemonicParsing="false" onAction="#buttonAddBenneClick" prefHeight="27.0" prefWidth="87.0" text="Add Benne" />
+                  <Spinner fx:id="spinnerTotalBenneToFill" layoutX="330.0" layoutY="49.0" prefHeight="27.0" prefWidth="102.0">
+                     <tooltip>
+                        <Tooltip text="Permet de définir le nombre de benne total à remplir, afin de déterminer à quel moment le traitement s'arrêtera." />
+                     </tooltip>
+                  </Spinner>
+                  <Label layoutX="147.0" layoutY="54.0" text="Nombre de benne à remplir :" />
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutX="496.0" layoutY="79.0" prefHeight="200.0" prefWidth="500.0" />
          </children>
       </AnchorPane>
    </bottom>
@@ -50,16 +57,6 @@
       <AnchorPane prefHeight="294.0" prefWidth="842.0" BorderPane.alignment="CENTER">
          <children>
             <BorderPane layoutX="5.0" layoutY="57.0" prefHeight="474.0" prefWidth="581.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-               <center>
-                  <VBox fx:id="transporteursPane" alignment="CENTER" prefHeight="176.0" prefWidth="218.0" spacing="5.0" BorderPane.alignment="CENTER">
-                     <BorderPane.margin>
-                        <Insets />
-                     </BorderPane.margin>
-                     <padding>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </padding>
-                  </VBox>
-               </center>
                <left>
                   <BorderPane prefWidth="150.0" BorderPane.alignment="CENTER">
                      <top>
@@ -110,6 +107,16 @@
                      </center>
                   </BorderPane>
                </right>
+               <top>
+                  <VBox fx:id="transporteursPane" alignment="CENTER" prefHeight="176.0" prefWidth="218.0" spacing="5.0" BorderPane.alignment="CENTER">
+                     <BorderPane.margin>
+                        <Insets />
+                     </BorderPane.margin>
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </VBox>
+               </top>
             </BorderPane>
          </children>
       </AnchorPane>

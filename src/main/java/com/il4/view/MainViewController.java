@@ -20,6 +20,12 @@ import java.util.ResourceBundle;
  */
     public class MainViewController implements Initializable, IActeurListener {
 
+    private enum ActeurType{
+        Bucheron,
+        Transporteur,
+        Ouvrier
+    }
+
     @FXML public VBox bucheronsPane;
     @FXML public VBox fillingBennePane;
     @FXML public VBox transporteursPane;
@@ -53,11 +59,31 @@ import java.util.ResourceBundle;
     public WorkingBenneView emptyingBenneView;
     private PetriViewController petriNet;
 
+    private XYChart.Data<String,Integer> createNewBarForChart(String name , ActeurType acteurType){
+        XYChart.Data<String,Integer> bar = new XYChart.Data<>(name,0);
+
+        bar.nodeProperty().addListener((observable, oldValue, newValue) -> {
+            switch (acteurType) {
+                case Bucheron:
+                    newValue.setStyle("-fx-bar-fill: #1b9b00;");
+                    break;
+                case Transporteur:
+                    newValue.setStyle("-fx-bar-fill: #55259b;");
+                    break;
+                case Ouvrier:
+                    newValue.setStyle("-fx-bar-fill: #272f9b;");
+                    break;
+            }
+        });
+
+        return bar;
+    }
+
     private void addBucheron(String name){
         BucheronView newView = new BucheronView();
         newView.setName(name);
         bucheronsPane.getChildren().add(newView);
-        actorWorkChartSeries.getData().add(new XYChart.Data<>(name,0));
+        actorWorkChartSeries.getData().add(createNewBarForChart(name,ActeurType.Bucheron));
 
         BackgroundApplication.getInstance().createBucheron(name,newView, this.fillingBenneView,petriNet,this);
     }
@@ -66,7 +92,7 @@ import java.util.ResourceBundle;
         TransporteurView newView = new TransporteurView();
         newView.setName(name);
         transporteursPane.getChildren().add(newView);
-        actorWorkChartSeries.getData().add(new XYChart.Data<>(name,0));
+        actorWorkChartSeries.getData().add(createNewBarForChart(name,ActeurType.Transporteur));
 
         BackgroundApplication.getInstance().createTransporteur(name,newView,petriNet,this);
     }
@@ -75,7 +101,7 @@ import java.util.ResourceBundle;
         OuvrierView newView = new OuvrierView();
         newView.setName(name);
         ouvriersPane.getChildren().add(newView);
-        actorWorkChartSeries.getData().add(new XYChart.Data<>(name,0));
+        actorWorkChartSeries.getData().add(createNewBarForChart(name,ActeurType.Ouvrier));
 
         BackgroundApplication.getInstance().createOuvrier(name,newView, this.emptyingBenneView, petriNet,this);
     }
@@ -109,6 +135,8 @@ import java.util.ResourceBundle;
                 transporteurWaitingBenneBucheron,
                 transporteurWaitingBenneOuvrier);
 
+        actorWorkChart.getData().add(actorWorkChartSeries);
+
         addBenne("Benne 1");
         addBenne("Benne 2");
         addBenne("Benne 3");
@@ -119,7 +147,6 @@ import java.util.ResourceBundle;
 
         spinnerTotalBenneToFill.getValueFactory().valueProperty().setValue(20);
 
-        actorWorkChart.getData().add(actorWorkChartSeries);
     }
 
 
