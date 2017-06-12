@@ -2,6 +2,7 @@ package com.il4.acteur;
 
 import com.il4.tool.WaitingBenne;
 import com.il4.acteur.listener.ITransporteurListener;
+import com.il4.tool.listener.IWorkingBenneListener;
 import javafx.application.Platform;
 
 import java.util.ArrayList;
@@ -22,7 +23,7 @@ public class Transporteur extends Acteur{
 
         listeners.forEach( (listener) -> {
             Platform.runLater(() -> {
-                ((ITransporteurListener)listener).onTakeBenne(benneName,side);
+                if(listener instanceof ITransporteurListener) ((ITransporteurListener)listener).onTakeBenne(benneName,side);
             });
         });
     }
@@ -31,7 +32,7 @@ public class Transporteur extends Acteur{
 
         listeners.forEach( (listener) -> {
             Platform.runLater(() -> {
-                ((ITransporteurListener)listener).onGoOuvrier();
+                if(listener instanceof ITransporteurListener) ((ITransporteurListener)listener).onGoOuvrier();
             });
         });
     }
@@ -40,7 +41,7 @@ public class Transporteur extends Acteur{
 
         listeners.forEach( (listener) -> {
             Platform.runLater(() -> {
-                ((ITransporteurListener)listener).onGoBucheron();
+                if(listener instanceof ITransporteurListener) ((ITransporteurListener)listener).onGoBucheron();
             });
         });
     }
@@ -49,7 +50,7 @@ public class Transporteur extends Acteur{
 
         listeners.forEach( (listener) -> {
             Platform.runLater(() -> {
-                ((ITransporteurListener)listener).onGiveBenne(benneName,side);
+                if(listener instanceof ITransporteurListener) ((ITransporteurListener)listener).onGiveBenne(benneName,side);
             });
         });
     }
@@ -103,7 +104,7 @@ public class Transporteur extends Acteur{
                 goToOuvrier();
             }
 
-
+            this.incOperationCount();
             this.ouvrierWaitingBenne.GiveBenne(this.getBenne());
             giveBenne(this.getBenne().getName(),  "Ouvrier");
 
@@ -124,7 +125,7 @@ public class Transporteur extends Acteur{
 
             }
 
-
+            this.incOperationCount();
             this.bucheronWaitingBenne.GiveBenne(this.getBenne());
             giveBenne(this.getBenne().getName(), "Bucheron");
 

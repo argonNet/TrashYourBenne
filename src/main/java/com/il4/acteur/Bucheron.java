@@ -24,7 +24,7 @@ public class Bucheron extends Worker {
     private void addBoisToBenne() {
         listeners.forEach((listener) -> {
             Platform.runLater(() -> {
-                ((IBucheronListener)listener).onAddBoisToBenne();
+                if(listener instanceof  IBucheronListener) ((IBucheronListener)listener).onAddBoisToBenne();
             });
         });
     }

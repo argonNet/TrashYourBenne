@@ -74,12 +74,14 @@ public abstract class Acteur extends Thread{
     //endregion
 
     //region *** Standard Declaration ***
+    private int operationCount;
 
     private Benne benne;
 
     protected String name;
     protected int speed;
     protected ArrayList<IActeurListener> listeners;
+
 
     public Acteur(String name){
         this.name = name;
@@ -142,6 +144,25 @@ public abstract class Acteur extends Thread{
     }
 
     protected abstract void performWork();
+
+
+    public int getOperationCount() {
+        return operationCount;
+    }
+
+    protected void incOperationCount() {
+        this.operationCount++;
+
+        listeners.forEach( (listener) -> {
+            Platform.runLater(() -> {
+                (listener).operationDone(this);
+            });
+        });
+    }
+
+    protected void resetOperationCount(){
+        this.operationCount = 0;
+    }
 
     //endregion
 

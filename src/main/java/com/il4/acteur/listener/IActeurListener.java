@@ -8,5 +8,6 @@ import com.il4.acteur.Acteur;
 public interface IActeurListener {
 
     void statusChange(Acteur.ThreadStatus status);
+    void operationDone(Acteur sender);
 
 }

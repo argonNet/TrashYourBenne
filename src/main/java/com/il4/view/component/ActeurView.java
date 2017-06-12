@@ -32,4 +32,9 @@ public class ActeurView extends AnchorPane implements IActeurListener {
         }
 
     }
+
+    @Override
+    public void operationDone(Acteur sender) {
+        //No operation to perform
+    }
 }

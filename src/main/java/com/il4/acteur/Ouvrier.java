@@ -1,5 +1,6 @@
 package com.il4.acteur;
 
+import com.il4.acteur.listener.IBucheronListener;
 import com.il4.acteur.listener.IOuvrierListener;
 import com.il4.tool.Benne;
 import com.il4.tool.WaitingBenne;
@@ -21,7 +22,7 @@ public class Ouvrier extends Worker {
 
         listeners.forEach( (listener) -> {
             Platform.runLater(() -> {
-                ((IOuvrierListener)listener).onRemoveBoisToBenne();
+                if(listener instanceof IOuvrierListener)((IOuvrierListener)listener).onRemoveBoisToBenne();
             });
         });
     }

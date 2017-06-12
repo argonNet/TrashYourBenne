@@ -46,7 +46,7 @@ public abstract class Worker extends Acteur {
     private void addWorkingBenne(Benne benneName) {
         workingBenneListeners.forEach((listener) -> {
             Platform.runLater(() -> {
-                listener.addWorkingBenne(benneName, this.getClass().getName());
+                if(listener instanceof  IWorkingBenneListener) listener.addWorkingBenne(benneName, this.getClass().getName());
             });
         });
     }
@@ -54,7 +54,7 @@ public abstract class Worker extends Acteur {
     private void stopWorkingOnBenne(Benne benneName) {
         workingBenneListeners.forEach((listener) -> {
             Platform.runLater(() -> {
-                listener.removeWorkingBenne(benneName,this.getClass().getName());
+                if(listener instanceof  IWorkingBenneListener) listener.removeWorkingBenne(benneName,this.getClass().getName());
             });
         });
     }
@@ -62,7 +62,7 @@ public abstract class Worker extends Acteur {
     private void startWorkingOnBenne(String benneName) {
         listeners.forEach((listener) -> {
             Platform.runLater(() -> {
-                ((IWorkerListener)listener).onStartWorkingOnBenne(benneName);
+                if(listener instanceof  IWorkingBenneListener) ((IWorkerListener)listener).onStartWorkingOnBenne(benneName);
             });
         });
     }
@@ -70,7 +70,7 @@ public abstract class Worker extends Acteur {
     private void stopWorkingOnBenne() {
         listeners.forEach((listener) -> {
             Platform.runLater(() -> {
-                ((IWorkerListener)listener).onStopWorkingOnBenne();
+                if(listener instanceof  IWorkingBenneListener) ((IWorkerListener)listener).onStopWorkingOnBenne();
             });
         });
     }
@@ -81,8 +81,6 @@ public abstract class Worker extends Acteur {
         try{
 
             while(shouldIContinueMyWork()){
-
-                System.out.println(this.getNameActeur() + " + Un tour !");
 
                 Benne currentBenne =  null;
 
@@ -129,6 +127,7 @@ public abstract class Worker extends Acteur {
 
                     // 3a - Définir la nouvelle valeur de la benne
                     currentBenne.setNewValue(getValueOperation(),this.getNameActeur());
+                    this.incOperationCount();
 
                     // 3b - Simulation du travail
                     for (int j = 0; j < 10; j++) {

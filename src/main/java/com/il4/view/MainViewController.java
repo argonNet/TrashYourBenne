@@ -1,9 +1,14 @@
 package com.il4.view;
 
 import com.il4.BackgroundApplication;
+import com.il4.acteur.Acteur;
+import com.il4.acteur.listener.IActeurListener;
 import com.il4.view.component.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 
@@ -13,7 +18,7 @@ import java.util.ResourceBundle;
 /**
  * Created by Argon on 01.04.17.
  */
-    public class MainViewController implements Initializable {
+    public class MainViewController implements Initializable, IActeurListener {
 
     @FXML public VBox bucheronsPane;
     @FXML public VBox fillingBennePane;
@@ -35,6 +40,10 @@ import java.util.ResourceBundle;
 
     @FXML public ListView<String> ListOuvrierWaitingBenne;
 
+    @FXML public BarChart<String,Integer> actorWorkChart;
+    @FXML public CategoryAxis xAxis;
+    private XYChart.Series<String, Integer> actorWorkChartSeries = new XYChart.Series<>();
+
     public WaitingBenneViewController transporteurWaitingBenneBucheron;
     public WaitingBenneViewController transporteurWaitingBenneOuvrier;
     public WaitingBenneViewController bucheronWaitingBenne;
@@ -48,24 +57,27 @@ import java.util.ResourceBundle;
         BucheronView newView = new BucheronView();
         newView.setName(name);
         bucheronsPane.getChildren().add(newView);
+        actorWorkChartSeries.getData().add(new XYChart.Data<>(name,0));
 
-        BackgroundApplication.getInstance().createBucheron(name,newView, this.fillingBenneView,petriNet);
+        BackgroundApplication.getInstance().createBucheron(name,newView, this.fillingBenneView,petriNet,this);
     }
 
     private void addTransporteur(String name){
         TransporteurView newView = new TransporteurView();
         newView.setName(name);
         transporteursPane.getChildren().add(newView);
+        actorWorkChartSeries.getData().add(new XYChart.Data<>(name,0));
 
-        BackgroundApplication.getInstance().createTransporteur(name,newView,petriNet);
+        BackgroundApplication.getInstance().createTransporteur(name,newView,petriNet,this);
     }
 
     private void addOuvrier(String name){
         OuvrierView newView = new OuvrierView();
         newView.setName(name);
         ouvriersPane.getChildren().add(newView);
+        actorWorkChartSeries.getData().add(new XYChart.Data<>(name,0));
 
-        BackgroundApplication.getInstance().createOuvrier(name,newView, this.emptyingBenneView, petriNet);
+        BackgroundApplication.getInstance().createOuvrier(name,newView, this.emptyingBenneView, petriNet,this);
     }
 
     private void addBenne(String name){
@@ -107,8 +119,7 @@ import java.util.ResourceBundle;
 
         spinnerTotalBenneToFill.getValueFactory().valueProperty().setValue(20);
 
-
-
+        actorWorkChart.getData().add(actorWorkChartSeries);
     }
 
 
@@ -133,4 +144,15 @@ import java.util.ResourceBundle;
     }
 
 
+    @Override
+    public void statusChange(Acteur.ThreadStatus status) {
+        //Nothing to do in it
+    }
+
+    @Override
+    public void operationDone(Acteur sender) {
+        actorWorkChartSeries.getData().filtered((x) -> {
+            return x.XValueProperty().getValue() == sender.getNameActeur();
+        }).get(0).YValueProperty().setValue(sender.getOperationCount());
+    }
 }

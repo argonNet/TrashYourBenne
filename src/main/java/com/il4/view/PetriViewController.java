@@ -158,4 +158,9 @@ public class PetriViewController implements IWorkingBenneListener,ITransporteurL
     public void statusChange(Acteur.ThreadStatus status) {
         //Nothing to do in this.
     }
+
+    @Override
+    public void operationDone(Acteur sender) {
+        //Nothing to do in this.
+    }
 }
