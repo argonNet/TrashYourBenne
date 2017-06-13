@@ -2,6 +2,9 @@ package com.il4.view;
 
 import com.il4.BackgroundApplication;
 import com.il4.acteur.Acteur;
+import com.il4.acteur.Bucheron;
+import com.il4.acteur.Ouvrier;
+import com.il4.acteur.Transporteur;
 import com.il4.acteur.listener.IActeurListener;
 import com.il4.view.component.*;
 import javafx.fxml.FXML;
@@ -46,9 +49,17 @@ import java.util.ResourceBundle;
 
     @FXML public ListView<String> ListOuvrierWaitingBenne;
 
-    @FXML public BarChart<String,Integer> actorWorkChart;
-    @FXML public CategoryAxis xAxis;
-    private XYChart.Series<String, Integer> actorWorkChartSeries = new XYChart.Series<>();
+    @FXML public BarChart<String,Integer>  bucheronWorkChart;
+    @FXML public CategoryAxis xAxisBucheron;
+    private XYChart.Series<String, Integer> bucheronWorkChartSeries = new XYChart.Series<>();
+
+    @FXML public BarChart<String,Integer> transporteurWorkChart;
+    @FXML public CategoryAxis xAxisTransporteur;
+    private XYChart.Series<String, Integer> transporteurWorkChartSeries = new XYChart.Series<>();
+
+    @FXML public BarChart<String,Integer> ouvrierWorkChart;
+    @FXML public CategoryAxis xAxisOuvrier;
+    private XYChart.Series<String, Integer> ouvrierWorkChartSeries = new XYChart.Series<>();
 
     public WaitingBenneViewController transporteurWaitingBenneBucheron;
     public WaitingBenneViewController transporteurWaitingBenneOuvrier;
@@ -83,7 +94,7 @@ import java.util.ResourceBundle;
         BucheronView newView = new BucheronView();
         newView.setName(name);
         bucheronsPane.getChildren().add(newView);
-        actorWorkChartSeries.getData().add(createNewBarForChart(name,ActeurType.Bucheron));
+        bucheronWorkChartSeries.getData().add(createNewBarForChart(name,ActeurType.Bucheron));
 
         BackgroundApplication.getInstance().createBucheron(name,newView, this.fillingBenneView,petriNet,this);
     }
@@ -92,7 +103,7 @@ import java.util.ResourceBundle;
         TransporteurView newView = new TransporteurView();
         newView.setName(name);
         transporteursPane.getChildren().add(newView);
-        actorWorkChartSeries.getData().add(createNewBarForChart(name,ActeurType.Transporteur));
+        transporteurWorkChartSeries.getData().add(createNewBarForChart(name,ActeurType.Transporteur));
 
         BackgroundApplication.getInstance().createTransporteur(name,newView,petriNet,this);
     }
@@ -101,7 +112,7 @@ import java.util.ResourceBundle;
         OuvrierView newView = new OuvrierView();
         newView.setName(name);
         ouvriersPane.getChildren().add(newView);
-        actorWorkChartSeries.getData().add(createNewBarForChart(name,ActeurType.Ouvrier));
+        ouvrierWorkChartSeries.getData().add(createNewBarForChart(name,ActeurType.Ouvrier));
 
         BackgroundApplication.getInstance().createOuvrier(name,newView, this.emptyingBenneView, petriNet,this);
     }
@@ -135,7 +146,10 @@ import java.util.ResourceBundle;
                 transporteurWaitingBenneBucheron,
                 transporteurWaitingBenneOuvrier);
 
-        actorWorkChart.getData().add(actorWorkChartSeries);
+
+        bucheronWorkChart.getData().add(bucheronWorkChartSeries);
+        transporteurWorkChart.getData().add(transporteurWorkChartSeries);
+        ouvrierWorkChart.getData().add(ouvrierWorkChartSeries);
 
         addBenne("Benne 1");
         addBenne("Benne 2");
@@ -178,7 +192,18 @@ import java.util.ResourceBundle;
 
     @Override
     public void operationDone(Acteur sender) {
-        actorWorkChartSeries.getData().filtered((x) -> {
+
+        XYChart.Series<String, Integer> workChartSerie = null;
+
+        if(sender instanceof Bucheron){
+            workChartSerie = bucheronWorkChartSeries;
+        }else if(sender instanceof Transporteur){
+            workChartSerie = transporteurWorkChartSeries;
+        }else if(sender instanceof Ouvrier){
+            workChartSerie = ouvrierWorkChartSeries;
+        }
+
+        workChartSerie.getData().filtered((x) -> {
             return x.XValueProperty().getValue() == sender.getNameActeur();
         }).get(0).YValueProperty().setValue(sender.getOperationCount());
     }

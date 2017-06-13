@@ -9,37 +9,30 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="727.0" prefWidth="1122.0" stylesheets="@trashYourBenne.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.il4.view.MainViewController">
+<BorderPane prefHeight="727.0" prefWidth="1050.0" stylesheets="@trashYourBenne.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.il4.view.MainViewController">
    <bottom>
-      <AnchorPane prefHeight="279.0" prefWidth="1122.0" style="-fx-background-color: darkgrey;" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="303.0" prefWidth="1050.0" style="-fx-background-color: darkgrey;" BorderPane.alignment="CENTER">
          <children>
-            <BarChart fx:id="actorWorkChart" layoutY="102.0" prefHeight="177.0" prefWidth="335.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="787.0" AnchorPane.topAnchor="102.0">
-              <xAxis>
-                <CategoryAxis side="BOTTOM" fx:id="xAxis" />
-              </xAxis>
-              <yAxis>
-                <NumberAxis side="LEFT" />
-              </yAxis>
-            </BarChart>
-            <AnchorPane prefHeight="90.0" prefWidth="1095.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <AnchorPane layoutX="320.0" prefHeight="90.0" prefWidth="1095.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-0.0" AnchorPane.topAnchor="212.0">
                <children>
                   <Button fx:id="buttonStart" layoutX="12.0" layoutY="9.0" mnemonicParsing="false" onAction="#buttonStartClick" prefHeight="35.0" prefWidth="29.0" AnchorPane.leftAnchor="12.0" AnchorPane.topAnchor="9.0">
                      <graphic>
                         <MaterialIconView glyphName="PLAY_ARROW" size="25" />
                      </graphic>
                   </Button>
-                  <TextField fx:id="textFieldBucheronName" layoutX="201.0" layoutY="13.0" prefHeight="27.0" prefWidth="130.0" />
+                  <TextField fx:id="textFieldBucheronName" layoutX="212.0" layoutY="13.0" prefHeight="27.0" prefWidth="130.0" />
                   <Button fx:id="buttonAddBucheron" layoutX="66.0" layoutY="13.0" mnemonicParsing="false" onAction="#buttonAddBucheron" prefHeight="27.0" prefWidth="135.0" text="Add Bucheron" />
                   <TextField fx:id="textFieldTransporteurName" layoutX="548.0" layoutY="13.0" prefHeight="27.0" prefWidth="130.0" />
                   <Button layoutX="402.0" layoutY="13.0" mnemonicParsing="false" onAction="#buttonAddTransporteur" prefHeight="27.0" prefWidth="135.0" text="Add Transporteur" />
-                  <TextField fx:id="textFieldOuvrierName" layoutX="910.0" layoutY="13.0" prefHeight="27.0" prefWidth="130.0" />
-                  <Button layoutX="750.0" layoutY="13.0" mnemonicParsing="false" onAction="#buttonAddOuvrier" prefHeight="17.0" prefWidth="135.0" text="Add Ouvrier" />
+                  <TextField fx:id="textFieldOuvrierName" layoutX="906.0" layoutY="13.0" prefHeight="27.0" prefWidth="130.0" />
+                  <Button layoutX="763.0" layoutY="13.0" mnemonicParsing="false" onAction="#buttonAddOuvrier" prefHeight="19.0" prefWidth="135.0" text="Add Ouvrier" />
                   <Button layoutX="530.0" layoutY="49.0" mnemonicParsing="false" onAction="#buttonAddBenneClick" prefHeight="27.0" prefWidth="87.0" text="Add Benne" />
                   <Spinner fx:id="spinnerTotalBenneToFill" layoutX="330.0" layoutY="49.0" prefHeight="27.0" prefWidth="102.0">
                      <tooltip>
@@ -49,7 +42,54 @@
                   <Label layoutX="147.0" layoutY="54.0" text="Nombre de benne à remplir :" />
                </children>
             </AnchorPane>
-            <AnchorPane layoutX="496.0" layoutY="79.0" prefHeight="200.0" prefWidth="500.0" />
+            <SplitPane dividerPositions="0.33240997229916897" layoutX="55.0" layoutY="116.0" prefHeight="212.0" prefWidth="954.0" AnchorPane.bottomAnchor="90.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+              <items>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="158.0" prefWidth="146.0">
+                     <children>
+                        <BarChart fx:id="bucheronWorkChart" layoutX="-17.0" layoutY="-23.0" legendVisible="false" prefHeight="242.0" prefWidth="218.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <xAxis>
+                              <CategoryAxis side="BOTTOM" fx:id="xAxisBucheron" />
+                           </xAxis>
+                           <yAxis>
+                              <NumberAxis side="LEFT" />
+                           </yAxis>
+                        </BarChart>
+                     </children>
+                  </AnchorPane>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="158.0" prefWidth="213.0">
+                     <children>
+                        <SplitPane dividerPositions="0.5115273775216138" layoutX="-41.0" layoutY="-24.0" prefHeight="158.0" prefWidth="223.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                          <items>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                                 <children>
+                                    <BarChart fx:id="transporteurWorkChart" layoutX="-61.0" layoutY="-63.0" legendVisible="false" prefHeight="252.0" prefWidth="410.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <xAxis>
+                                          <CategoryAxis side="BOTTOM" fx:id="xAxisTransporteur" />
+                                       </xAxis>
+                                       <yAxis>
+                                          <NumberAxis side="LEFT" />
+                                       </yAxis>
+                                    </BarChart>
+                                 </children>
+                              </AnchorPane>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                                 <children>
+                                    <BarChart fx:id="ouvrierWorkChart" layoutX="-42.0" layoutY="-59.0" legendVisible="false" prefHeight="252.0" prefWidth="330.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                      <xAxis>
+                                        <CategoryAxis side="BOTTOM" fx:id="xAxisOuvrier" />
+                                      </xAxis>
+                                      <yAxis>
+                                        <NumberAxis side="LEFT" />
+                                      </yAxis>
+                                    </BarChart>
+                                 </children>
+                              </AnchorPane>
+                          </items>
+                        </SplitPane>
+                     </children>
+                  </AnchorPane>
+              </items>
+            </SplitPane>
          </children>
       </AnchorPane>
    </bottom>
@@ -107,7 +147,7 @@
                      </center>
                   </BorderPane>
                </right>
-               <top>
+               <center>
                   <VBox fx:id="transporteursPane" alignment="CENTER" prefHeight="176.0" prefWidth="218.0" spacing="5.0" BorderPane.alignment="CENTER">
                      <BorderPane.margin>
                         <Insets />
@@ -116,7 +156,7 @@
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </padding>
                   </VBox>
-               </top>
+               </center>
             </BorderPane>
          </children>
       </AnchorPane>
@@ -124,10 +164,10 @@
    <left>
       <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <top>
-            <AnchorPane prefHeight="100.0" prefWidth="200.0" styleClass="angle" BorderPane.alignment="CENTER" />
+            <AnchorPane prefHeight="20.0" prefWidth="200.0" styleClass="angle" BorderPane.alignment="CENTER" />
          </top>
          <bottom>
-            <AnchorPane prefHeight="100.0" prefWidth="200.0" styleClass="angle" BorderPane.alignment="CENTER" />
+            <AnchorPane prefHeight="20.0" prefWidth="200.0" styleClass="angle" BorderPane.alignment="CENTER" />
          </bottom>
          <center>
             <VBox fx:id="bucheronsPane" alignment="CENTER" prefHeight="337.0" prefWidth="180.0" spacing="5.0" BorderPane.alignment="CENTER">
@@ -148,10 +188,10 @@
             </VBox>
          </center>
          <top>
-            <AnchorPane prefHeight="100.0" prefWidth="200.0" styleClass="angle" BorderPane.alignment="CENTER" />
+            <AnchorPane prefHeight="20.0" prefWidth="200.0" styleClass="angle" BorderPane.alignment="CENTER" />
          </top>
          <bottom>
-            <AnchorPane prefHeight="100.0" prefWidth="200.0" styleClass="angle" BorderPane.alignment="CENTER" />
+            <AnchorPane prefHeight="20.0" prefWidth="200.0" styleClass="angle" BorderPane.alignment="CENTER" />
          </bottom>
       </BorderPane>
    </right>
