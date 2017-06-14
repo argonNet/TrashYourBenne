@@ -16,183 +16,218 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="727.0" prefWidth="1050.0" stylesheets="@trashYourBenne.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.il4.view.MainViewController">
-   <bottom>
-      <AnchorPane prefHeight="303.0" prefWidth="1050.0" style="-fx-background-color: darkgrey;" BorderPane.alignment="CENTER">
-         <children>
-            <AnchorPane layoutX="320.0" prefHeight="90.0" prefWidth="1095.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-0.0" AnchorPane.topAnchor="212.0">
+<BorderPane prefHeight="727.0" prefWidth="1040.0" stylesheets="@trashYourBenne.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.il4.view.MainViewController">
+   <center>
+      <BorderPane prefHeight="727.0" prefWidth="792.0">
+         <bottom>
+            <AnchorPane prefHeight="96.0" prefWidth="830.0" style="-fx-background-color: darkgrey;" BorderPane.alignment="CENTER">
                <children>
-                  <Button fx:id="buttonStart" layoutX="12.0" layoutY="9.0" mnemonicParsing="false" onAction="#buttonStartClick" prefHeight="35.0" prefWidth="29.0" AnchorPane.leftAnchor="12.0" AnchorPane.topAnchor="9.0">
+                  <Button fx:id="buttonStart" layoutX="14.0" layoutY="10.0" mnemonicParsing="false" onAction="#buttonStartClick" prefHeight="86.0" prefWidth="80.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0">
                      <graphic>
-                        <MaterialIconView glyphName="PLAY_ARROW" size="25" />
+                        <MaterialIconView glyphName="PLAY_ARROW" size="60" />
                      </graphic>
                   </Button>
-                  <TextField fx:id="textFieldBucheronName" layoutX="212.0" layoutY="13.0" prefHeight="27.0" prefWidth="130.0" />
-                  <Button fx:id="buttonAddBucheron" layoutX="66.0" layoutY="13.0" mnemonicParsing="false" onAction="#buttonAddBucheron" prefHeight="27.0" prefWidth="135.0" text="Add Bucheron" />
-                  <TextField fx:id="textFieldTransporteurName" layoutX="548.0" layoutY="13.0" prefHeight="27.0" prefWidth="130.0" />
-                  <Button layoutX="402.0" layoutY="13.0" mnemonicParsing="false" onAction="#buttonAddTransporteur" prefHeight="27.0" prefWidth="135.0" text="Add Transporteur" />
-                  <TextField fx:id="textFieldOuvrierName" layoutX="906.0" layoutY="13.0" prefHeight="27.0" prefWidth="130.0" />
-                  <Button layoutX="763.0" layoutY="13.0" mnemonicParsing="false" onAction="#buttonAddOuvrier" prefHeight="19.0" prefWidth="135.0" text="Add Ouvrier" />
-                  <Button layoutX="530.0" layoutY="49.0" mnemonicParsing="false" onAction="#buttonAddBenneClick" prefHeight="27.0" prefWidth="87.0" text="Add Benne" />
-                  <Spinner fx:id="spinnerTotalBenneToFill" layoutX="330.0" layoutY="49.0" prefHeight="27.0" prefWidth="102.0">
+                  <TextField fx:id="textFieldBucheronName" layoutX="620.0" layoutY="5.0" prefHeight="27.0" prefWidth="135.0" AnchorPane.rightAnchor="50.0" />
+                  <Button fx:id="buttonAddBucheron" disable="true" layoutX="490.0" layoutY="5.0" mnemonicParsing="false" onAction="#buttonAddBucheron" prefHeight="27.0" prefWidth="120.0" text="Bucheron" AnchorPane.rightAnchor="195.0">
+                     <graphic>
+                        <MaterialIconView glyphName="ACCOUNT_CIRCLE" size="15" />
+                     </graphic>
+                     <tooltip>
+                        <Tooltip text="Ajouter un bucheron" />
+                     </tooltip></Button>
+                  <TextField fx:id="textFieldTransporteurName" layoutX="620.0" layoutY="35.0" prefHeight="27.0" prefWidth="135.0" AnchorPane.rightAnchor="50.0" />
+                  <Button fx:id="buttonAddTransporteur" alignment="CENTER" disable="true" layoutX="490.0" layoutY="35.0" mnemonicParsing="false" onAction="#buttonAddTransporteur" prefHeight="27.0" prefWidth="120.0" text="Transporteur" AnchorPane.rightAnchor="195.0">
+                     <graphic>
+                        <MaterialIconView glyphName="ACCOUNT_CIRCLE" size="15" />
+                     </graphic>
+                     <tooltip>
+                        <Tooltip text="Ajouter un transporteur" />
+                     </tooltip></Button>
+                  <TextField fx:id="textFieldOuvrierName" layoutX="620.0" layoutY="65.0" prefHeight="27.0" prefWidth="135.0" AnchorPane.rightAnchor="50.0" />
+                  <Button fx:id="buttonAddOuvrier" alignment="CENTER" disable="true" layoutX="490.0" layoutY="65.0" mnemonicParsing="false" onAction="#buttonAddOuvrier" prefHeight="27.0" prefWidth="120.0" text="Ouvrier" AnchorPane.rightAnchor="195.0">
+                     <graphic>
+                        <MaterialIconView glyphName="ACCOUNT_CIRCLE" size="15" />
+                     </graphic>
+                     <tooltip>
+                        <Tooltip text="Ajouter un ouvrier" />
+                     </tooltip></Button>
+                  <Button layoutX="400.0" layoutY="5.0" mnemonicParsing="false" onAction="#buttonAddBenneClick" prefHeight="89.0" prefWidth="80.0" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="325.0" AnchorPane.topAnchor="5.0">
+                     <graphic>
+                        <MaterialIconView glyphName="ADD_SHOPPING_CART" size="60" />
+                     </graphic>
+                     <tooltip>
+                        <Tooltip text="Ajouter une benne" />
+                     </tooltip></Button>
+                  <Spinner fx:id="spinnerTotalBenneToFill" layoutX="289.0" layoutY="65.0" prefHeight="27.0" prefWidth="76.0">
                      <tooltip>
                         <Tooltip text="Permet de définir le nombre de benne total à remplir, afin de déterminer à quel moment le traitement s'arrêtera." />
                      </tooltip>
                   </Spinner>
-                  <Label layoutX="147.0" layoutY="54.0" text="Nombre de benne à remplir :" />
+                  <Label layoutX="108.0" layoutY="70.0" text="Nombre de benne à remplir :" />
+                  <Button layoutX="761.0" layoutY="5.0" mnemonicParsing="false" onAction="#buttonGenerateNameClick" prefHeight="27.0" prefWidth="30.0" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+                     <graphic>
+                        <MaterialIconView glyphName="CACHED" size="20" />
+                     </graphic>
+                  </Button>
                </children>
             </AnchorPane>
-            <SplitPane dividerPositions="0.33240997229916897" layoutX="55.0" layoutY="116.0" prefHeight="212.0" prefWidth="954.0" AnchorPane.bottomAnchor="90.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-              <items>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="158.0" prefWidth="146.0">
-                     <children>
-                        <BarChart fx:id="bucheronWorkChart" layoutX="-17.0" layoutY="-23.0" legendVisible="false" prefHeight="242.0" prefWidth="218.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                           <xAxis>
-                              <CategoryAxis side="BOTTOM" fx:id="xAxisBucheron" />
-                           </xAxis>
-                           <yAxis>
-                              <NumberAxis side="LEFT" />
-                           </yAxis>
-                        </BarChart>
-                     </children>
-                  </AnchorPane>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="158.0" prefWidth="213.0">
-                     <children>
-                        <SplitPane dividerPositions="0.5115273775216138" layoutX="-41.0" layoutY="-24.0" prefHeight="158.0" prefWidth="223.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                          <items>
-                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
-                                 <children>
-                                    <BarChart fx:id="transporteurWorkChart" layoutX="-61.0" layoutY="-63.0" legendVisible="false" prefHeight="252.0" prefWidth="410.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                       <xAxis>
-                                          <CategoryAxis side="BOTTOM" fx:id="xAxisTransporteur" />
-                                       </xAxis>
-                                       <yAxis>
-                                          <NumberAxis side="LEFT" />
-                                       </yAxis>
-                                    </BarChart>
-                                 </children>
-                              </AnchorPane>
-                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
-                                 <children>
-                                    <BarChart fx:id="ouvrierWorkChart" layoutX="-42.0" layoutY="-59.0" legendVisible="false" prefHeight="252.0" prefWidth="330.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                      <xAxis>
-                                        <CategoryAxis side="BOTTOM" fx:id="xAxisOuvrier" />
-                                      </xAxis>
-                                      <yAxis>
-                                        <NumberAxis side="LEFT" />
-                                      </yAxis>
-                                    </BarChart>
-                                 </children>
-                              </AnchorPane>
-                          </items>
-                        </SplitPane>
-                     </children>
-                  </AnchorPane>
-              </items>
-            </SplitPane>
-         </children>
-      </AnchorPane>
-   </bottom>
-   <center>
-      <AnchorPane prefHeight="294.0" prefWidth="842.0" BorderPane.alignment="CENTER">
-         <children>
-            <BorderPane layoutX="5.0" layoutY="57.0" prefHeight="474.0" prefWidth="581.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-               <left>
-                  <BorderPane prefWidth="150.0" BorderPane.alignment="CENTER">
-                     <top>
-                        <ListView fx:id="ListTransporteurWaitingBenneBucheron" prefHeight="80.0" prefWidth="200.0" styleClass="waitingBenneList" BorderPane.alignment="CENTER">
-                           <BorderPane.margin>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                           </BorderPane.margin>
-                        </ListView>
-                     </top>
-                     <bottom>
-                        <ListView fx:id="ListBucheronWaitingBenne" prefHeight="80.0" prefWidth="200.0" styleClass="waitingBenneList" BorderPane.alignment="CENTER">
-                           <BorderPane.margin>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                           </BorderPane.margin>
-                        </ListView>
-                     </bottom>
+         </bottom>
+         <center>
+            <AnchorPane prefHeight="294.0" prefWidth="842.0" BorderPane.alignment="CENTER">
+               <children>
+                  <BorderPane layoutX="5.0" layoutY="57.0" prefHeight="474.0" prefWidth="581.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <left>
+                        <BorderPane prefWidth="100.0" BorderPane.alignment="CENTER">
+                           <top>
+                              <ListView fx:id="ListTransporteurWaitingBenneBucheron" prefHeight="80.0" prefWidth="200.0" styleClass="waitingBenneList" BorderPane.alignment="CENTER">
+                                 <BorderPane.margin>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </BorderPane.margin>
+                              </ListView>
+                           </top>
+                           <bottom>
+                              <ListView fx:id="ListBucheronWaitingBenne" prefHeight="80.0" prefWidth="200.0" styleClass="waitingBenneList" BorderPane.alignment="CENTER">
+                                 <BorderPane.margin>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </BorderPane.margin>
+                              </ListView>
+                           </bottom>
+                           <center>
+                              <VBox fx:id="fillingBennePane" alignment="CENTER" prefWidth="138.0" spacing="5.0" styleClass="waitingBenneList" BorderPane.alignment="CENTER">
+                                 <padding>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </padding>
+                              </VBox>
+                           </center>
+                        </BorderPane>
+                     </left>
+                     <right>
+                        <BorderPane prefWidth="100.0" BorderPane.alignment="CENTER">
+                           <top>
+                              <ListView fx:id="ListOuvrierWaitingBenne" prefHeight="80.0" prefWidth="200.0" styleClass="waitingBenneList" BorderPane.alignment="CENTER">
+                                 <BorderPane.margin>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </BorderPane.margin>
+                              </ListView>
+                           </top>
+                           <bottom>
+                              <ListView fx:id="ListTransporteurWaitingBenneOuvrier" prefHeight="80.0" prefWidth="200.0" styleClass="waitingBenneList" BorderPane.alignment="CENTER">
+                                 <BorderPane.margin>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </BorderPane.margin>
+                              </ListView>
+                           </bottom>
+                           <center>
+                              <VBox fx:id="emptyingBennePane" alignment="CENTER" spacing="5.0" BorderPane.alignment="CENTER">
+                                 <padding>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </padding>
+                              </VBox>
+                           </center>
+                        </BorderPane>
+                     </right>
                      <center>
-                        <VBox fx:id="fillingBennePane" alignment="CENTER" prefHeight="400.0" prefWidth="110.0" spacing="5.0" styleClass="waitingBenneList" BorderPane.alignment="CENTER">
+                        <VBox fx:id="transporteursPane" alignment="CENTER" spacing="5.0" BorderPane.alignment="CENTER">
+                           <BorderPane.margin>
+                              <Insets />
+                           </BorderPane.margin>
                            <padding>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </padding>
                         </VBox>
                      </center>
                   </BorderPane>
-               </left>
-               <right>
-                  <BorderPane prefWidth="150.0" BorderPane.alignment="CENTER">
-                     <top>
-                        <ListView fx:id="ListOuvrierWaitingBenne" prefHeight="80.0" prefWidth="200.0" styleClass="waitingBenneList" BorderPane.alignment="CENTER">
-                           <BorderPane.margin>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                           </BorderPane.margin>
-                        </ListView>
-                     </top>
-                     <bottom>
-                        <ListView fx:id="ListTransporteurWaitingBenneOuvrier" prefHeight="80.0" prefWidth="200.0" styleClass="waitingBenneList" BorderPane.alignment="CENTER">
-                           <BorderPane.margin>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                           </BorderPane.margin>
-                        </ListView>
-                     </bottom>
-                     <center>
-                        <VBox fx:id="emptyingBennePane" alignment="CENTER" prefHeight="200.0" prefWidth="129.0" spacing="5.0" BorderPane.alignment="CENTER">
-                           <padding>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                           </padding>
-                        </VBox>
-                     </center>
-                  </BorderPane>
-               </right>
+               </children>
+            </AnchorPane>
+         </center>
+         <left>
+            <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <top>
+                  <AnchorPane prefHeight="20.0" styleClass="angle" BorderPane.alignment="CENTER" />
+               </top>
+               <bottom>
+                  <AnchorPane prefHeight="20.0" styleClass="angle" BorderPane.alignment="CENTER" />
+               </bottom>
                <center>
-                  <VBox fx:id="transporteursPane" alignment="CENTER" prefHeight="176.0" prefWidth="218.0" spacing="5.0" BorderPane.alignment="CENTER">
-                     <BorderPane.margin>
-                        <Insets />
-                     </BorderPane.margin>
+                  <VBox fx:id="bucheronsPane" alignment="CENTER" spacing="5.0" BorderPane.alignment="CENTER">
                      <padding>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </padding>
                   </VBox>
                </center>
             </BorderPane>
-         </children>
-      </AnchorPane>
+         </left>
+         <right>
+            <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <center>
+                  <VBox fx:id="ouvriersPane" alignment="CENTER" spacing="5.0" BorderPane.alignment="CENTER">
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </VBox>
+               </center>
+               <top>
+                  <AnchorPane prefHeight="20.0" styleClass="angle" BorderPane.alignment="CENTER" />
+               </top>
+               <bottom>
+                  <AnchorPane prefHeight="20.0" styleClass="angle" BorderPane.alignment="CENTER" />
+               </bottom>
+            </BorderPane>
+         </right>
+      </BorderPane>
+
    </center>
    <left>
-      <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <top>
-            <AnchorPane prefHeight="20.0" prefWidth="200.0" styleClass="angle" BorderPane.alignment="CENTER" />
-         </top>
-         <bottom>
-            <AnchorPane prefHeight="20.0" prefWidth="200.0" styleClass="angle" BorderPane.alignment="CENTER" />
-         </bottom>
-         <center>
-            <VBox fx:id="bucheronsPane" alignment="CENTER" prefHeight="337.0" prefWidth="180.0" spacing="5.0" BorderPane.alignment="CENTER">
-               <padding>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </padding>
-            </VBox>
-         </center>
-      </BorderPane>
+
    </left>
    <right>
-      <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <center>
-            <VBox fx:id="ouvriersPane" alignment="CENTER" prefHeight="572.0" prefWidth="198.0" spacing="5.0" BorderPane.alignment="CENTER">
-               <padding>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </padding>
-            </VBox>
-         </center>
-         <top>
-            <AnchorPane prefHeight="20.0" prefWidth="200.0" styleClass="angle" BorderPane.alignment="CENTER" />
-         </top>
-         <bottom>
-            <AnchorPane prefHeight="20.0" prefWidth="200.0" styleClass="angle" BorderPane.alignment="CENTER" />
-         </bottom>
-      </BorderPane>
+      <SplitPane dividerPositions="0.3213793103448276" orientation="VERTICAL" prefHeight="727.0" prefWidth="235.0" BorderPane.alignment="CENTER">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+               <children>
+                  <BarChart fx:id="bucheronWorkChart" layoutX="-64.0" layoutY="14.0" legendVisible="false" prefHeight="242.0" prefWidth="218.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <xAxis>
+                        <CategoryAxis side="BOTTOM" fx:id="xAxisBucheron" />
+                     </xAxis>
+                     <yAxis>
+                        <NumberAxis side="LEFT" />
+                     </yAxis>
+                  </BarChart>
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+               <children>
+                  <SplitPane dividerPositions="0.5" layoutX="22.0" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <items>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                           <children>
+                              <BarChart fx:id="transporteurWorkChart" layoutX="-63.0" layoutY="12.0" legendVisible="false" prefHeight="252.0" prefWidth="410.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <xAxis>
+                                    <CategoryAxis side="BOTTOM" fx:id="xAxisTransporteur" />
+                                 </xAxis>
+                                 <yAxis>
+                                    <NumberAxis side="LEFT" />
+                                 </yAxis>
+                              </BarChart>
+                           </children>
+                        </AnchorPane>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                           <children>
+                              <BarChart fx:id="ouvrierWorkChart" layoutX="-63.0" layoutY="-28.0" legendVisible="false" prefHeight="252.0" prefWidth="330.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-0.0">
+                                 <xAxis>
+                                    <CategoryAxis side="BOTTOM" fx:id="xAxisOuvrier" />
+                                 </xAxis>
+                                 <yAxis>
+                                    <NumberAxis side="LEFT" />
+                                 </yAxis>
+                              </BarChart>
+                           </children>
+                        </AnchorPane>
+                    </items>
+                  </SplitPane>
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
    </right>
 </BorderPane>

@@ -51,7 +51,7 @@ public abstract class Worker extends Acteur {
         });
     }
 
-    private void stopWorkingOnBenne(Benne benneName) {
+    private void removeWorkingBenne(Benne benneName) {
         workingBenneListeners.forEach((listener) -> {
             Platform.runLater(() -> {
                 if(listener instanceof  IWorkingBenneListener) listener.removeWorkingBenne(benneName,this.getClass().getName());
@@ -62,7 +62,7 @@ public abstract class Worker extends Acteur {
     private void startWorkingOnBenne(String benneName) {
         listeners.forEach((listener) -> {
             Platform.runLater(() -> {
-                if(listener instanceof  IWorkingBenneListener) ((IWorkerListener)listener).onStartWorkingOnBenne(benneName);
+                if(listener instanceof  IWorkerListener) ((IWorkerListener)listener).onStartWorkingOnBenne(benneName);
             });
         });
     }
@@ -70,7 +70,7 @@ public abstract class Worker extends Acteur {
     private void stopWorkingOnBenne() {
         listeners.forEach((listener) -> {
             Platform.runLater(() -> {
-                if(listener instanceof  IWorkingBenneListener) ((IWorkerListener)listener).onStopWorkingOnBenne();
+                if(listener instanceof  IWorkerListener) ((IWorkerListener)listener).onStopWorkingOnBenne();
             });
         });
     }
@@ -144,7 +144,7 @@ public abstract class Worker extends Acteur {
 
                         try{
                             getCurrentWorkingBennes().remove(currentBenne);
-                            stopWorkingOnBenne(currentBenne);
+                            removeWorkingBenne(currentBenne);
                             transporteurWaitingBenne.GiveBenne(currentBenne);
                         }finally {
                             getCurrentWorkingBennesLock().unlock();

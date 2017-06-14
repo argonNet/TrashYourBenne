@@ -6,7 +6,11 @@ import com.il4.acteur.Bucheron;
 import com.il4.acteur.Ouvrier;
 import com.il4.acteur.Transporteur;
 import com.il4.acteur.listener.IActeurListener;
+import com.il4.tool.NameGenerator;
 import com.il4.view.component.*;
+import com.sun.xml.internal.ws.api.FeatureConstructor;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.BarChart;
@@ -34,6 +38,10 @@ import java.util.ResourceBundle;
     @FXML public VBox transporteursPane;
     @FXML public VBox emptyingBennePane;
     @FXML public VBox ouvriersPane;
+
+    @FXML public Button buttonAddBucheron;
+    @FXML public Button buttonAddTransporteur;
+    @FXML public Button buttonAddOuvrier;
 
     @FXML public TextField textFieldBucheronName;
     @FXML public TextField textFieldTransporteurName;
@@ -131,6 +139,14 @@ import java.util.ResourceBundle;
         petriNet = new PetriViewController();
         spinnerTotalBenneToFill.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0,100));
 
+        textFieldBucheronName.textProperty().addListener((observable, oldValue, newValue) ->
+                buttonAddBucheron.setDisable(newValue == null || newValue.isEmpty()));
+
+        textFieldTransporteurName.textProperty().addListener((observable, oldValue, newValue) ->
+                buttonAddTransporteur.setDisable(newValue == null || newValue.isEmpty()));
+        textFieldOuvrierName.textProperty().addListener((observable, oldValue, newValue) ->
+                buttonAddOuvrier.setDisable(newValue == null || newValue.isEmpty()));
+
         bucheronWaitingBenne = new WaitingBenneViewController(ListBucheronWaitingBenne);
         ouvrierWaitingBenne = new WaitingBenneViewController(ListOuvrierWaitingBenne);
 
@@ -184,6 +200,11 @@ import java.util.ResourceBundle;
         addBenne("Benne " + (BackgroundApplication.getInstance().getBennesCount() + 1));
     }
 
+    @FXML public void buttonGenerateNameClick(){
+        textFieldBucheronName.textProperty().setValue(NameGenerator.getName());
+        textFieldTransporteurName.textProperty().setValue(NameGenerator.getName());
+        textFieldOuvrierName.textProperty().setValue(NameGenerator.getName());
+    }
 
     @Override
     public void statusChange(Acteur.ThreadStatus status) {
