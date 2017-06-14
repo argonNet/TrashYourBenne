@@ -1,5 +1,5 @@
 package com.il4.petri;
-public class PetrinetObject {
+public abstract class PetrinetObject {
 
     private String name;
     

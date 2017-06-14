@@ -25,41 +25,41 @@ public class PetriViewController implements IWorkingBenneListener,ITransporteurL
     {
         Petrinet pn = new Petrinet("PetriTrashYourBenne");
 
-        Place p1 = pn.place("pBenneVideBucheron");
-        Place p2 = pn.place("pBenneRemplieTransporteur");
-        Place p3 = pn.place("pBenneTransportForetUsine");
-        Place p4 = pn.place("pBenneTransportLivreUsine");
-        Place p5 = pn.place("pBenneRemplieOuvrier");
-        Place p6 = pn.place("pBenneVideTransporteur");
-        Place p7 = pn.place("pBenneTransportUsineForet");
-        Place p8 = pn.place("pBenneTransportLivreForet");
+        Place p1 = pn.createPlace("pBenneVideBucheron");
+        Place p2 = pn.createPlace("pBenneRemplieTransporteur");
+        Place p3 = pn.createPlace("pBenneTransportForetUsine");
+        Place p4 = pn.createPlace("pBenneTransportLivreUsine");
+        Place p5 = pn.createPlace("pBenneRemplieOuvrier");
+        Place p6 = pn.createPlace("pBenneVideTransporteur");
+        Place p7 = pn.createPlace("pBenneTransportUsineForet");
+        Place p8 = pn.createPlace("pBenneTransportLivreForet");
 
-        Transition t1 = pn.transition("tBucheronBenneRemplie");
-        Transition t2 = pn.transition("tTransporteurPartirForet");
-        Transition t3 = pn.transition("tTransporteurArriverUsine");
-        Transition t4 = pn.transition("tTransporteurBenneDesamarrerUsine");
-        Transition t5 = pn.transition("tOuvrierBenneVide");
-        Transition t6 = pn.transition("tTransporteurPartirUsine");
-        Transition t7 = pn.transition("tTransporteurArriverForet");
-        Transition t8 = pn.transition("tTransporteurBenneDesamarrerForet");
+        Transition t1 = pn.createTransition("tBucheronBenneRemplie");
+        Transition t2 = pn.createTransition("tTransporteurPartirForet");
+        Transition t3 = pn.createTransition("tTransporteurArriverUsine");
+        Transition t4 = pn.createTransition("tTransporteurBenneDesamarrerUsine");
+        Transition t5 = pn.createTransition("tOuvrierBenneVide");
+        Transition t6 = pn.createTransition("tTransporteurPartirUsine");
+        Transition t7 = pn.createTransition("tTransporteurArriverForet");
+        Transition t8 = pn.createTransition("tTransporteurBenneDesamarrerForet");
 
 
-        pn.arc("a1", p1, t1);
-        pn.arc("a2", t1, p2);
-        pn.arc("a3", p2, t2);
-        pn.arc("a4", t2, p3);
-        pn.arc("a5", p3, t3);
-        pn.arc("a6", t3, p4);
-        pn.arc("a7", p4, t4);
-        pn.arc("a8", t4, p5);
-        pn.arc("a9", p5, t5);
-        pn.arc("a10", t5, p6);
-        pn.arc("a11", p6, t6);
-        pn.arc("a12", t6, p7);
-        pn.arc("a13",p7,t7);
-        pn.arc("a14",t7,p8);
-        pn.arc("a15",p8,t8);
-        pn.arc("a16",t8,p1);
+        pn.createArc("a1", p1, t1);
+        pn.createArc("a2", t1, p2);
+        pn.createArc("a3", p2, t2);
+        pn.createArc("a4", t2, p3);
+        pn.createArc("a5", p3, t3);
+        pn.createArc("a6", t3, p4);
+        pn.createArc("a7", p4, t4);
+        pn.createArc("a8", t4, p5);
+        pn.createArc("a9", p5, t5);
+        pn.createArc("a10", t5, p6);
+        pn.createArc("a11", p6, t6);
+        pn.createArc("a12", t6, p7);
+        pn.createArc("a13",p7,t7);
+        pn.createArc("a14",t7,p8);
+        pn.createArc("a15",p8,t8);
+        pn.createArc("a16",t8,p1);
 
         return pn;
     }
@@ -72,86 +72,33 @@ public class PetriViewController implements IWorkingBenneListener,ITransporteurL
 
 
     @Override
-    public void removeWorkingBenne(Benne b, String side)  {
-
-        Transition t = null;
-        if (side.contains("Bucheron")) {
-           t =petrinet.getTransition("tBucheronBenneRemplie");
-        }
-        else if (side.contains("Ouvrier"))
-        {
-            t =petrinet.getTransition("tOuvrierBenneVide");
-        }
-        if (t != null) {
-            if (t.canFire()) {
-                t.fire();
-                System.out.println(petrinet);
-            }
-        }
+    public void removeWorkingBenne(Benne b, String side)   {
+            fireTransition(side, "tBucheronBenneRemplie", "tOuvrierBenneVide");
     }
 
     @Override
-    public void addWorkingBenne(Benne benne, String side)
-    {
-        Transition t = null;
-
-        if (side.contains("Bucheron")) {
-            t =petrinet.getTransition("tTransporteurBenneDesamarrerForet");
-        }
-        else if (side.contains("Ouvrier"))
-        {
-            t =petrinet.getTransition("tTransporteurBenneDesamarrerUsine");
-        }
-        if (t != null) {
-            if (t.canFire()) {
-                t.fire();
-                System.out.println(petrinet);
-            }
-        }
+    public void addWorkingBenne(Benne benne, String side) {
+        fireTransition(side,"tTransporteurBenneDesamarrerForet", "tTransporteurBenneDesamarrerUsine");
     }
 
     @Override
     public void onTakeBenne(String benneName,String side){
-        Transition t = null;
-        if (side.contains("Bucheron")) {
-            t =petrinet.getTransition("tTransporteurPartirForet");
-        }
-        else if (side.contains("Ouvrier"))
-        {
-            t =petrinet.getTransition("tTransporteurPartirUsine");
-        }
-        if (t != null) {
-            if (t.canFire()) {
-                t.fire();
-                System.out.println(petrinet);
-            }
-        }
+        fireTransition(side,"tTransporteurPartirForet", "tTransporteurPartirUsine");
     }
-    @Override
-    public void onGoOuvrier(){
-        //Inutile pour le réseau de petri
-    }
-    @Override
-    public void onGoBucheron(){
-        //Inutile pour le réseau de petri
-    }
+
     @Override
     public void onGiveBenne(String benneName, String side)
     {
-        Transition t = null;
-        if (side.contains("Bucheron")) {
-            t =petrinet.getTransition("tTransporteurArriverForet");
-        }
-        else if (side.contains("Ouvrier"))
-        {
-            t =petrinet.getTransition("tTransporteurArriverUsine");
-        }
-        if (t != null) {
-            if (t.canFire()) {
-                t.fire();
-                System.out.println(petrinet);
-            }
-        }
+        fireTransition(side,"tTransporteurArriverForet", "tTransporteurArriverUsine");
+    }
+
+    @Override
+    public void onGoOuvrier(){
+        //Nothing to do in this.
+    }
+    @Override
+    public void onGoBucheron(){
+        //Nothing to do in this.
     }
 
     @Override
@@ -162,5 +109,29 @@ public class PetriViewController implements IWorkingBenneListener,ITransporteurL
     @Override
     public void operationDone(Acteur sender) {
         //Nothing to do in this.
+    }
+
+    private void fireTransition(String side, String bucheronTransition, String ouvrierTransition)
+    {
+        Transition t = null;
+        if (side.contains("Bucheron")) {
+            t =petrinet.getTransition(bucheronTransition);
+        }
+        else if (side.contains("Ouvrier"))
+        {
+            t =petrinet.getTransition(ouvrierTransition);
+        }
+        if (t != null) {
+            try {
+                if (t.canFire()) {
+                    t.fire();
+                    System.out.println(petrinet);
+                }
+            }
+            catch(Exception e)
+            {
+                System.out.println("Exception sur le réseau de Petri: "+ e);
+            }
+        }
     }
 }

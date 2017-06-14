@@ -26,47 +26,50 @@ extends PetrinetObject {
         }
     }
     
-    public List<Transition> getTransitionsAbleToFire() {
-        ArrayList<Transition> list = new ArrayList<Transition>();
-        for (Transition t : transitions) {
-            if (t.canFire()) {
-                list.add(t);
-            }
-        }
-        return list;
-    }
-    
-    public Transition transition(String name) {
+    public Transition createTransition(String name) {
         Transition t = new Transition(name);
         transitions.add(t);
         return t;
     }
     
-    public Place place(String name) {
+    public Place createPlace(String name) {
         Place p = new Place(name);
         places.add(p);
         return p;
     }
     
-    public Place place(String name, int initial) {
-        Place p = new Place(name, initial);
-        places.add(p);
-        return p;
-    }
-    
-    public Arc arc(String name, Place p, Transition t) {
+    public Arc createArc(String name, Place p, Transition t) {
         Arc arc = new Arc(name, p, t);
         arcs.add(arc);
         return arc;
     }
     
-    public Arc arc(String name, Transition t, Place p) {
+    public Arc createArc(String name, Transition t, Place p) {
         Arc arc = new Arc(name, t, p);
         arcs.add(arc);
         return arc;
     }
 
-    
+    public Place getPlace(String placeName) {
+        Place place = null;
+        for (Place p : places)
+            if (p.getName() == placeName) {
+                place = p;
+                break;
+            }
+        return place;
+    }
+
+    public Transition getTransition(String transitionName) {
+        Transition transition = null;
+        for (Transition t : transitions)
+            if (t.getName() == transitionName) {
+                transition = t;
+                break;
+            }
+        return transition;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("Petrinet ");
@@ -82,36 +85,5 @@ extends PetrinetObject {
         return sb.toString();
     }
 
-    public Place getPlace(String placeName) {
-        Place place = null;
-        for (Place p : places)
-            if (p.getName() == placeName) {
-                place = p;
-                break;
-            }
-        return place;
-    }
-
-    public List<Place> getPlaces() {
-        return places;
-    }
-
-    public List<Transition> getTransitions() {
-        return transitions;
-    }
-
-    public Transition getTransition(String transitionName) {
-        Transition transition = null;
-        for (Transition t : transitions)
-            if (t.getName() == transitionName) {
-                transition = t;
-                break;
-            }
-        return transition;
-    }
-
-    public List<Arc> getArcs() {
-        return arcs;
-    }
 
 }

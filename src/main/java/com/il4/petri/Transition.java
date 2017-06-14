@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Transition
-extends PetrinetObject{
+extends PetrinetObject {
 
     protected Transition(String name) {
         super(name);
@@ -14,10 +14,10 @@ extends PetrinetObject{
     private List<Arc> outgoing = new ArrayList<Arc>();
     
 
-    public boolean canFire() {
+    public boolean canFire() throws Exception {
         boolean canFire = true;
 
-        canFire = ! this.isNotConnected();
+        canFire = !this.isNotConnected();
         
         for (Arc arc : incoming) {
             canFire = canFire & arc.canFire();
@@ -29,7 +29,7 @@ extends PetrinetObject{
         return canFire;
     }
 
-    public void fire() {
+    public void fire() throws Exception {
         for (Arc arc : incoming) {
             arc.fire();
         }
@@ -56,8 +56,7 @@ extends PetrinetObject{
     @Override
     public String toString() {
         return super.toString() + 
-               (isNotConnected() ? " IS NOT CONNECTED" : "" ) +
-               (canFire()? " READY TO FIRE" : "");
+               (isNotConnected() ? " IS NOT CONNECTED" : "" );
     }
     
 }
