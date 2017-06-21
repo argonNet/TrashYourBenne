@@ -11,6 +11,8 @@ extends PetrinetObject {
         super(name);
     }
 
+    public int getTokens() { return this.tokens;}
+
 
     public boolean hasAtLeastTokens(int threshold) {
         return (tokens >= threshold);

@@ -137,6 +137,7 @@ import java.util.ResourceBundle;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         petriNet = new PetriViewController();
+        petriNet.SetPetrinetListener(PetrinetView.getInstance());
         spinnerTotalBenneToFill.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0,100));
 
         textFieldBucheronName.textProperty().addListener((observable, oldValue, newValue) ->
