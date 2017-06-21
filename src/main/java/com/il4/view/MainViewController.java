@@ -8,9 +8,6 @@ import com.il4.acteur.Transporteur;
 import com.il4.acteur.listener.IActeurListener;
 import com.il4.tool.NameGenerator;
 import com.il4.view.component.*;
-import com.sun.xml.internal.ws.api.FeatureConstructor;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.BarChart;
@@ -47,6 +44,8 @@ import java.util.ResourceBundle;
     @FXML public TextField textFieldTransporteurName;
     @FXML public TextField textFieldOuvrierName;
 
+    @FXML public Spinner<Integer> spinnerMaxWorkingBenneCountOuvrier;
+    @FXML public Spinner<Integer> spinnerMaxWorkingBenneCountBucheron;
     @FXML public Spinner<Integer> spinnerTotalBenneToFill;
 
     @FXML public Button buttonStart;
@@ -77,6 +76,7 @@ import java.util.ResourceBundle;
     public WorkingBenneView fillingBenneView;
     public WorkingBenneView emptyingBenneView;
     private PetriViewController petriNet;
+
 
     private XYChart.Data<String,Integer> createNewBarForChart(String name , ActeurType acteurType){
         XYChart.Data<String,Integer> bar = new XYChart.Data<>(name,0);
@@ -133,10 +133,11 @@ import java.util.ResourceBundle;
     }
 
 
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         petriNet = new PetriViewController();
+        spinnerMaxWorkingBenneCountBucheron.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0,100));
+        spinnerMaxWorkingBenneCountOuvrier.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0,100));
         spinnerTotalBenneToFill.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0,100));
 
         textFieldBucheronName.textProperty().addListener((observable, oldValue, newValue) ->
@@ -162,7 +163,6 @@ import java.util.ResourceBundle;
                 transporteurWaitingBenneBucheron,
                 transporteurWaitingBenneOuvrier);
 
-
         bucheronWorkChart.getData().add(bucheronWorkChartSeries);
         transporteurWorkChart.getData().add(transporteurWorkChartSeries);
         ouvrierWorkChart.getData().add(ouvrierWorkChartSeries);
@@ -175,15 +175,19 @@ import java.util.ResourceBundle;
         addTransporteur("Robert");
         addOuvrier("Manuel");
 
+        spinnerMaxWorkingBenneCountBucheron.getValueFactory().valueProperty().setValue(2);
+        spinnerMaxWorkingBenneCountOuvrier.getValueFactory().valueProperty().setValue(2);
         spinnerTotalBenneToFill.getValueFactory().valueProperty().setValue(20);
 
     }
 
-
     public void buttonStartClick(){
         BackgroundApplication.getInstance().setBenneToFillCount(spinnerTotalBenneToFill.getValue());
-        BackgroundApplication.getInstance().Start();
+        BackgroundApplication.getInstance().setBucheronWorkingBenneMaxCount(spinnerMaxWorkingBenneCountBucheron.getValue());
+        BackgroundApplication.getInstance().setOuvrierWorkingBenneMaxCount(spinnerMaxWorkingBenneCountOuvrier.getValue());
         buttonStart.setDisable(true);
+
+        BackgroundApplication.getInstance().Start();
     }
 
     @FXML  public void buttonAddBucheron(){

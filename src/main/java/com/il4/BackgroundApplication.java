@@ -41,6 +41,14 @@ public class BackgroundApplication {
         Acteur.setBenToFill(benneCount);
     }
 
+    public void setBucheronWorkingBenneMaxCount(int benneCount){
+        Bucheron.setMaxWorkingBenneCount(benneCount);
+    }
+
+    public void setOuvrierWorkingBenneMaxCount(int benneCount){
+        Ouvrier.setMaxWorkingBenneCount(benneCount);
+    }
+
     public void createBucheron(String name,
                                BucheronView view,
                                IWorkingBenneListener workingBenneListener,

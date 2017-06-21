@@ -25,6 +25,7 @@ public class Benne {
     public ArrayList<IBenneListener> listeners;
 
     public Benne(String name, BenneView viewB){
+        this.remplissage = 0;
         this.name = name;
         this.listeners = new ArrayList<>();
         this.view = viewB;
@@ -35,7 +36,7 @@ public class Benne {
     }
 
     public boolean isEmpty(){
-        return  remplissage <= 0;
+        return remplissage <= 0;
     }
 
     /**

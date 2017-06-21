@@ -14,9 +14,8 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 public class Transporteur extends Acteur{
 
-    private static int filledBenCountTransporteur = 0;
-
-    private static Lock mylockTransporteur = new ReentrantLock();
+    //private static int filledBenCountTransporteur = 0;
+    //private static Lock mylockTransporteur = new ReentrantLock();
 
 
     private void takeBenne(String benneName, String side){

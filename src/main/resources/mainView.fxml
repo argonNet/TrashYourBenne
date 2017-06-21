@@ -20,7 +20,7 @@
    <center>
       <BorderPane prefHeight="727.0" prefWidth="792.0">
          <bottom>
-            <AnchorPane prefHeight="96.0" prefWidth="830.0" style="-fx-background-color: darkgrey;" BorderPane.alignment="CENTER">
+            <AnchorPane prefHeight="97.0" prefWidth="830.0" style="-fx-background-color: darkgrey;" BorderPane.alignment="CENTER">
                <children>
                   <Button fx:id="buttonStart" layoutX="14.0" layoutY="10.0" mnemonicParsing="false" onAction="#buttonStartClick" prefHeight="86.0" prefWidth="80.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0">
                      <graphic>
@@ -28,7 +28,7 @@
                      </graphic>
                   </Button>
                   <TextField fx:id="textFieldBucheronName" layoutX="620.0" layoutY="5.0" prefHeight="27.0" prefWidth="135.0" AnchorPane.rightAnchor="50.0" />
-                  <Button fx:id="buttonAddBucheron" disable="true" layoutX="490.0" layoutY="5.0" mnemonicParsing="false" onAction="#buttonAddBucheron" prefHeight="27.0" prefWidth="120.0" text="Bucheron" AnchorPane.rightAnchor="195.0">
+                  <Button fx:id="buttonAddBucheron" alignment="TOP_LEFT" disable="true" layoutX="490.0" layoutY="5.0" mnemonicParsing="false" onAction="#buttonAddBucheron" prefHeight="27.0" prefWidth="120.0" text="Bucheron" AnchorPane.rightAnchor="195.0" AnchorPane.topAnchor="5.0">
                      <graphic>
                         <MaterialIconView glyphName="ACCOUNT_CIRCLE" size="15" />
                      </graphic>
@@ -36,7 +36,7 @@
                         <Tooltip text="Ajouter un bucheron" />
                      </tooltip></Button>
                   <TextField fx:id="textFieldTransporteurName" layoutX="620.0" layoutY="35.0" prefHeight="27.0" prefWidth="135.0" AnchorPane.rightAnchor="50.0" />
-                  <Button fx:id="buttonAddTransporteur" alignment="CENTER" disable="true" layoutX="490.0" layoutY="35.0" mnemonicParsing="false" onAction="#buttonAddTransporteur" prefHeight="27.0" prefWidth="120.0" text="Transporteur" AnchorPane.rightAnchor="195.0">
+                  <Button fx:id="buttonAddTransporteur" alignment="TOP_LEFT" disable="true" layoutX="490.0" layoutY="35.0" mnemonicParsing="false" onAction="#buttonAddTransporteur" prefHeight="27.0" prefWidth="120.0" text="Transporteur" AnchorPane.rightAnchor="195.0">
                      <graphic>
                         <MaterialIconView glyphName="ACCOUNT_CIRCLE" size="15" />
                      </graphic>
@@ -44,7 +44,7 @@
                         <Tooltip text="Ajouter un transporteur" />
                      </tooltip></Button>
                   <TextField fx:id="textFieldOuvrierName" layoutX="620.0" layoutY="65.0" prefHeight="27.0" prefWidth="135.0" AnchorPane.rightAnchor="50.0" />
-                  <Button fx:id="buttonAddOuvrier" alignment="CENTER" disable="true" layoutX="490.0" layoutY="65.0" mnemonicParsing="false" onAction="#buttonAddOuvrier" prefHeight="27.0" prefWidth="120.0" text="Ouvrier" AnchorPane.rightAnchor="195.0">
+                  <Button fx:id="buttonAddOuvrier" alignment="TOP_LEFT" disable="true" layoutX="490.0" layoutY="65.0" mnemonicParsing="false" onAction="#buttonAddOuvrier" prefHeight="27.0" prefWidth="120.0" text="Ouvrier" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="195.0">
                      <graphic>
                         <MaterialIconView glyphName="ACCOUNT_CIRCLE" size="15" />
                      </graphic>
@@ -58,7 +58,7 @@
                      <tooltip>
                         <Tooltip text="Ajouter une benne" />
                      </tooltip></Button>
-                  <Spinner fx:id="spinnerTotalBenneToFill" layoutX="289.0" layoutY="65.0" prefHeight="27.0" prefWidth="76.0">
+                  <Spinner fx:id="spinnerTotalBenneToFill" layoutX="311.0" layoutY="65.0" prefHeight="27.0" prefWidth="76.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="311.0">
                      <tooltip>
                         <Tooltip text="Permet de définir le nombre de benne total à remplir, afin de déterminer à quel moment le traitement s'arrêtera." />
                      </tooltip>
@@ -68,7 +68,14 @@
                      <graphic>
                         <MaterialIconView glyphName="CACHED" size="20" />
                      </graphic>
+                     <tooltip>
+                        <Tooltip text="Generate name for all the actors" />
+                     </tooltip>
                   </Button>
+                  <Spinner fx:id="spinnerMaxWorkingBenneCountOuvrier" layoutX="311.0" layoutY="35.0" prefHeight="27.0" prefWidth="76.0" AnchorPane.leftAnchor="311.0" />
+                  <Spinner fx:id="spinnerMaxWorkingBenneCountBucheron" layoutX="311.0" layoutY="5.0" prefHeight="27.0" prefWidth="76.0" AnchorPane.leftAnchor="311.0" AnchorPane.topAnchor="5.0" />
+                  <Label layoutX="108.0" layoutY="40.0" prefHeight="17.0" prefWidth="196.0" text="Déchargement de benne Max :" />
+                  <Label layoutX="108.0" layoutY="10.0" prefHeight="17.0" prefWidth="176.0" text="Remplissage de benne Max :" />
                </children>
             </AnchorPane>
          </bottom>
@@ -185,7 +192,7 @@
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                <children>
-                  <BarChart fx:id="bucheronWorkChart" layoutX="-64.0" layoutY="14.0" legendVisible="false" prefHeight="242.0" prefWidth="218.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <BarChart fx:id="bucheronWorkChart" layoutX="-64.0" layoutY="14.0" legendVisible="false" prefHeight="242.0" prefWidth="218.0" title="Bois chargé" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <xAxis>
                         <CategoryAxis side="BOTTOM" fx:id="xAxisBucheron" />
                      </xAxis>
@@ -201,7 +208,7 @@
                     <items>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                            <children>
-                              <BarChart fx:id="transporteurWorkChart" layoutX="-63.0" layoutY="12.0" legendVisible="false" prefHeight="252.0" prefWidth="410.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <BarChart fx:id="transporteurWorkChart" layoutX="-63.0" layoutY="12.0" legendVisible="false" prefHeight="252.0" prefWidth="410.0" title="Bennes transportées" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <xAxis>
                                     <CategoryAxis side="BOTTOM" fx:id="xAxisTransporteur" />
                                  </xAxis>
@@ -213,7 +220,7 @@
                         </AnchorPane>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                            <children>
-                              <BarChart fx:id="ouvrierWorkChart" layoutX="-63.0" layoutY="-28.0" legendVisible="false" prefHeight="252.0" prefWidth="330.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-0.0">
+                              <BarChart fx:id="ouvrierWorkChart" layoutX="-63.0" layoutY="-28.0" legendVisible="false" prefHeight="252.0" prefWidth="330.0" title="Bois déchargé" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-0.0">
                                  <xAxis>
                                     <CategoryAxis side="BOTTOM" fx:id="xAxisOuvrier" />
                                  </xAxis>

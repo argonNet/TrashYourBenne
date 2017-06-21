@@ -15,6 +15,9 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 public class Ouvrier extends Worker {
 
+    private static int maxWorkingBenneCount;
+    public static void setMaxWorkingBenneCount(int value){maxWorkingBenneCount = value;}
+
     protected static Lock currentEmptyingBennesLock = new ReentrantLock();
     protected static LinkedList<Benne> currentEmptyingBennes = new LinkedList<>();
 
@@ -67,8 +70,15 @@ public class Ouvrier extends Worker {
         return -1;
     }
 
+    @Override
+    protected int getMaxWorkingBenneCount(){
+        return maxWorkingBenneCount;
+    }
+
     public void addListener(IOuvrierListener listener){
         listeners.add(listener);
     }
+
+
 }
 

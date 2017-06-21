@@ -15,14 +15,13 @@ import java.util.concurrent.locks.Lock;
  */
 public abstract class Worker extends Acteur {
 
-    private static final int MAX_WORKING_BENNE_COUNT = 2; //TODO : Set it to BUCHERON COUNT -1
-
     protected abstract Lock getCurrentWorkingBennesLock();
     protected abstract LinkedList<Benne> getCurrentWorkingBennes();
     protected abstract int getValueOperation();
     protected abstract boolean isBenneReady(Benne benne);
     protected abstract void defineWorkerOperation();
     protected abstract boolean shouldIContinueMyWork();
+    protected abstract int getMaxWorkingBenneCount();
 
     public WaitingBenne waitingBenne;
     public WaitingBenne transporteurWaitingBenne;
@@ -90,7 +89,7 @@ public abstract class Worker extends Acteur {
                 try{
 
                     // 1 - Prends une benne en attente, pour la passer en cours de travail
-                    if (getCurrentWorkingBennes().size() <= MAX_WORKING_BENNE_COUNT) {
+                    if (getCurrentWorkingBennes().size() < getMaxWorkingBenneCount()) {
                         Benne benne = this.waitingBenne.TakeBenne();
                         if(benne != null) {
                             getCurrentWorkingBennes().add(benne);
@@ -155,7 +154,7 @@ public abstract class Worker extends Acteur {
                     stopWorkingOnBenne();
                 }
 
-                sleep(20); //Petite pause du bucheron avant de reprendre une bille de bois
+                sleep(20); //Petite pause du Worker avant de reprendre une bille de bois
             }
         }catch(InterruptedException e){
             System.out.println("Error : " + e.getMessage());

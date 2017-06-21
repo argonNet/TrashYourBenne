@@ -14,6 +14,9 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 public class Bucheron extends Worker {
 
+    private static int maxWorkingBenneCount;
+    public static void setMaxWorkingBenneCount(int value){maxWorkingBenneCount = value;}
+
     protected static Lock currentFillingBennesLock = new ReentrantLock();
     protected static LinkedList<Benne> currentFillingBennes = new LinkedList<>();
 
@@ -63,6 +66,11 @@ public class Bucheron extends Worker {
     @Override
     protected int getValueOperation(){
         return 1;
+    }
+
+    @Override
+    protected int getMaxWorkingBenneCount(){
+        return maxWorkingBenneCount;
     }
 
     public void addListener(IBucheronListener listener){
