@@ -136,6 +136,8 @@ import java.util.ResourceBundle;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         petriNet = new PetriViewController();
+        petriNet.SetPetrinetListener(PetrinetView.getInstance());
+
         spinnerMaxWorkingBenneCountBucheron.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0,100));
         spinnerMaxWorkingBenneCountOuvrier.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0,100));
         spinnerTotalBenneToFill.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0,100));

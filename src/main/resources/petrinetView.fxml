@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="panelPetrinet" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="512.0" prefWidth="722.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Circle fx:id="pBenneVidePourBucheron" fill="WHITE" layoutX="70.0" layoutY="75.0" radius="36.0" stroke="BLACK" strokeType="INSIDE" />
+			<Line fx:id="a1" endX="50" endY="209" layoutX="20.0" startX="50" startY="111.0" />
+			<Rectangle fx:id="tBucheronBenneRemplie" arcHeight="5.0" arcWidth="5.0" fill="#000307" height="84.0" layoutX="61.0" layoutY="209.0" stroke="BLACK" strokeType="INSIDE" width="19.0" />
+      <Line fx:id="a2" endX="50" endY="391" layoutX="20.0" startX="50" startY="293" />
+			<Circle fx:id="pBenneRempliePourTransporteur" fill="WHITE" layoutX="70.0" layoutY="427.0" radius="36.0" stroke="BLACK" strokeType="INSIDE" />
+      <Line fx:id="a3" endX="122" endY="427" layoutX="20.0" startX="86" startY="427" />
+			<Rectangle fx:id="tTransporteurPartirForet" arcHeight="5.0" arcWidth="5.0" fill="#000307" height="84.0" layoutX="142.0" layoutY="385.0" stroke="BLACK" strokeType="INSIDE" width="19.0" />
+		  <Line fx:id="a4" endX="220" endY="427" layoutX="20.0" startX="122" startY="427" />
+			<Circle fx:id="pBenneTransportForetUsine" fill="WHITE" layoutX="240.0" layoutY="427.0" radius="36.0" stroke="BLACK" strokeType="INSIDE" />
+			<Line fx:id="a5" endX="309" endY="427" layoutX="20.0" startX="256" startY="427" />
+			<Rectangle fx:id="tTransporteurArriverUsine" arcHeight="5.0" arcWidth="5.0" fill="#000307" height="84.0" layoutX="329.0" layoutY="384.0" stroke="BLACK" strokeType="INSIDE" width="19.0" />
+			<Line fx:id="a6" endX="426" endY="427" layoutX="20.0" startX="309" startY="427" />
+			<Circle fx:id="pBenneTransportLivreUsine" fill="WHITE" layoutX="446.0" layoutY="427.0" radius="36.0" stroke="BLACK" strokeType="INSIDE" />
+			<Line fx:id="a7" endX="517" endY="427" layoutX="20.0" startX="462" startY="427" />
+			<Rectangle fx:id="tTransporteurBenneDesamarrerUsine" arcHeight="5.0" arcWidth="5.0" fill="#000307" height="84.0" layoutX="537.0" layoutY="384.0" stroke="BLACK" strokeType="INSIDE" width="19.0" />
+			<Line fx:id="a8" endX="620" endY="427" layoutX="20.0" startX="517" startY="427" />
+			<Circle fx:id="pBenneRempliePourOuvrier" fill="WHITE" layoutX="640.0" layoutY="427.0" radius="36.0" stroke="BLACK" strokeType="INSIDE" />	
+			<Line fx:id="a9" endX="620" endY="209" layoutX="20.0" startX="620" startY="391" />	
+			<Rectangle fx:id="tOuvrierBenneVide" arcHeight="5.0" arcWidth="5.0" fill="#000307" height="84.0" layoutX="631.0" layoutY="209.0" stroke="BLACK" strokeType="INSIDE" width="19.0" />
+			<Line fx:id="a10" endX="620" endY="75" layoutX="20.0" startX="620" startY="209" />	
+      <Circle fx:id="pBenneVidePourTransporteur" fill="WHITE" layoutX="640.0" layoutY="75.0" radius="36.0" stroke="BLACK" strokeType="INSIDE" />
+      <Line fx:id="a11" endX="517" endY="75" layoutX="20.0" startX="584" startY="75" />	
+			<Rectangle fx:id="tTransporteurPartirUsine" arcHeight="5.0" arcWidth="5.0" fill="#000307" height="84.0" layoutX="537.0" layoutY="33.0" stroke="BLACK" strokeType="INSIDE" width="19.0" />
+			<Line fx:id="a12" endX="426" endY="75" layoutX="20.0" startX="517" startY="75" />	
+			<Circle fx:id="pBenneTransportUsineForet" fill="WHITE" layoutX="446.0" layoutY="75.0" radius="36.0" stroke="BLACK" strokeType="INSIDE" />
+			<Line fx:id="a13" endX="309" endY="75" layoutX="20.0" startX="390" startY="75" />	
+			<Rectangle fx:id="tTransporteurArriverForet" arcHeight="5.0" arcWidth="5.0" fill="#000307" height="84.0" layoutX="329.0" layoutY="31.0" stroke="BLACK" strokeType="INSIDE" width="19.0" />
+			<Line fx:id="a14" endX="220" endY="75" layoutX="20.0" startX="309" startY="75" />		
+			<Circle fx:id="pBenneTransportLivreForet" fill="WHITE" layoutX="240.0" layoutY="75.0" radius="36.0" stroke="BLACK" strokeType="INSIDE" />
+      <Line fx:id="a15" endX="132" endY="75" layoutX="20.0" startX="184" startY="75" />	      
+			<Rectangle fx:id="tTransporteurBenneDesamarrerForet" arcHeight="5.0" arcWidth="5.0" fill="#000307" height="84.0" layoutX="152.0" layoutY="31.0" stroke="BLACK" strokeType="INSIDE" width="19.0" />
+	    <Line fx:id="a16" endX="86" endY="75" layoutX="20.0" startX="132" startY="75" />
+      <Label fx:id="lBenneVidePourBucheron" layoutX="8.0" layoutY="10.0" text="Bennes en cours de remplissage" />
+      <Label fx:id="countBenneVidePourBucheron" alignment="CENTER" contentDisplay="CENTER" layoutX="42.0" layoutY="45.0" prefHeight="60.0" prefWidth="56.0" text="0" wrapText="true">
+         <font>
+            <Font size="29.0" />
+         </font>
+      </Label>
+      <Label fx:id="lBenneRempliePourTransporteur" layoutX="7.0" layoutY="467.0" prefHeight="29.0" prefWidth="168.0" text="Bennes remplies pour transport" />
+      <Label fx:id="countBenneRempliePourTransporteur" alignment="CENTER" contentDisplay="CENTER" layoutX="42.0" layoutY="397.0" prefHeight="60.0" prefWidth="56.0" text="0" wrapText="true">
+         <font>
+            <Font size="29.0" />
+         </font>
+      </Label>
+      <Label fx:id="countBenneTransportForetUsine" alignment="CENTER" contentDisplay="CENTER" layoutX="212.0" layoutY="397.0" prefHeight="60.0" prefWidth="56.0" text="0" wrapText="true">
+         <font>
+            <Font size="29.0" />
+         </font>
+      </Label>
+      <Label fx:id="lBenneTransportForetUsine" layoutX="152.0" layoutY="356.0" prefHeight="29.0" prefWidth="225.0" text="Bennes transportées de la forêt à l'usine" />
+      <Label fx:id="countBenneTransportLivreUsine" alignment="CENTER" contentDisplay="CENTER" layoutX="419.0" layoutY="398.0" prefHeight="60.0" prefWidth="56.0" text="0" wrapText="true">
+         <font>
+            <Font size="29.0" />
+         </font>
+      </Label>
+      <Label fx:id="lBenneTransportLivreUsine" layoutX="381.0" layoutY="356.0" prefHeight="29.0" prefWidth="149.0" text="Bennes livrées à l'usine" />
+      <Label fx:id="countBenneRempliePourOuvrier" alignment="CENTER" contentDisplay="CENTER" layoutX="613.0" layoutY="398.0" prefHeight="60.0" prefWidth="56.0" text="0" wrapText="true">
+         <font>
+            <Font size="29.0" />
+         </font>
+      </Label>
+      <Label fx:id="lBenneRempliePourOuvrier" layoutX="570.0" layoutY="467.0" prefHeight="29.0" prefWidth="168.0" text="Bennes en cours de vidage" />
+      <Label fx:id="countBenneVidePourTransporteur" alignment="CENTER" contentDisplay="CENTER" layoutX="613.0" layoutY="46.0" prefHeight="60.0" prefWidth="56.0" text="0" wrapText="true">
+         <font>
+            <Font size="29.0" />
+         </font>
+      </Label>
+      <Label fx:id="lBenneVidePourTransporteur" layoutX="561.0" layoutY="6.0" prefHeight="29.0" prefWidth="168.0" text="Bennes vides pour transport" />
+      <Label fx:id="countBenneTransportUsineForet" alignment="CENTER" contentDisplay="CENTER" layoutX="418.0" layoutY="46.0" prefHeight="60.0" prefWidth="56.0" text="0" wrapText="true">
+         <font>
+            <Font size="29.0" />
+         </font>
+      </Label>
+      <Label fx:id="lBenneTransportUsineForet" layoutX="335.0" layoutY="117.0" prefHeight="29.0" prefWidth="225.0" text="Bennes transportées de l'usine à la forêt" />
+      <Label fx:id="countBenneTransportLivreForet" alignment="CENTER" contentDisplay="CENTER" layoutX="211.0" layoutY="46.0" prefHeight="60.0" prefWidth="56.0" text="0" wrapText="true">
+         <font>
+            <Font size="29.0" />
+         </font>
+      </Label>
+      <Label fx:id="lBenneTransportLivreForet" layoutX="174.0" layoutY="117.0" prefHeight="29.0" prefWidth="225.0" text="Bennes livrées à la forêt" />	    
+	 </children>
+</AnchorPane>
