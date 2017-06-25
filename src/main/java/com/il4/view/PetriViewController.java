@@ -72,6 +72,9 @@ public class PetriViewController implements IWorkingBenneListener,ITransporteurL
     public void addToken()
     {
         petrinet.getPlace(BEGIN_PLACE).addTokens(1);
+        Platform.runLater(() -> {
+            if(petrinetListener instanceof  IPetrinetListener) petrinetListener.OnChange(petrinet);
+        });
     }
 
     public void SetPetrinetListener(IPetrinetListener petrinetListener) { this.petrinetListener = petrinetListener;}
