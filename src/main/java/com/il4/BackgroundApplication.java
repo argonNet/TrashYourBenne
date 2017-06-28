@@ -109,16 +109,16 @@ public class BackgroundApplication {
             WaitingBenneViewController transporteurWaitingBenneFromBucheronView,
             WaitingBenneViewController transporteurWaitingBenneFromOuvrierView){
 
-        bucheronWaitingBenne = new WaitingBenne(WaitingBenne.WaitingMode.oneWaiting);
+        bucheronWaitingBenne = new WaitingBenne(WaitingBenne.WaitingMode.noWaiting);
         bucheronWaitingBenne.listeners.add(bucheronWaitingBenneView);
 
-        ouvrierWaitingBenne = new WaitingBenne(WaitingBenne.WaitingMode.oneWaiting);
+        ouvrierWaitingBenne = new WaitingBenne(WaitingBenne.WaitingMode.noWaiting);
         ouvrierWaitingBenne.listeners.add(ouvrierWaitingBenneView);
 
-        transporteurWaitingBenneFromBucheron = new WaitingBenne(WaitingBenne.WaitingMode.severalWaiting);
+        transporteurWaitingBenneFromBucheron = new WaitingBenne(WaitingBenne.WaitingMode.waitingInQueue);
         transporteurWaitingBenneFromBucheron.listeners.add(transporteurWaitingBenneFromBucheronView);
 
-        transporteurWaitingBenneFromOuvrier = new WaitingBenne(WaitingBenne.WaitingMode.severalWaiting);
+        transporteurWaitingBenneFromOuvrier = new WaitingBenne(WaitingBenne.WaitingMode.waitingInQueue);
         transporteurWaitingBenneFromOuvrier.listeners.add(transporteurWaitingBenneFromOuvrierView);
     }
 

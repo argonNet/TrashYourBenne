@@ -16,8 +16,8 @@ import java.util.concurrent.locks.ReentrantLock;
 public class WaitingBenne {
 
     public enum WaitingMode{
-        oneWaiting,
-        severalWaiting
+        noWaiting,
+        waitingInQueue
     }
 
     public ArrayList<IWaitingBenneListener> listeners;
@@ -27,7 +27,7 @@ public class WaitingBenne {
     private Lock takeOrGiveBenneLock = new ReentrantLock();
     private Condition waitIfNoBenneAvailable = takeOrGiveBenneLock.newCondition();
 
-    private WaitingMode waitingMode = WaitingMode.oneWaiting;
+    private WaitingMode waitingMode = WaitingMode.noWaiting;
 
     private void benneListChange(){
         ArrayList<String> benneNames = new ArrayList<>();
@@ -69,9 +69,9 @@ public class WaitingBenne {
 
         try{
 
-            if(waitingMode == WaitingMode.severalWaiting){
+            if(waitingMode == WaitingMode.waitingInQueue){
 
-                //Plusieurs thread attende simulatnément (file d'attente)
+                //Plusieurs thread attendent simulatnément (file d'attente)
                 while(!this.IsABenneWaiting()){
                     try {
 
